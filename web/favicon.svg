@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Projectionist mark: a projector lens throwing its beam.
+       Hand-authored for the app (v1.21) — amber on a dark rounded
+       tile. Drawn bold on purpose (heavy ring, clear gap before the
+       beam cone) so it stays legible at 16x16: ring lens, solid
+       aperture, widening beam. -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#14161c"/>
+  <path d="M43.5 25 L59 17 L59 47 L43.5 39 Z" fill="#e5a00d"/>
+  <circle cx="23.5" cy="32" r="12.5" fill="none" stroke="#e5a00d" stroke-width="7"/>
+  <circle cx="23.5" cy="32" r="4.25" fill="#e5a00d"/>
+</svg>

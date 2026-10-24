@@ -1,0 +1,637 @@
+{
+  "name": "Default pack (clean-room)",
+  "badges": [
+    {
+      "id": "star",
+      "file": "star.png",
+      "label": "Star (rating shell — value drawn at runtime)",
+      "category": "rating",
+      "w": 220,
+      "h": 220
+    },
+    {
+      "id": "imdb",
+      "file": "imdb.png",
+      "label": "IMDb-style badge (clean-room)",
+      "category": "rating",
+      "w": 380,
+      "h": 190
+    },
+    {
+      "id": "tomato",
+      "file": "tomato.png",
+      "label": "Tomato-style badge (clean-room)",
+      "category": "rating",
+      "w": 220,
+      "h": 220
+    },
+    {
+      "id": "popcorn",
+      "file": "popcorn.png",
+      "label": "Popcorn-style badge (clean-room)",
+      "category": "rating",
+      "w": 220,
+      "h": 280
+    },
+    {
+      "id": "badge-4k",
+      "file": "badge-4k.png",
+      "label": "4K text badge",
+      "category": "tech",
+      "w": 300,
+      "h": 150
+    },
+    {
+      "id": "badge-hdr",
+      "file": "badge-hdr.png",
+      "label": "HDR text badge",
+      "category": "tech",
+      "w": 300,
+      "h": 150
+    },
+    {
+      "id": "badge-dolby-vision",
+      "file": "badge-dolby-vision.png",
+      "label": "Dolby Vision text badge",
+      "category": "tech",
+      "w": 680,
+      "h": 150
+    },
+    {
+      "id": "badge-atmos",
+      "file": "badge-atmos.png",
+      "label": "Atmos text badge",
+      "category": "tech",
+      "w": 373,
+      "h": 150
+    },
+    {
+      "id": "badge-dtsx",
+      "file": "badge-dtsx.png",
+      "label": "DTS:X text badge",
+      "category": "tech",
+      "w": 373,
+      "h": 150
+    },
+    {
+      "id": "pill",
+      "file": "pill.png",
+      "label": "Unwatched-count pill (count drawn at runtime)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "ribbon-new",
+      "file": "ribbon-new.png",
+      "label": "NEW ribbon",
+      "category": "status",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "ribbon-blank",
+      "file": "ribbon-blank.png",
+      "label": "Blank ribbon (text drawn at runtime)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "ribbon-directors-cut",
+      "file": "ribbon-directors-cut.png",
+      "label": "Director's Cut ribbon",
+      "category": "ribbon",
+      "w": 947,
+      "h": 170
+    },
+    {
+      "id": "ribbon-4k-remux",
+      "file": "ribbon-4k-remux.png",
+      "label": "4K Remux ribbon",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "ribbon-extended",
+      "file": "ribbon-extended.png",
+      "label": "Extended ribbon",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "pill-rescombo",
+      "file": "pill-rescombo.png",
+      "label": "Resolution combo (text drawn at runtime)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-content-rating",
+      "file": "pill-content-rating.png",
+      "label": "Content rating pill (text drawn at runtime)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "ribbon-status",
+      "file": "ribbon-status.png",
+      "label": "Show status ribbon (text drawn at runtime)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "pill-language",
+      "file": "pill-language.png",
+      "label": "Language pill — SUB/DUB/DUAL (text drawn at runtime)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-audio",
+      "file": "pill-audio.png",
+      "label": "Audio pill — best-format text drawn at runtime (family)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-edition",
+      "file": "pill-edition.png",
+      "label": "Edition pill — edition title drawn at runtime (family)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-versions",
+      "file": "pill-versions.png",
+      "label": "Versions pill — \"N Versions\" drawn at runtime (family)",
+      "category": "tech",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-source",
+      "file": "pill-source.png",
+      "label": "Source pill — release source drawn at runtime (family)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-details",
+      "file": "pill-details.png",
+      "label": "Details pill — year/runtime or seasons/episodes drawn at runtime (family)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-runtime",
+      "file": "pill-runtime.png",
+      "label": "Runtime pill — runtime drawn at runtime (family)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-subtitles",
+      "file": "pill-subtitles.png",
+      "label": "Subtitles pill — subtitle languages/count drawn at runtime (family)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-watch-status",
+      "file": "pill-watch-status.png",
+      "label": "Watch status pill — UNWATCHED / N UNWATCHED drawn at runtime (family)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-new",
+      "file": "pill-new.png",
+      "label": "New pill — NEW drawn at runtime (family)",
+      "category": "status",
+      "w": 400,
+      "h": 160
+    },
+    {
+      "id": "pill-decade",
+      "file": "pill-decade.png",
+      "label": "Decade pill — “1980s” drawn at runtime (family)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-video-codec",
+      "file": "pill-video-codec.png",
+      "label": "Video codec pill — HEVC / H.264 / AV1 drawn at runtime (family)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-streaming",
+      "file": "pill-streaming.png",
+      "label": "Streaming pill — provider names drawn at runtime (family)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-studio",
+      "file": "pill-studio.png",
+      "label": "Studio pill — studio/network name drawn at runtime (family)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-genre",
+      "file": "pill-genre.png",
+      "label": "Genre pill — genre tags drawn at runtime (family)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-hdr",
+      "file": "pill-hdr.png",
+      "label": "HDR pill — DV / HDR10 / HLG drawn at runtime (family)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-channels",
+      "file": "pill-channels.png",
+      "label": "Channels pill — 5.1 / 7.1 / 2.0 drawn at runtime (family)",
+      "category": "tech",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-aspect-ratio",
+      "file": "pill-aspect-ratio.png",
+      "label": "Aspect ratio pill — 2.39:1 / 16:9 drawn at runtime (family)",
+      "category": "tech",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-franchise",
+      "file": "pill-franchise.png",
+      "label": "Franchise pill — TMDb collection name drawn at runtime (family)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-origin",
+      "file": "pill-origin.png",
+      "label": "Origin pill — language · country drawn at runtime (family)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "ribbon-collection",
+      "file": "ribbon-collection.png",
+      "label": "Collection ribbon — Plex collection name drawn at runtime (family)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "ribbon-family",
+      "file": "ribbon-family.png",
+      "label": "Family ribbon — FAMILY drawn at runtime (family)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "ribbon-leaving",
+      "file": "ribbon-leaving.png",
+      "label": "Leaving ribbon — LEAVING SOON / LEAVING ON date drawn at runtime (family)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "pill-saga-position",
+      "file": "pill-saga-position.png",
+      "label": "Saga position pill — “MOVIE 2 OF 4” drawn at runtime (family)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-quick-watch",
+      "file": "pill-quick-watch.png",
+      "label": "Quick watch pill — “UNDER 90 MIN” drawn at runtime (family)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "ribbon-genre",
+      "file": "ribbon-genre.png",
+      "label": "Genre ribbon — genre tags drawn at runtime (family banner presentation)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "pill-rescombo-aurora",
+      "file": "pill-rescombo-aurora.png",
+      "label": "Resolution combo — Aurora (text drawn at runtime)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-audio-aurora",
+      "file": "pill-audio-aurora.png",
+      "label": "Audio pill — Aurora (text drawn at runtime)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-edition-aurora",
+      "file": "pill-edition-aurora.png",
+      "label": "Edition pill — Aurora (text drawn at runtime)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-content-rating-aurora",
+      "file": "pill-content-rating-aurora.png",
+      "label": "Content rating pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-language-aurora",
+      "file": "pill-language-aurora.png",
+      "label": "Language pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-versions-aurora",
+      "file": "pill-versions-aurora.png",
+      "label": "Versions pill — Aurora (text drawn at runtime)",
+      "category": "tech",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-source-aurora",
+      "file": "pill-source-aurora.png",
+      "label": "Source pill — Aurora (text drawn at runtime)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-details-aurora",
+      "file": "pill-details-aurora.png",
+      "label": "Details pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-runtime-aurora",
+      "file": "pill-runtime-aurora.png",
+      "label": "Runtime pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-subtitles-aurora",
+      "file": "pill-subtitles-aurora.png",
+      "label": "Subtitles pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-watch-status-aurora",
+      "file": "pill-watch-status-aurora.png",
+      "label": "Watch status pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-new-aurora",
+      "file": "pill-new-aurora.png",
+      "label": "New pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 400,
+      "h": 160
+    },
+    {
+      "id": "pill-decade-aurora",
+      "file": "pill-decade-aurora.png",
+      "label": "Decade pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-video-codec-aurora",
+      "file": "pill-video-codec-aurora.png",
+      "label": "Video codec pill — Aurora (text drawn at runtime)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-streaming-aurora",
+      "file": "pill-streaming-aurora.png",
+      "label": "Streaming pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-studio-aurora",
+      "file": "pill-studio-aurora.png",
+      "label": "Studio pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-genre-aurora",
+      "file": "pill-genre-aurora.png",
+      "label": "Genre pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-aurora",
+      "file": "pill-aurora.png",
+      "label": "Pill — Aurora (value drawn at runtime)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "ribbon-status-aurora",
+      "file": "ribbon-status-aurora.png",
+      "label": "Show status ribbon — Aurora (text drawn at runtime)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "ribbon-blank-aurora",
+      "file": "ribbon-blank-aurora.png",
+      "label": "Blank ribbon — Aurora (text drawn at runtime)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "pill-hdr-aurora",
+      "file": "pill-hdr-aurora.png",
+      "label": "HDR pill — Aurora (text drawn at runtime)",
+      "category": "tech",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-channels-aurora",
+      "file": "pill-channels-aurora.png",
+      "label": "Channels pill — Aurora (text drawn at runtime)",
+      "category": "tech",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-aspect-ratio-aurora",
+      "file": "pill-aspect-ratio-aurora.png",
+      "label": "Aspect ratio pill — Aurora (text drawn at runtime)",
+      "category": "tech",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "pill-franchise-aurora",
+      "file": "pill-franchise-aurora.png",
+      "label": "Franchise pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-origin-aurora",
+      "file": "pill-origin-aurora.png",
+      "label": "Origin pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 320,
+      "h": 160
+    },
+    {
+      "id": "ribbon-collection-aurora",
+      "file": "ribbon-collection-aurora.png",
+      "label": "Collection ribbon — Aurora (text drawn at runtime)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "ribbon-family-aurora",
+      "file": "ribbon-family-aurora.png",
+      "label": "Family ribbon — Aurora (text drawn at runtime)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "ribbon-leaving-aurora",
+      "file": "ribbon-leaving-aurora.png",
+      "label": "Leaving ribbon — Aurora (text drawn at runtime)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "pill-saga-position-aurora",
+      "file": "pill-saga-position-aurora.png",
+      "label": "Saga position pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "pill-quick-watch-aurora",
+      "file": "pill-quick-watch-aurora.png",
+      "label": "Quick watch pill — Aurora (text drawn at runtime)",
+      "category": "status",
+      "w": 560,
+      "h": 160
+    },
+    {
+      "id": "ribbon-genre-aurora",
+      "file": "ribbon-genre-aurora.png",
+      "label": "Genre ribbon — Aurora (text drawn at runtime)",
+      "category": "ribbon",
+      "w": 680,
+      "h": 170
+    },
+    {
+      "id": "star-aurora",
+      "file": "star-aurora.png",
+      "label": "Star — Aurora (rating shell — value drawn at runtime)",
+      "category": "rating",
+      "w": 220,
+      "h": 220
+    },
+    {
+      "id": "imdb-aurora",
+      "file": "imdb-aurora.png",
+      "label": "IMDb-style badge — Aurora (clean-room)",
+      "category": "rating",
+      "w": 380,
+      "h": 190
+    },
+    {
+      "id": "tomato-aurora",
+      "file": "tomato-aurora.png",
+      "label": "Tomato-style badge — Aurora (clean-room)",
+      "category": "rating",
+      "w": 220,
+      "h": 220
+    },
+    {
+      "id": "popcorn-aurora",
+      "file": "popcorn-aurora.png",
+      "label": "Popcorn-style badge — Aurora (clean-room)",
+      "category": "rating",
+      "w": 220,
+      "h": 280
+    }
+  ]
+}

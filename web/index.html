@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projectionist</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<script>
+  // Theme pre-paint (v1.19): apply the cached theme before the
+  // stylesheet paints, so a non-default theme never flashes the
+  // default first. The cache is a localStorage mirror of the
+  // server-side setting (the settings store is the source of truth;
+  // themes.js re-syncs from it on load and rewrites this mirror).
+  // The mirror carries the resolved palette, so this script needs
+  // no theme knowledge of its own.
+  try {
+    var pcmThemeCache = JSON.parse(localStorage.getItem('pcm-theme-v1') || 'null');
+    if (pcmThemeCache && pcmThemeCache.vars) {
+      var pcmRoot = document.documentElement;
+      for (var pcmVar in pcmThemeCache.vars) pcmRoot.style.setProperty(pcmVar, pcmThemeCache.vars[pcmVar]);
+      if (pcmThemeCache.scheme) pcmRoot.style.colorScheme = pcmThemeCache.scheme;
+    }
+  } catch (e) { /* no mirror yet — the stylesheet's default theme paints */ }
+</script>
+<link rel="stylesheet" href="styles.css">
+<!--
+  ============================================================================
+  index.html — the entire UI skeleton.
+  ----------------------------------------------------------------------------
+  FUTURE AI — how this page is organized:
+    <aside id="sidebar">  — brand, tab nav, server status pill (bottom).
+    <main>
+      <section id="tab-connect">      — sign-in + server picker (Connect tab)
+      <section id="tab-collections">  — dashboard: sections, grid, detail view
+      <section id="tab-builder">      — collection builder/editor + dry-run
+    <div id="modal-root"> / <div id="toast-root"> — overlays, filled by app.js.
+
+  RULES FOR EDITING THIS FILE:
+    - Static structure only. All dynamic content is rendered by renderer/app.js
+      into the marked mount points (ids below). If you add a mount point, add
+      its renderer in app.js and note it here.
+    - Artwork <img> tags ALWAYS go through the pleximg:// protocol
+      (see main.js registerArtProtocol) — never build a direct Plex URL here;
+      the renderer has no token.
+    - Keep the tab contract: every <section class="tab"> has a matching
+      <button class="nav-item" data-tab="..."> in the sidebar. app.js wires
+      them by data-tab.
+  ============================================================================
+-->
+</head>
+<body>
+<div id="bg-glow" aria-hidden="true"></div>
+
+<div id="app">
+  <!-- ======================= SIDEBAR ======================= -->
+  <aside id="sidebar">
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true"><path d="M43.5 25 L59 17 L59 47 L43.5 39 Z" fill="#14161c"/><circle cx="23.5" cy="32" r="12.5" fill="none" stroke="#14161c" stroke-width="7"/><circle cx="23.5" cy="32" r="4.25" fill="#14161c"/></svg></div>
+      <div class="brand-text">
+        <strong>Projectionist</strong>
+        <span>Plex Collection Manager · <span id="app-version"></span></span>
+      </div>
+    </div>
+
+    <nav id="main-nav">
+      <button class="nav-item active" data-tab="connect">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.785 6L18 14.215l-2.054 2.054a5.81 5.81 0 1 1-8.215-8.215zM4 20l3.5-3.5M15 4l-3.5 3.5M20 9l-3.5 3.5"/></svg></span><span>Connect</span>
+      </button>
+      <button class="nav-item" data-tab="collections">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1zm10 0a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zM4 15a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1zm10 0a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg></span><span>Collections</span>
+      </button>
+      <button class="nav-item" data-tab="builder">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 10h3V7L6.5 3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1-3 3l-6-6a6 6 0 0 1-8-8z"/></svg></span><span>Builder</span>
+        <em class="nav-pill" id="builder-draft-pill" hidden></em>
+      </button>
+      <button class="nav-item" data-tab="advisor">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h1m8-9v1m8 8h1M5.6 5.6l.7.7m12.1-.7l-.7.7M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0-1 3a2 2 0 0 1-4 0a3.5 3.5 0 0 0-1-3m.7 1h4.6"/></svg></span><span>Advisor</span>
+        <em class="nav-pill" id="advisor-scan-pill" hidden></em>
+      </button>
+      <button class="nav-item" data-tab="overlays">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 6l-8 4l8 4l8-4zm-8 8l8 4l8-4"/></svg></span><span>Overlays</span>
+      </button>
+      <button class="nav-item" data-tab="settings">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37c1 .608 2.296.07 2.572-1.065"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/></g></svg></span><span>Settings</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <!-- Server status pill. Filled by app.js renderServerPill(). -->
+      <div id="server-pill" class="server-pill signed-out">
+        <span class="dot"></span><span id="server-pill-text">Not signed in</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======================= MAIN ======================= -->
+  <main id="main">
+
+    <!-- ============ TAB: CONNECT ============ -->
+    <section class="tab active" id="tab-connect">
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">Step one</p>
+          <h1>Connect your Plex server</h1>
+          <p class="lede">Sign in once with Plex. Your token stays in the main process and is saved in Credential Manager (encrypted-file fallback if unavailable), never sent anywhere but Plex.</p>
+        </div>
+      </header>
+
+      <!-- Signed-out state -->
+      <div id="connect-signed-out" class="connect-card">
+        <div class="connect-art" aria-hidden="true"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.785 6L18 14.215l-2.054 2.054a5.81 5.81 0 1 1-8.215-8.215zM4 20l3.5-3.5M15 4l-3.5 3.5M20 9l-3.5 3.5"/></svg></span></div>
+        <h2>Sign in with Plex</h2>
+        <p>We'll open plex.tv in your browser. Approve the app there, then come back — this window picks up the approval automatically.</p>
+        <button class="btn primary big" id="btn-signin">Sign in with Plex</button>
+        <p class="fineprint" id="signin-fineprint">No password is ever typed here. Plex issues a limited token just for this app.</p>
+      </div>
+
+      <!-- Waiting-for-approval state -->
+      <div id="connect-pending" class="connect-card" hidden>
+        <div class="spinner" aria-hidden="true"></div>
+        <h2>Waiting for approval…</h2>
+        <p>Approve <strong>Plex Collection Manager</strong> in the browser tab that just opened, then this screen will continue on its own.</p>
+        <button class="btn ghost" id="btn-reopen-auth">Re-open the approval page</button>
+        <button class="btn ghost danger" id="btn-cancel-login">Cancel</button>
+      </div>
+
+      <!-- Signed-in state: server picker -->
+      <div id="connect-servers" hidden>
+        <div class="row-between">
+          <div>
+            <h2 id="servers-title">Your servers</h2>
+            <p class="muted" id="servers-subtitle">Pick the server this app manages. Connection quality is measured live.</p>
+          </div>
+          <button class="btn ghost" id="btn-logout">Sign out</button>
+        </div>
+        <!-- Server cards. Filled by app.js renderServers(). -->
+        <div id="server-list" class="server-list"></div>
+        <p class="fineprint">Signed in as <strong id="user-name"></strong> · token backend: <span id="token-backend"></span></p>
+      </div>
+    </section>
+
+    <!-- ============ TAB: COLLECTIONS ============ -->
+    <section class="tab" id="tab-collections">
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">Library</p>
+          <h1>Collections</h1>
+          <p class="lede">Everything Plex knows about, exactly as it stands right now.</p>
+        </div>
+        <button class="btn primary" id="btn-new-collection">＋ New collection</button>
+      </header>
+
+      <!-- Library section switcher (Movies / TV …). Filled by app.js. -->
+      <div id="section-tabs" class="section-tabs"></div>
+
+      <!-- Dashboard toolbar: search + sort + smart/static filter -->
+      <div id="collections-toolbar" class="toolbar" hidden>
+        <input id="collections-search" class="input" type="search" placeholder="Search collections…" autocomplete="off">
+        <select id="collections-sort" class="input select">
+          <option value="title">Sort: Title A–Z</option>
+          <option value="size-desc">Sort: Most items</option>
+          <option value="size-asc">Sort: Fewest items</option>
+          <option value="recent">Sort: Recently updated</option>
+        </select>
+        <select id="collections-kind" class="input select">
+          <option value="all">All kinds</option>
+          <option value="smart">Smart only</option>
+          <option value="static">Manual only</option>
+        </select>
+      </div>
+
+      <!-- Collections manager (v1.13): health view + full metadata
+           editor + bulk art. Rendered by collections-manager.js into
+           this mount; the grid below stays the browse surface. -->
+      <div id="cm-root"></div>
+
+      <!-- Grid view mount point -->
+      <div id="collections-grid" class="poster-grid"></div>
+      <div id="collections-empty" class="empty" hidden>
+        <p>No collections here yet.</p>
+        <button class="btn primary" id="btn-empty-new">Build your first one</button>
+      </div>
+
+      <!-- Detail view (member wall). Hidden until a collection is opened. -->
+      <div id="collection-detail" hidden>
+        <button class="btn ghost" id="btn-back-to-grid">← All collections</button>
+        <div class="detail-hero">
+          <img id="detail-art" class="detail-art" alt="">
+          <div class="detail-meta">
+            <p class="eyebrow" id="detail-kind"></p>
+            <h2 id="detail-title"></h2>
+            <p class="muted" id="detail-sub"></p>
+            <p id="detail-summary"></p>
+            <p id="collection-created-note" class="mode-desc" role="status" hidden></p>
+            <div class="detail-actions">
+              <button class="btn primary" id="btn-detail-edit">Edit in Builder</button>
+              <button class="btn ghost" id="btn-detail-duplicate">Duplicate</button>
+              <button class="btn ghost" id="btn-detail-overlay" title="Design poster overlays for every title in this collection">Overlay&hellip;</button>
+              <button class="btn ghost danger" id="btn-detail-delete" title="Delete the collection grouping (never deletes media)">Delete</button>
+            </div>
+          </div>
+        </div>
+        <div class="row-between">
+          <h3>Members</h3>
+          <input id="members-search" class="input" type="search" placeholder="Filter members…" autocomplete="off">
+        </div>
+        <div id="members-grid" class="poster-grid small"></div>
+      </div>
+    </section>
+
+    <!-- ============ TAB: BUILDER ============ -->
+    <!--
+      FUTURE AI — the Builder is a four-step wizard (v1.17):
+        1 Start (source: blank / rules / import) · 2 Library & members
+        (poster grid, rule preview, or import grid) · 3 Details ·
+        4 Review & create (the dry-run). State lives in app.js `draft`
+        + `wizard`. NOTHING here writes to Plex until the user confirms
+        the Step 4 dry-run — see buildDryRun() and the apply handler.
+    -->
+    <section class="tab" id="tab-builder">
+      <header class="page-head">
+        <div>
+          <p class="eyebrow" id="builder-eyebrow">Builder</p>
+          <h1 id="builder-title">New collection</h1>
+          <p class="lede">A four-step wizard. Nothing is written to Plex until the Step 4 review is confirmed — leaving mid-wizard writes nothing.</p>
+        </div>
+        <button class="btn ghost" id="btn-builder-reset">Start over</button>
+      </header>
+
+      <!-- Wizard step header: numbered, named; click a step to jump
+           (forward jumps run the same validation as Next). -->
+      <ol class="wizard-steps" id="wizard-steps">
+        <li><button type="button" class="wz-step-btn" data-wz-goto="1"><span class="step-n">1</span> Start</button></li>
+        <li><button type="button" class="wz-step-btn" data-wz-goto="2"><span class="step-n">2</span> Library &amp; members</button></li>
+        <li><button type="button" class="wz-step-btn" data-wz-goto="3"><span class="step-n">3</span> Details</button></li>
+        <li><button type="button" class="wz-step-btn" data-wz-goto="4"><span class="step-n">4</span> Review &amp; create</button></li>
+      </ol>
+      <p id="wizard-step-error" class="wizard-error" role="alert" hidden></p>
+
+      <!-- STEP 1 — Start: choose the source. -->
+      <section class="wizard-panel" id="wz-step-1">
+        <div class="panel">
+          <h3><span class="step-n">1</span> Start — where do the members come from?</h3>
+          <p id="builder-mode-desc" class="mode-desc" aria-live="polite"></p>
+          <div class="wz-source-grid" id="wz-source-grid">
+            <label class="wz-source-card">
+              <input type="radio" name="wz-source" value="blank" checked>
+              <strong>Blank collection</strong>
+              <span>Pick each movie or series yourself from a poster grid of your library.</span>
+            </label>
+            <label class="wz-source-card">
+              <input type="radio" name="wz-source" value="rules">
+              <strong>From rules</strong>
+              <span>Genre, decade, rating, unwatched, recently added, runtime, critic rating — Plex matches the library against your rules, live.</span>
+            </label>
+            <label class="wz-source-card">
+              <input type="radio" name="wz-source" value="import">
+              <strong>From a list</strong>
+              <span>Import a TMDb or Trakt list; matched titles are seeded in list order and anything unmatched is reported with its reason.</span>
+            </label>
+          </div>
+          <p class="muted small" id="wz-edit-note" hidden>This collection already exists — its members and details are loaded. The source is fixed; changing members or details goes through the same Step 4 review before anything is applied.</p>
+        </div>
+      </section>
+
+      <!-- STEP 2 — Library & members. -->
+      <section class="wizard-panel" id="wz-step-2" hidden>
+        <div class="panel">
+          <h3><span class="step-n">2</span> Library &amp; members</h3>
+          <div class="field-row">
+            <label class="field">Library
+              <select id="b-section" class="input select"></select>
+            </label>
+            <label class="field">Type
+              <select id="b-type" class="input select" disabled>
+                <option value="1">Movies</option>
+                <option value="2">TV shows</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- Blank path: the library's actual poster grid. -->
+          <div id="wz-blank-panel">
+            <div class="row-between">
+              <h4>Pick members</h4>
+              <span id="wz-grid-counts" class="muted small" aria-live="polite"></span>
+            </div>
+            <input id="wz-grid-search" class="input" type="search" placeholder="Search titles in this library…" autocomplete="off">
+            <div class="wz-tray" id="wz-selected-tray">
+              <strong><span id="member-count" class="count-badge">0</span> selected</strong>
+              <span class="muted small">Selection survives paging and searching. Order below is the creation order — drag to reorder.</span>
+              <button class="btn ghost small" id="btn-clear-selected" type="button">Clear all</button>
+            </div>
+            <div id="draft-list" class="draft-list"></div>
+            <div id="wz-member-grid" class="poster-grid small wz-grid" style="margin-top:12px"></div>
+            <button class="btn secondary" id="wz-grid-more" type="button" hidden>Show more</button>
+          </div>
+
+          <!-- Rules path: rule form + live match preview (read-only). -->
+          <div id="wz-rules-panel" hidden>
+            <div class="row-between">
+              <h4>Rules</h4>
+              <button class="btn ghost small" id="btn-add-rule" type="button">+ Add rule</button>
+            </div>
+            <p class="muted small">Rules combine with AND and become a Plex advanced filter. The match preview below updates as you edit — it is computed by Plex, never picked by hand.</p>
+            <div id="rule-list"></div>
+            <div class="row-between" style="margin-top:10px">
+              <code id="filter-query-preview" class="query-preview"></code>
+              <button class="btn primary" id="btn-preview-rules" type="button" title="Runs the rules against your Plex server and shows the matching titles">Preview matches</button>
+            </div>
+            <p id="wz-rule-count" class="muted small" aria-live="polite"></p>
+            <div id="rule-preview-grid" class="poster-grid small" style="margin-top:12px"></div>
+          </div>
+
+          <!-- Import path: existing preview report + seeded grid. -->
+          <div id="wz-import-panel" hidden>
+            <h4>Import a list <span class="hint">(TMDb / Trakt)</span></h4>
+            <p class="muted small">Paste a public list and the matched titles become this draft's members <strong>in list order</strong>. Entries that can't be matched are reported with the reason — the preview itself writes nothing to Plex. Matched titles appear in the grid below, pre-selected; click one to remove it before continuing.</p>
+            <div class="field-row">
+              <label class="field">Source
+                <select id="imp-source" class="input select">
+                  <option value="tmdb">TMDb list</option>
+                  <option value="trakt">Trakt list</option>
+                </select>
+              </label>
+              <label class="field" style="flex:1">List id or URL
+                <input id="imp-ref" class="input" type="text" placeholder="List id, themoviedb.org list URL, or trakt.tv list URL" autocomplete="off">
+              </label>
+            </div>
+            <button class="btn secondary" id="btn-import-preview" type="button">Preview import</button>
+            <div id="import-results"></div>
+            <div id="wz-import-grid" class="poster-grid small wz-grid" style="margin-top:12px"></div>
+            <button class="btn secondary" id="wz-import-more" type="button" hidden>Show more</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 — Details. -->
+      <section class="wizard-panel" id="wz-step-3" hidden>
+        <div class="panel">
+          <h3><span class="step-n">3</span> Details</h3>
+          <p class="muted small">The title, summary and poster everyone sees in Plex. Only the title is required.</p>
+          <p id="wz-details-error" class="wizard-error" role="alert" hidden></p>
+          <label class="field">Title <span class="hint">(required)</span>
+            <input id="b-title" class="input" type="text" placeholder="e.g. Neo-Noir Essentials" maxlength="120" autocomplete="off">
+          </label>
+          <label class="field">Sort title <span class="hint">(controls ordering inside Plex; defaults to Title)</span>
+            <input id="b-titlesort" class="input" type="text" placeholder="Defaults to Title" maxlength="120" autocomplete="off">
+          </label>
+          <label class="field">Summary
+            <textarea id="b-summary" class="input" rows="3" placeholder="Shown on the collection page in Plex…" maxlength="2000"></textarea>
+          </label>
+          <label class="field">Content rating <span class="hint">(optional — e.g. PG, PG-13, R, TV-MA)</span>
+            <input id="b-content-rating" class="input" type="text" placeholder="Leave blank for none" maxlength="20" autocomplete="off">
+          </label>
+
+          <!-- Static/smart choice: offered when the source is rules. -->
+          <div id="wz-kind-choice">
+            <h4>Collection kind</h4>
+            <label class="wz-kind-option">
+              <input type="radio" name="wz-kind" value="static" id="wz-kind-static" checked>
+              <span><strong>Static</strong> — a fixed member list: the titles chosen (or matching) now; it changes only when you edit it.</span>
+            </label>
+            <label class="wz-kind-option">
+              <input type="radio" name="wz-kind" value="smart" id="wz-kind-smart">
+              <span><strong>Smart</strong> — Plex stores the rules and keeps membership updated as your library changes; no fixed member list is stored.</span>
+            </label>
+            <input type="checkbox" id="b-smart" hidden>
+          </div>
+          <p class="muted small" id="wz-kind-note" hidden>Static collection — the member list from Step 2 is stored as-is.</p>
+
+          <label class="field">Collection poster <span class="hint">Preview, confirm and back up before applying.</span>
+            <input id="b-poster" class="input" type="text" placeholder="TPDb poster link, poster ID, or selected art" autocomplete="off">
+          </label>
+          <div class="btn-row">
+            <button id="btn-find-art" class="btn secondary small" type="button">Find collection art</button>
+            <button id="btn-generate-art" class="btn secondary small" type="button">Generate poster</button>
+            <button id="btn-clear-art" class="btn ghost small" type="button">Clear selection</button>
+          </div>
+          <div id="collection-art-selection" class="muted small" aria-live="polite">No replacement poster selected.</div>
+          <p class="muted small">Art comes from ThePosterDB. If art requests suddenly fail as blocked, their anti-bot protection has tripped on your connection — it usually clears on its own; wait a while and try again.</p>
+          <details class="advanced">
+            <summary>Advanced (optional) — home-screen visibility</summary>
+            <label class="check"><input type="checkbox" id="b-vis-home" checked> <span>Show on home screen</span></label>
+            <label class="check"><input type="checkbox" id="b-vis-shared"> <span>Show on shared users' home</span></label>
+            <label class="check"><input type="checkbox" id="b-vis-recommended" checked> <span>Show in Recommended</span></label>
+          </details>
+        </div>
+      </section>
+
+      <!-- STEP 4 — Review & create: the existing dry-run diff. -->
+      <section class="wizard-panel" id="wz-step-4" hidden>
+        <div class="panel dryrun">
+          <div class="row-between">
+            <h3><span class="step-n">4</span> Review &amp; create</h3>
+            <button class="btn secondary" id="btn-dryrun" type="button">Recompute review</button>
+          </div>
+          <p class="muted small">This review is the existing dry-run: it compares your draft against the live collection and shows <strong>exactly</strong> what creating/applying would do — <strong>nothing is written to Plex until you confirm.</strong></p>
+          <p id="wz-review-error" class="wizard-error" role="alert" hidden></p>
+          <div id="dryrun-output" class="dryrun-output">
+            <p class="muted">No review computed yet.</p>
+          </div>
+          <button class="btn primary big block" id="btn-apply" disabled>Create collection</button>
+        </div>
+      </section>
+
+      <!-- Wizard navigation. -->
+      <div class="wizard-nav">
+        <button class="btn ghost" id="btn-wizard-back" type="button">← Back</button>
+        <button class="btn primary" id="btn-wizard-next" type="button">Next →</button>
+      </div>
+    </section>
+
+    <!-- ============ TAB: ADVISOR ============ -->
+    <!--
+      FUTURE AI — the Advisor tab (v0.2). Layout:
+        .advisor-head    — scan button + progress + last-scan line
+        .advisor-subnav  — sub-views: Suggestions | Top 100s | Dub/Sub | Drafts
+        .advisor-body
+          #advisor-rail    — suggestion-type filter (left)
+          #advisor-cards   — suggestion cards (center)
+        Card click (v1.18) — a pop-out editor card (modal via openModal):
+        editable title + member wall + Create/Draft/Dismiss. No detail
+        region in the page; the list never hides.
+      All dynamic content rendered by renderer/advisor.js. Shared helpers
+      (artSrc, openModal, state…) come from window.PCM (see app.js bottom).
+      The Advisor NEVER writes to Plex — "Create" seeds the v0.1 Builder.
+    -->
+    <section class="tab" id="tab-advisor">
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">Advisor · v0.2</p>
+          <h1>Collection advisor</h1>
+          <p class="lede">Suggestions mined from your actual library — franchises, genres, hidden gems, top-100s, dub/sub. Nothing is created until you say so.</p>
+        </div>
+        <div class="advisor-scanbox">
+          <button class="btn primary" id="btn-scan">⟳ Scan library</button>
+          <p class="muted small" id="scan-meta">Not scanned yet</p>
+        </div>
+      </header>
+
+      <div id="scan-progress" class="scan-progress" hidden>
+        <div class="scan-bar"><div id="scan-bar-fill"></div></div>
+        <p class="muted small" id="scan-note">Starting…</p>
+      </div>
+
+      <div class="advisor-subnav" id="advisor-subnav">
+        <button class="subnav-item active" data-view="suggestions">Suggestions</button>
+        <button class="subnav-item" data-view="top100">Top 100s</button>
+        <button class="subnav-item" data-view="dubsub">Dub / Sub</button>
+        <button class="subnav-item" data-view="drafts">Drafts <em class="nav-pill" id="drafts-pill" hidden></em></button>
+      </div>
+
+      <!-- AI assistant strip (BYOK, off by default — see advisor.js) -->
+      <div id="ai-strip" class="ai-strip" hidden>
+        <span class="ai-badge">AI</span>
+        <input id="ai-nl-input" class="input" type="text" placeholder='Describe a collection — e.g. "slow-burn 90s thrillers" — and AI will propose Builder rules' autocomplete="off">
+        <button class="btn secondary small" id="btn-ai-rules">Propose rules</button>
+        <button class="btn ghost small" id="btn-ai-merge">Tidy franchises</button>
+      </div>
+      <!-- AI collection suggestions (v1.21): per section, from the latest scan — see advisor.js -->
+      <div id="ai-suggest-row" class="ai-strip ai-suggest-row" hidden>
+        <span class="ai-badge">AI</span>
+        <label class="ai-suggest-label" for="ai-section">Collections for</label>
+        <select id="ai-section" class="input select"></select>
+        <button class="btn secondary small" id="btn-ai-suggest">Suggest collections with AI</button>
+        <p id="ai-suggest-status" class="muted small" hidden></p>
+      </div>
+      <p id="ai-strip-hint" class="muted small">AI suggestions are off — <button class="linklike" id="btn-ai-goto-settings">add a key in Settings</button> to enable them. Everything works without AI.</p>
+
+      <!-- Suggestions view -->
+      <div id="advisor-view-suggestions" class="advisor-view">
+        <div id="advisor-why" class="why-banner" hidden></div>
+        <div class="advisor-body">
+          <aside id="advisor-rail" class="advisor-rail"></aside>
+          <div id="advisor-cards" class="advisor-cards"></div>
+        </div>
+      </div>
+
+      <!-- Top 100s view -->
+      <div id="advisor-view-top100" class="advisor-view" hidden>
+        <div class="row-between">
+          <div class="section-tabs" id="top100-tabs">
+            <button class="section-tab active" data-list="movies">Top 100 Movies</button>
+            <button class="section-tab" data-list="tv">Top 100 Shows</button>
+          </div>
+          <p class="muted small">Display + ownership only — this app never downloads media.</p>
+        </div>
+        <div class="section-tabs" id="top100-own-tabs" style="margin-top:12px">
+          <button class="section-tab active" data-own="owned">You own (<span id="top100-owned-count">0</span>)</button>
+          <button class="section-tab" data-own="recs">Recommendations — not on your server (<span id="top100-recs-count">0</span>)</button>
+        </div>
+        <div class="row-between" id="top100-owned-bar" style="margin-top:10px">
+          <p class="muted small" id="top100-owned-note"></p>
+          <button class="btn primary small" id="btn-top100-make">Make it a collection</button>
+        </div>
+        <div id="top100-grid" class="poster-grid" style="margin-top:12px"></div>
+      </div>
+
+      <!-- Dub/Sub view -->
+      <div id="advisor-view-dubsub" class="advisor-view" hidden>
+        <p class="muted">Verdicts come from your Plex audio tracks — English present = dubbed, Japanese-only = subbed. <span class="heuristic-tag">Heuristic edges are labeled, not hidden.</span></p>
+        <div class="dubsub-cols">
+          <div class="dubsub-col"><h3><span class="verdict-dot dubbed"></span>Dubbed <span class="count-badge" id="dub-count-dubbed">0</span></h3><div id="dub-col-dubbed" class="dubsub-list"></div></div>
+          <div class="dubsub-col"><h3><span class="verdict-dot dual"></span>Dual-audio <span class="count-badge" id="dub-count-dual">0</span></h3><div id="dub-col-dual" class="dubsub-list"></div></div>
+          <div class="dubsub-col"><h3><span class="verdict-dot subbed"></span>Subbed <span class="count-badge" id="dub-count-subbed">0</span></h3><div id="dub-col-subbed" class="dubsub-list"></div></div>
+          <div class="dubsub-col unknown"><h3><span class="verdict-dot unknown"></span>Unknown <span class="count-badge" id="dub-count-unknown">0</span></h3><div id="dub-col-unknown" class="dubsub-list"></div></div>
+        </div>
+        <p class="fineprint">Only titles flagged as anime appear here (TMDb: Japanese + Animation, or sections you mark in Settings, or per-title overrides). English-original content is never called "dubbed".</p>
+      </div>
+
+      <!-- Drafts view -->
+      <div id="advisor-view-drafts" class="advisor-view" hidden>
+        <div id="drafts-list" class="drafts-list"></div>
+      </div>
+    </section>
+
+    <!-- ============ TAB: SETTINGS ============ -->
+    <!--
+      FUTURE AI — Settings tab (v0.2). Three panels:
+        #keys-panel     — API keys (values never leave main; UI shows Set/Not set)
+        #advisor-panel  — suggestion thresholds, anime sections, IMDb toggle
+        #cache-panel    — cache size, clear cache, reset dismissals
+      Rendered by renderer/advisor.js (settingsUI section).
+    -->
+    <!-- ============ TAB: OVERLAYS (v0.3 Poster Overlay Studio) ============ -->
+    <!-- Mount points for overlays.js: designer, samples, dry-run, history.
+         The designer canvas composites at 1000x1500 internally and scales
+         for display via CSS. -->
+    <section class="tab" id="tab-overlays">
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">Overlays · v0.3</p>
+          <h1>Poster overlay studio</h1>
+          <p class="muted small">Deletion is blocked. Poster changes require a verified original backup.</p>
+          <p class="lede">Design badge layouts, evaluate them against real per-item metadata, dry-run, then apply. Every original poster is backed up before anything is written — one click restores it.</p>
+        </div>
+      </header>
+
+      <div class="overlay-subnav" id="overlay-subnav">
+        <button class="subnav-item active" data-view="studio">Studio</button>
+        <button class="subnav-item" data-view="templates">Templates</button>
+        <button class="subnav-item" data-view="apply">Apply</button>
+        <button class="subnav-item" data-view="history">History</button>
+      </div>
+
+      <!-- STUDIO VIEW — three regions: target rail | stage | truth rail.
+           The rail browses the server (collections + items as poster
+           grids, errors inline); the stage is the canvas designer; the
+           right rail shows the FACTS Plex reports for the target and a
+           live verdict for every badge (fires / won't fire, and why). -->
+      <div id="overlay-view-studio" class="overlay-view">
+        <div class="studio-layout">
+          <aside class="ov-rail">
+            <h3>Design target</h3>
+            <div id="ov-browser"></div>
+          </aside>
+          <div class="ov-stage">
+            <div class="overlay-targetbar">
+              <span class="muted small">Designing on</span>
+              <span id="overlay-target-name">No poster selected</span>
+            </div>
+            <div class="overlay-canvas-wrap">
+              <canvas id="overlay-canvas" width="1000" height="1500"></canvas>
+              <p class="muted small" id="overlay-canvas-hint">Pick a poster in the rail. Enabled families draw themselves when the item's facts earn them — drag a family badge on the canvas to offset it. Facts and verdicts update live.</p>
+            </div>
+            <div class="row-between">
+              <h3>Families</h3>
+              <button class="btn ghost small" id="btn-families-aurora-all" title="Switch every family to the Aurora style pack (richer art, same geometry)">Aurora for all</button>
+              <button class="btn ghost small" id="btn-families-classic-all" title="Switch every family back to the classic style pack">Classic for all</button>
+              <button class="btn ghost small" id="btn-families-signature-all" title="Switch every family to the Signature engine (procedural frosted-glass badges, drawn live — no shell art)">Signature for all</button>
+              <button class="btn secondary small" id="btn-overlay-save-template" title="Save the current layout (families + custom badges) as a named template you can apply to other items later">Save as template</button>
+            </div>
+            <p class="muted small">Kometa-style overlay families: each one is judged per item against its real metadata — no facts, no badge. Toggle them, set corners and sizes, pick rating sources.</p>
+            <div id="overlay-families"></div>
+            <h3>Custom badges</h3>
+            <p class="muted small">Hand-placed badges (bundle art, your own PNGs, Fanart logos) — these ride along with the family layout as free placements with their own rules.</p>
+            <div id="overlay-trays"></div>
+            <h3 id="overlay-sel-head" hidden>Selected badge</h3>
+            <div id="overlay-sel"></div>
+          </div>
+          <aside class="ov-inspector">
+            <h3>What Plex reports</h3>
+            <div id="overlay-facts"><p class="muted small">Pick a poster to see the metadata families are judged against.</p></div>
+            <h3>Family &amp; badge verdicts</h3>
+            <div id="overlay-verdicts"><p class="muted small">Verdicts appear once a poster is picked.</p></div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- TEMPLATES VIEW (v0.4) -->
+      <div id="overlay-view-templates" class="overlay-view" hidden>
+        <p class="muted">Saved layouts — a family layout plus any custom badges. Templates saved before the family system are tagged <strong>legacy</strong> and still apply exactly as saved. <strong>Apply template</strong> loads the layout into the Designer, then you pick a target (one item, a collection, a section, or a filtered set) and run the normal evaluate &rarr; dry-run &rarr; apply flow.</p>
+        <div id="overlay-templates" class="template-list"></div>
+      </div>
+
+      <!-- APPLY VIEW — honest flow: resolve targets → EVALUATE (fetch
+           real metadata for every item, judge every family + badge) → dry-run
+           (exactly which posters change, which are skipped and why,
+           which couldn't be checked) → APPLY (firing items only). -->
+      <div id="overlay-view-apply" class="overlay-view" hidden>
+        <div class="overlay-applybar">
+          <p class="tray-label">Apply overlays to</p>
+          <div class="btn-row" id="overlay-scope-row">
+            <button class="btn secondary" id="btn-scope-selected">Apply</button>
+            <button class="btn secondary" id="btn-scope-tag">Apply to tag&hellip;</button>
+            <button class="btn secondary" id="btn-scope-library">Apply to all in library</button>
+            <button class="btn secondary" id="btn-scope-collection">Apply to all in collection</button>
+          </div>
+          <div id="overlay-scope-picker"></div>
+          <div id="overlay-scope-confirm" hidden>
+            <span id="overlay-scope-confirm-text"></span>
+            <button class="btn primary small" id="btn-scope-start">Apply</button>
+            <button class="btn ghost small" id="btn-scope-cancel">Cancel</button>
+          </div>
+          <p class="muted small" id="overlay-target-detail">“Apply” uses the poster picked in the Studio. The other scopes ask for one quick count confirmation, then run.</p>
+          <div class="btn-row">
+            <button class="btn primary" id="btn-overlay-apply-now">Apply overlays</button>
+            <button class="btn secondary" id="btn-overlay-evaluate">Preview</button>
+            <button class="btn danger" id="btn-overlay-cancel-run" hidden>Cancel</button>
+            <span class="muted small">Apply runs the whole job in one click — facts are fetched and judged at click time, originals are backed up (verified) before any poster is written, and results stream in as they finish. Preview is an optional look-first dry-run; it is never required.</span>
+          </div>
+        </div>
+        <div id="overlay-eval"></div>
+        <div id="overlay-progress" class="scan-progress" hidden>
+          <div class="scan-bar"><div id="overlay-bar-fill"></div></div>
+          <p class="muted small" id="overlay-progress-note">Starting…</p>
+        </div>
+        <div id="overlay-results"></div>
+
+        <div class="overlay-applybar" id="restore-default-card">
+          <h3>Restore default Plex posters</h3>
+          <p class="muted small">Switches every top-level item (movies and shows) in a library back to its clean Plex agent poster — the provider poster, with <strong>no overlays baked in</strong>. The clean poster is put back as a fresh upload of the agent's own poster image (image-identical): merely re-selecting the agent poster does not update what Plex clients display, while a fresh upload does. Nothing is deleted: the current poster is backed up first (verified, in History), and the old uploaded image stays in Plex, just deselected. This card covers top-level items only; to put an item back on its own saved original — at any level — use Restore backed-up posters below.</p>
+          <div class="field-row">
+            <label class="field">Library
+              <select id="restore-section" class="input"></select>
+            </label>
+            <button class="btn secondary" id="btn-restore-count">Count</button>
+            <span class="muted small" id="restore-count-note"></span>
+          </div>
+          <p class="muted small" id="restore-load-note" hidden></p>
+          <div id="restore-confirm" hidden>
+            <span id="restore-confirm-text"></span>
+            <button class="btn primary small" id="btn-restore-start">Restore defaults</button>
+            <button class="btn ghost small" id="btn-restore-cancel">Cancel</button>
+          </div>
+          <div id="restore-progress" class="scan-progress" hidden>
+            <div class="scan-bar"><div id="restore-bar-fill"></div></div>
+            <p class="muted small" id="restore-progress-note">Starting…</p>
+          </div>
+          <div class="btn-row">
+            <button class="btn danger" id="btn-restore-cancel-run" hidden>Cancel</button>
+          </div>
+          <div id="restore-results"></div>
+        </div>
+        <div class="overlay-applybar" id="restore-backups-card">
+          <h3>Restore backed-up posters</h3>
+          <p class="muted small">Puts items back on the <strong>original poster saved before an overlay was applied</strong> — at any level: movies, shows, seasons, and episodes. Only items with a saved backup appear here; an item with no backup is never listed, and no provider poster is ever offered as a substitute original. Restores are recorded in History with their level.</p>
+          <div class="field-row">
+            <label class="field">Level
+              <select id="backup-level" class="input">
+                <option value="">All levels</option>
+                <option value="movie">Movies</option>
+                <option value="show">Shows</option>
+                <option value="season">Seasons</option>
+                <option value="episode">Episodes</option>
+              </select>
+            </label>
+            <button class="btn secondary" id="btn-backups-refresh">Refresh</button>
+            <button class="btn primary" id="btn-backups-restore-all">Restore all shown</button>
+            <span class="muted small" id="backups-note"></span>
+          </div>
+          <div id="backups-list"></div>
+          <div id="backups-results"></div>
+        </div>
+        <div class="overlay-applybar" id="leaving-card">
+          <h3>Leaving soon</h3>
+          <p class="muted small">Your own list of titles leaving this server, with the dates <strong>you</strong> set — the dates live in this app, not in Plex, and nothing reads them from anywhere else. The <strong>Leaving soon</strong> badge family (in the Studio) draws its banner from this list when overlays are applied: a badged poster shows the list <strong>as of apply time</strong>, so changing a date afterwards does not redraw posters already badged — re-apply to update them. Entries whose date has passed stay listed as expired until you remove them.</p>
+          <div class="field-row">
+            <label class="field">Leaving date
+              <input type="date" id="leaving-date" class="input">
+            </label>
+            <button class="btn secondary" id="btn-leaving-set-picked">Set on picked items</button>
+            <span class="muted small" id="leaving-picked-note"></span>
+          </div>
+          <div class="field-row">
+            <label class="field">Collection
+              <select id="leaving-collection" class="input"></select>
+            </label>
+            <button class="btn secondary" id="btn-leaving-set-collection">Set on whole collection</button>
+          </div>
+          <p class="muted small" id="leaving-load-note" hidden></p>
+          <div id="leaving-list"></div>
+        </div>
+      </div>
+
+      <!-- HISTORY VIEW -->
+      <div id="overlay-view-history" class="overlay-view" hidden>
+        <div class="btn-row">
+          <button class="btn secondary small" id="btn-overlay-reapply-check">Check for changed posters</button>
+          <span class="muted small">Detects posters Plex refreshed since overlays were applied.</span>
+        </div>
+        <div id="overlay-reapply"></div>
+        <div id="overlay-history"></div>
+      </div>
+    </section>
+
+    <section class="tab" id="tab-settings">
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">Configuration</p>
+          <h1>Settings</h1>
+          <p class="lede">Appearance, API keys and Advisor tuning. Keys are stored in Windows Credential Manager (or the encrypted fallback) — the UI never sees a value, only whether one is set.</p>
+        </div>
+      </header>
+      <div class="settings-cols">
+        <!-- Appearance / theme manager (v1.19). Cards + custom editor
+             are rendered by themes.js into these mounts; the theme
+             choice itself persists in the app's settings store. -->
+        <div class="panel" id="appearance-panel">
+          <h3>Appearance</h3>
+          <p class="muted small">Themes recolor the whole app — shell, panels, text, accents — and apply the moment you pick one. Your choice is saved in the app's settings, so it survives restarts. The Custom editor starts from whichever theme is active; edits apply live, and picking a color makes that surface solid.</p>
+          <div id="theme-cards" class="theme-cards"></div>
+          <div id="theme-editor"></div>
+          <p class="muted small" id="theme-status" aria-live="polite"></p>
+        </div>
+        <div class="panel">
+          <h3>API keys</h3>
+          <p class="muted small">IMDb has no public API — the "IMDb" rating comes from OMDb, labeled honestly wherever it appears.</p>
+          <div id="keys-list"></div>
+          <div class="key-row">
+            <div><strong>Trakt account</strong><p class="muted small">OAuth — needed for your watchlist. Client ID + secret above first.</p></div>
+            <div class="key-actions"><button class="btn secondary small" id="btn-trakt-oauth">Connect Trakt</button></div>
+          </div>
+          <label class="field">AI base URL <span class="hint">(OpenAI-compatible; default shown)</span>
+            <input id="ai-base-url" class="input" type="url" placeholder="https://api.openai.com/v1" autocomplete="off">
+          </label>
+          <label class="field">AI model <span class="hint">(must exist on the base URL above &mdash; e.g. gemini-2.0-flash for Google AI Studio)</span>
+            <input id="ai-model" class="input" type="text" placeholder="gpt-4o-mini" autocomplete="off" spellcheck="false">
+          </label>
+          <div class="btn-row">
+            <button class="btn primary small" id="btn-ai-save">Save</button>
+            <button class="btn secondary small" id="btn-ai-test">Test connection</button>
+          </div>
+          <div id="ai-test-result" class="ai-test-result" hidden></div>
+          <p class="muted small">The test sends a tiny prompt and shows the raw reply &mdash; or the exact error (HTTP status + response snippet) if it fails.</p>
+        </div>
+        <div class="panel">
+          <h3>Advisor tuning</h3>
+          <div id="advisor-settings-form"></div>
+        </div>
+        <div class="panel">
+          <h3>Cache &amp; history</h3>
+          <p class="muted small" id="cache-meta">Cache: —</p>
+          <div class="row-between">
+            <button class="btn secondary small" id="btn-clear-cache">Clear API cache</button>
+            <button class="btn ghost small" id="btn-reset-dismissals">Reset dismissed suggestions</button>
+          </div>
+          <p class="fineprint">Clearing the cache re-fetches TMDb/Trakt/OMDb data on the next scan (rate limits apply). Dismissals and drafts are never cleared by this.</p>
+        </div>
+        <div class="panel" id="backup-panel">
+          <h3>Backup &amp; restore</h3>
+          <p class="muted small">Export downloads one JSON file with your portable settings: appearance and custom theme, Advisor tuning, overlay templates, and Leaving Soon dates. It never includes your server choice, your sign-in, or cached art — those belong to this machine.</p>
+          <label class="check-row"><input type="checkbox" id="backup-include-keys"> Include API keys in the export</label>
+          <p class="muted small">Only check this if you need your keys on the new machine. Anyone who opens that file can read them — keep it private, and delete it after the move.</p>
+          <div class="btn-row">
+            <button class="btn secondary small" id="btn-backup-export">Export settings</button>
+          </div>
+          <p class="muted small">Import replaces your portable settings with the file's, adds or overwrites overlay templates by name, and replaces the Leaving Soon list. Your server choice and sign-in are never touched, even if the file mentions them.</p>
+          <div class="row-between">
+            <input class="input" type="file" id="backup-file" accept=".json,application/json">
+          </div>
+          <label class="check-row"><input type="checkbox" id="backup-import-keys"> Also import API keys from this file, if it contains any</label>
+          <div class="btn-row">
+            <button class="btn secondary small" id="btn-backup-import">Import settings</button>
+          </div>
+          <p class="muted small" id="backup-status" aria-live="polite"></p>
+        </div>
+        <div class="panel" id="support-panel">
+          <h3>Donate button</h3>
+          <p class="muted small">Shows a floating Ko-fi donate button (the Ko-fi overlay widget) in the corner of the app whenever the toggle is on, a username is set, and the widget script loads. Toggle off and no script loads at all; no username, or no internet, means no button — nothing breaks, nothing complains. The username is yours to change — a forker points it at their own Ko-fi.</p>
+          <label class="check-row"><input type="checkbox" id="donate-enabled" checked> Show donate button</label>
+          <label class="field">Ko-fi username
+            <input id="donate-username" class="input" type="text" placeholder="your-ko-fi-name" autocomplete="off" spellcheck="false">
+          </label>
+          <div class="btn-row">
+            <button class="btn secondary small" id="btn-donate-save">Save</button>
+          </div>
+          <p class="muted small" id="donate-status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Add-titles modal mount -->
+<div id="modal-root"></div>
+<!-- Toasts -->
+<div id="toast-root" aria-live="polite"></div>
+
+<script src="/session.js"></script>
+<script src="bridge.js"></script>
+<script src="themes.js"></script>
+<script src="app.js"></script>
+<script src="collection-art.js"></script>
+<script src="advisor.js"></script>
+<script src="composite.js"></script>
+<script src="overlays.js"></script>
+<script src="collections-manager.js"></script>
+<script src="poster-generator.js"></script>
+</body>
+</html>

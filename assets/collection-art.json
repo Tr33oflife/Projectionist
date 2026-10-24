@@ -1,0 +1,5551 @@
+{
+  "repository": "Kometa-Team/Default-Images",
+  "commit": "222a717e85e077a328ab0687b59441b2850c3124",
+  "checked": "2026-10-19",
+  "items": [
+    {
+      "title": "1,001 To See Before You Die",
+      "category": "chart",
+      "path": "chart/color/1,001 To See Before You Die.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "AFI 100 Years 100 Movies",
+      "category": "chart",
+      "path": "chart/color/AFI 100 Years 100 Movies.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "AniDB Popular",
+      "category": "chart",
+      "path": "chart/color/AniDB Popular.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "AniList Popular",
+      "category": "chart",
+      "path": "chart/color/AniList Popular.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "AniList Season",
+      "category": "chart",
+      "path": "chart/color/AniList Season.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "AniList Top Rated",
+      "category": "chart",
+      "path": "chart/color/AniList Top Rated.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "AniList Trending",
+      "category": "chart",
+      "path": "chart/color/AniList Trending.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Box Office Mojo All Time 100",
+      "category": "chart",
+      "path": "chart/color/Box Office Mojo All Time 100.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Cannes Palme d'Or Winners",
+      "category": "chart",
+      "path": "chart/color/Cannes Palme d'Or Winners.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Common Sense Selection",
+      "category": "chart",
+      "path": "chart/color/Common Sense Selection.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Edgar Wright's 1,000 Favorites",
+      "category": "chart",
+      "path": "chart/color/Edgar Wright's 1,000 Favorites.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "IMDb Bottom Rated",
+      "category": "chart",
+      "path": "chart/color/IMDb Bottom Rated.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "IMDb Box Office",
+      "category": "chart",
+      "path": "chart/color/IMDb Box Office.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "IMDb Lowest Rated",
+      "category": "chart",
+      "path": "chart/color/IMDb Lowest Rated.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "IMDb Popular",
+      "category": "chart",
+      "path": "chart/color/IMDb Popular.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "IMDb Top 250 (Letterboxd)",
+      "category": "chart",
+      "path": "chart/color/IMDb Top 250 (Letterboxd).jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "IMDb Top 250",
+      "category": "chart",
+      "path": "chart/color/IMDb Top 250.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Letterboxd Top 250",
+      "category": "chart",
+      "path": "chart/color/Letterboxd Top 250.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Letterboxd Top 500",
+      "category": "chart",
+      "path": "chart/color/Letterboxd Top 500.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Metacritic Must See",
+      "category": "chart",
+      "path": "chart/color/Metacritic Must See.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mojo Top 100",
+      "category": "chart",
+      "path": "chart/color/Mojo Top 100.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Must See Movies",
+      "category": "chart",
+      "path": "chart/color/Must See Movies.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Must See Shows",
+      "category": "chart",
+      "path": "chart/color/Must See Shows.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Must Watch Movies",
+      "category": "chart",
+      "path": "chart/color/Must Watch Movies.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Must Watch Shows",
+      "category": "chart",
+      "path": "chart/color/Must Watch Shows.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "My Personal Movie Picks",
+      "category": "chart",
+      "path": "chart/color/My Personal Movie Picks.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "My Personal Show Picks",
+      "category": "chart",
+      "path": "chart/color/My Personal Show Picks.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "MyAnimeList Favorited",
+      "category": "chart",
+      "path": "chart/color/MyAnimeList Favorited.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "MyAnimeList Popular",
+      "category": "chart",
+      "path": "chart/color/MyAnimeList Popular.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "MyAnimeList Season",
+      "category": "chart",
+      "path": "chart/color/MyAnimeList Season.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "MyAnimeList Top Airing",
+      "category": "chart",
+      "path": "chart/color/MyAnimeList Top Airing.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "MyAnimeList Top Rated",
+      "category": "chart",
+      "path": "chart/color/MyAnimeList Top Rated.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "New Episodes",
+      "category": "chart",
+      "path": "chart/color/New Episodes.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "New Premieres",
+      "category": "chart",
+      "path": "chart/color/New Premieres.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Newly Released Episodes",
+      "category": "chart",
+      "path": "chart/color/Newly Released Episodes.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Newly Released",
+      "category": "chart",
+      "path": "chart/color/Newly Released.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Next Airing",
+      "category": "chart",
+      "path": "chart/color/Next Airing.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "One Million Watched Club",
+      "category": "chart",
+      "path": "chart/color/One Million Watched Club.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Oscar Best Picture Winners",
+      "category": "chart",
+      "path": "chart/color/Oscar Best Picture Winners.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Pilots",
+      "category": "chart",
+      "path": "chart/color/Pilots.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Plex Episodes Leaving Soon",
+      "category": "chart",
+      "path": "chart/color/Plex Episodes Leaving Soon.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Plex Movies Leaving Soon",
+      "category": "chart",
+      "path": "chart/color/Plex Movies Leaving Soon.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Plex People Watching",
+      "category": "chart",
+      "path": "chart/color/Plex People Watching.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Plex Pilots",
+      "category": "chart",
+      "path": "chart/color/Plex Pilots.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Plex Popular",
+      "category": "chart",
+      "path": "chart/color/Plex Popular.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Plex Random",
+      "category": "chart",
+      "path": "chart/color/Plex Random.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Plex Shows Leaving Soon",
+      "category": "chart",
+      "path": "chart/color/Plex Shows Leaving Soon.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Plex Watched",
+      "category": "chart",
+      "path": "chart/color/Plex Watched.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "RT Certified Fresh",
+      "category": "chart",
+      "path": "chart/color/RT Certified Fresh.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "RT Rated 100",
+      "category": "chart",
+      "path": "chart/color/RT Rated 100.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Recently Added",
+      "category": "chart",
+      "path": "chart/color/Recently Added.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Recently Aired",
+      "category": "chart",
+      "path": "chart/color/Recently Aired.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Returning Soon",
+      "category": "chart",
+      "path": "chart/color/Returning Soon.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Roger Ebert's Great Movies",
+      "category": "chart",
+      "path": "chart/color/Roger Ebert's Great Movies.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Sight & Sound Greatest Films",
+      "category": "chart",
+      "path": "chart/color/Sight & Sound Greatest Films.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Simkl DVD",
+      "category": "chart",
+      "path": "chart/color/Simkl DVD.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Simkl Trending This Month",
+      "category": "chart",
+      "path": "chart/color/Simkl Trending This Month.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Simkl Trending This Week",
+      "category": "chart",
+      "path": "chart/color/Simkl Trending This Week.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Simkl Trending Today",
+      "category": "chart",
+      "path": "chart/color/Simkl Trending Today.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "StevenLu's Popular Movies",
+      "category": "chart",
+      "path": "chart/color/StevenLu's Popular Movies.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "TMDb Airing Today",
+      "category": "chart",
+      "path": "chart/color/TMDb Airing Today.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "TMDb Now Playing",
+      "category": "chart",
+      "path": "chart/color/TMDb Now Playing.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "TMDb On The Air",
+      "category": "chart",
+      "path": "chart/color/TMDb On The Air.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "TMDb Popular",
+      "category": "chart",
+      "path": "chart/color/TMDb Popular.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "TMDb Top Rated",
+      "category": "chart",
+      "path": "chart/color/TMDb Top Rated.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "TMDb Trending",
+      "category": "chart",
+      "path": "chart/color/TMDb Trending.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Tautulli Popular",
+      "category": "chart",
+      "path": "chart/color/Tautulli Popular.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Tautulli Watched",
+      "category": "chart",
+      "path": "chart/color/Tautulli Watched.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "This Day in History",
+      "category": "chart",
+      "path": "chart/color/This Day in History.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "This Month in History",
+      "category": "chart",
+      "path": "chart/color/This Month in History.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "This Week in History",
+      "category": "chart",
+      "path": "chart/color/This Week in History.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 10 Pirated Movies of the Week",
+      "category": "chart",
+      "path": "chart/color/Top 10 Pirated Movies of the Week.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 100 Animation",
+      "category": "chart",
+      "path": "chart/color/Top 100 Animation.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 100 Black-Directed",
+      "category": "chart",
+      "path": "chart/color/Top 100 Black-Directed.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 100 Silent Films",
+      "category": "chart",
+      "path": "chart/color/Top 100 Silent Films.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 100 Western Films",
+      "category": "chart",
+      "path": "chart/color/Top 100 Western Films.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 250 Animation",
+      "category": "chart",
+      "path": "chart/color/Top 250 Animation.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 250 Black-Directed",
+      "category": "chart",
+      "path": "chart/color/Top 250 Black-Directed.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 250 Documentaries",
+      "category": "chart",
+      "path": "chart/color/Top 250 Documentaries.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 250 Horror",
+      "category": "chart",
+      "path": "chart/color/Top 250 Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 250 International",
+      "category": "chart",
+      "path": "chart/color/Top 250 International.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 250 Most Fans",
+      "category": "chart",
+      "path": "chart/color/Top 250 Most Fans.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 250 Sci-Fi Films",
+      "category": "chart",
+      "path": "chart/color/Top 250 Sci-Fi Films.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top 250 Women-Directed",
+      "category": "chart",
+      "path": "chart/color/Top 250 Women-Directed.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Tracearr Binged",
+      "category": "chart",
+      "path": "chart/color/Tracearr Binged.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Tracearr Completed",
+      "category": "chart",
+      "path": "chart/color/Tracearr Completed.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Tracearr Most Transcoded",
+      "category": "chart",
+      "path": "chart/color/Tracearr Most Transcoded.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Tracearr Popular",
+      "category": "chart",
+      "path": "chart/color/Tracearr Popular.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Tracearr Rewatched",
+      "category": "chart",
+      "path": "chart/color/Tracearr Rewatched.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Tracearr Trending",
+      "category": "chart",
+      "path": "chart/color/Tracearr Trending.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Tracearr Watched",
+      "category": "chart",
+      "path": "chart/color/Tracearr Watched.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Trakt Collected",
+      "category": "chart",
+      "path": "chart/color/Trakt Collected.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Trakt Now Playing",
+      "category": "chart",
+      "path": "chart/color/Trakt Now Playing.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Trakt Popular",
+      "category": "chart",
+      "path": "chart/color/Trakt Popular.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Trakt Recommended",
+      "category": "chart",
+      "path": "chart/color/Trakt Recommended.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Trakt Trending",
+      "category": "chart",
+      "path": "chart/color/Trakt Trending.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Trakt Watched",
+      "category": "chart",
+      "path": "chart/color/Trakt Watched.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Trakt Watchlist",
+      "category": "chart",
+      "path": "chart/color/Trakt Watchlist.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_1",
+      "category": "chart",
+      "path": "chart/color/amc+_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_10",
+      "category": "chart",
+      "path": "chart/color/amc+_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_11",
+      "category": "chart",
+      "path": "chart/color/amc+_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_12",
+      "category": "chart",
+      "path": "chart/color/amc+_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_13",
+      "category": "chart",
+      "path": "chart/color/amc+_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_14",
+      "category": "chart",
+      "path": "chart/color/amc+_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_15",
+      "category": "chart",
+      "path": "chart/color/amc+_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_16",
+      "category": "chart",
+      "path": "chart/color/amc+_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_17",
+      "category": "chart",
+      "path": "chart/color/amc+_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_18",
+      "category": "chart",
+      "path": "chart/color/amc+_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_19",
+      "category": "chart",
+      "path": "chart/color/amc+_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_2",
+      "category": "chart",
+      "path": "chart/color/amc+_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_20",
+      "category": "chart",
+      "path": "chart/color/amc+_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_21",
+      "category": "chart",
+      "path": "chart/color/amc+_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_22",
+      "category": "chart",
+      "path": "chart/color/amc+_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_23",
+      "category": "chart",
+      "path": "chart/color/amc+_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_24",
+      "category": "chart",
+      "path": "chart/color/amc+_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_25",
+      "category": "chart",
+      "path": "chart/color/amc+_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_26",
+      "category": "chart",
+      "path": "chart/color/amc+_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_27",
+      "category": "chart",
+      "path": "chart/color/amc+_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_28",
+      "category": "chart",
+      "path": "chart/color/amc+_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_29",
+      "category": "chart",
+      "path": "chart/color/amc+_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_3",
+      "category": "chart",
+      "path": "chart/color/amc+_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_30",
+      "category": "chart",
+      "path": "chart/color/amc+_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_4",
+      "category": "chart",
+      "path": "chart/color/amc+_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_5",
+      "category": "chart",
+      "path": "chart/color/amc+_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_6",
+      "category": "chart",
+      "path": "chart/color/amc+_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_7",
+      "category": "chart",
+      "path": "chart/color/amc+_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_8",
+      "category": "chart",
+      "path": "chart/color/amc+_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "amc+_top_9",
+      "category": "chart",
+      "path": "chart/color/amc+_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top",
+      "category": "chart",
+      "path": "chart/color/apple_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_1",
+      "category": "chart",
+      "path": "chart/color/apple_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_10",
+      "category": "chart",
+      "path": "chart/color/apple_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_11",
+      "category": "chart",
+      "path": "chart/color/apple_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_12",
+      "category": "chart",
+      "path": "chart/color/apple_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_13",
+      "category": "chart",
+      "path": "chart/color/apple_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_14",
+      "category": "chart",
+      "path": "chart/color/apple_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_15",
+      "category": "chart",
+      "path": "chart/color/apple_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_16",
+      "category": "chart",
+      "path": "chart/color/apple_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_17",
+      "category": "chart",
+      "path": "chart/color/apple_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_18",
+      "category": "chart",
+      "path": "chart/color/apple_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_19",
+      "category": "chart",
+      "path": "chart/color/apple_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_2",
+      "category": "chart",
+      "path": "chart/color/apple_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_20",
+      "category": "chart",
+      "path": "chart/color/apple_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_21",
+      "category": "chart",
+      "path": "chart/color/apple_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_22",
+      "category": "chart",
+      "path": "chart/color/apple_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_23",
+      "category": "chart",
+      "path": "chart/color/apple_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_24",
+      "category": "chart",
+      "path": "chart/color/apple_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_25",
+      "category": "chart",
+      "path": "chart/color/apple_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_26",
+      "category": "chart",
+      "path": "chart/color/apple_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_27",
+      "category": "chart",
+      "path": "chart/color/apple_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_28",
+      "category": "chart",
+      "path": "chart/color/apple_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_29",
+      "category": "chart",
+      "path": "chart/color/apple_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_3",
+      "category": "chart",
+      "path": "chart/color/apple_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_30",
+      "category": "chart",
+      "path": "chart/color/apple_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_4",
+      "category": "chart",
+      "path": "chart/color/apple_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_5",
+      "category": "chart",
+      "path": "chart/color/apple_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_6",
+      "category": "chart",
+      "path": "chart/color/apple_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_7",
+      "category": "chart",
+      "path": "chart/color/apple_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_8",
+      "category": "chart",
+      "path": "chart/color/apple_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "apple_top_9",
+      "category": "chart",
+      "path": "chart/color/apple_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top",
+      "category": "chart",
+      "path": "chart/color/disney_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_1",
+      "category": "chart",
+      "path": "chart/color/disney_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_10",
+      "category": "chart",
+      "path": "chart/color/disney_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_11",
+      "category": "chart",
+      "path": "chart/color/disney_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_12",
+      "category": "chart",
+      "path": "chart/color/disney_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_13",
+      "category": "chart",
+      "path": "chart/color/disney_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_14",
+      "category": "chart",
+      "path": "chart/color/disney_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_15",
+      "category": "chart",
+      "path": "chart/color/disney_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_16",
+      "category": "chart",
+      "path": "chart/color/disney_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_17",
+      "category": "chart",
+      "path": "chart/color/disney_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_18",
+      "category": "chart",
+      "path": "chart/color/disney_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_19",
+      "category": "chart",
+      "path": "chart/color/disney_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_2",
+      "category": "chart",
+      "path": "chart/color/disney_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_20",
+      "category": "chart",
+      "path": "chart/color/disney_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_21",
+      "category": "chart",
+      "path": "chart/color/disney_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_22",
+      "category": "chart",
+      "path": "chart/color/disney_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_23",
+      "category": "chart",
+      "path": "chart/color/disney_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_24",
+      "category": "chart",
+      "path": "chart/color/disney_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_25",
+      "category": "chart",
+      "path": "chart/color/disney_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_26",
+      "category": "chart",
+      "path": "chart/color/disney_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_27",
+      "category": "chart",
+      "path": "chart/color/disney_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_28",
+      "category": "chart",
+      "path": "chart/color/disney_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_29",
+      "category": "chart",
+      "path": "chart/color/disney_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_3",
+      "category": "chart",
+      "path": "chart/color/disney_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_30",
+      "category": "chart",
+      "path": "chart/color/disney_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_4",
+      "category": "chart",
+      "path": "chart/color/disney_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_5",
+      "category": "chart",
+      "path": "chart/color/disney_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_6",
+      "category": "chart",
+      "path": "chart/color/disney_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_7",
+      "category": "chart",
+      "path": "chart/color/disney_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_8",
+      "category": "chart",
+      "path": "chart/color/disney_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "disney_top_9",
+      "category": "chart",
+      "path": "chart/color/disney_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top",
+      "category": "chart",
+      "path": "chart/color/google_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_1",
+      "category": "chart",
+      "path": "chart/color/google_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_10",
+      "category": "chart",
+      "path": "chart/color/google_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_11",
+      "category": "chart",
+      "path": "chart/color/google_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_12",
+      "category": "chart",
+      "path": "chart/color/google_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_13",
+      "category": "chart",
+      "path": "chart/color/google_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_14",
+      "category": "chart",
+      "path": "chart/color/google_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_15",
+      "category": "chart",
+      "path": "chart/color/google_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_16",
+      "category": "chart",
+      "path": "chart/color/google_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_17",
+      "category": "chart",
+      "path": "chart/color/google_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_18",
+      "category": "chart",
+      "path": "chart/color/google_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_19",
+      "category": "chart",
+      "path": "chart/color/google_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_2",
+      "category": "chart",
+      "path": "chart/color/google_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_20",
+      "category": "chart",
+      "path": "chart/color/google_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_21",
+      "category": "chart",
+      "path": "chart/color/google_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_22",
+      "category": "chart",
+      "path": "chart/color/google_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_23",
+      "category": "chart",
+      "path": "chart/color/google_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_24",
+      "category": "chart",
+      "path": "chart/color/google_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_25",
+      "category": "chart",
+      "path": "chart/color/google_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_26",
+      "category": "chart",
+      "path": "chart/color/google_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_27",
+      "category": "chart",
+      "path": "chart/color/google_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_28",
+      "category": "chart",
+      "path": "chart/color/google_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_29",
+      "category": "chart",
+      "path": "chart/color/google_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_3",
+      "category": "chart",
+      "path": "chart/color/google_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_30",
+      "category": "chart",
+      "path": "chart/color/google_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_4",
+      "category": "chart",
+      "path": "chart/color/google_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_5",
+      "category": "chart",
+      "path": "chart/color/google_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_6",
+      "category": "chart",
+      "path": "chart/color/google_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_7",
+      "category": "chart",
+      "path": "chart/color/google_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_8",
+      "category": "chart",
+      "path": "chart/color/google_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "google_top_9",
+      "category": "chart",
+      "path": "chart/color/google_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top",
+      "category": "chart",
+      "path": "chart/color/hbo_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_1",
+      "category": "chart",
+      "path": "chart/color/hbo_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_10",
+      "category": "chart",
+      "path": "chart/color/hbo_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_11",
+      "category": "chart",
+      "path": "chart/color/hbo_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_12",
+      "category": "chart",
+      "path": "chart/color/hbo_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_13",
+      "category": "chart",
+      "path": "chart/color/hbo_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_14",
+      "category": "chart",
+      "path": "chart/color/hbo_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_15",
+      "category": "chart",
+      "path": "chart/color/hbo_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_16",
+      "category": "chart",
+      "path": "chart/color/hbo_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_17",
+      "category": "chart",
+      "path": "chart/color/hbo_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_18",
+      "category": "chart",
+      "path": "chart/color/hbo_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_19",
+      "category": "chart",
+      "path": "chart/color/hbo_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_2",
+      "category": "chart",
+      "path": "chart/color/hbo_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_20",
+      "category": "chart",
+      "path": "chart/color/hbo_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_21",
+      "category": "chart",
+      "path": "chart/color/hbo_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_22",
+      "category": "chart",
+      "path": "chart/color/hbo_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_23",
+      "category": "chart",
+      "path": "chart/color/hbo_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_24",
+      "category": "chart",
+      "path": "chart/color/hbo_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_25",
+      "category": "chart",
+      "path": "chart/color/hbo_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_26",
+      "category": "chart",
+      "path": "chart/color/hbo_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_27",
+      "category": "chart",
+      "path": "chart/color/hbo_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_28",
+      "category": "chart",
+      "path": "chart/color/hbo_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_29",
+      "category": "chart",
+      "path": "chart/color/hbo_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_3",
+      "category": "chart",
+      "path": "chart/color/hbo_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_30",
+      "category": "chart",
+      "path": "chart/color/hbo_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_4",
+      "category": "chart",
+      "path": "chart/color/hbo_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_5",
+      "category": "chart",
+      "path": "chart/color/hbo_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_6",
+      "category": "chart",
+      "path": "chart/color/hbo_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_7",
+      "category": "chart",
+      "path": "chart/color/hbo_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_8",
+      "category": "chart",
+      "path": "chart/color/hbo_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hbo_top_9",
+      "category": "chart",
+      "path": "chart/color/hbo_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top",
+      "category": "chart",
+      "path": "chart/color/hulu_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_1",
+      "category": "chart",
+      "path": "chart/color/hulu_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_10",
+      "category": "chart",
+      "path": "chart/color/hulu_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_11",
+      "category": "chart",
+      "path": "chart/color/hulu_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_12",
+      "category": "chart",
+      "path": "chart/color/hulu_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_13",
+      "category": "chart",
+      "path": "chart/color/hulu_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_14",
+      "category": "chart",
+      "path": "chart/color/hulu_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_15",
+      "category": "chart",
+      "path": "chart/color/hulu_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_16",
+      "category": "chart",
+      "path": "chart/color/hulu_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_17",
+      "category": "chart",
+      "path": "chart/color/hulu_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_18",
+      "category": "chart",
+      "path": "chart/color/hulu_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_19",
+      "category": "chart",
+      "path": "chart/color/hulu_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_2",
+      "category": "chart",
+      "path": "chart/color/hulu_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_20",
+      "category": "chart",
+      "path": "chart/color/hulu_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_21",
+      "category": "chart",
+      "path": "chart/color/hulu_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_22",
+      "category": "chart",
+      "path": "chart/color/hulu_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_23",
+      "category": "chart",
+      "path": "chart/color/hulu_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_24",
+      "category": "chart",
+      "path": "chart/color/hulu_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_25",
+      "category": "chart",
+      "path": "chart/color/hulu_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_26",
+      "category": "chart",
+      "path": "chart/color/hulu_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_27",
+      "category": "chart",
+      "path": "chart/color/hulu_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_28",
+      "category": "chart",
+      "path": "chart/color/hulu_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_29",
+      "category": "chart",
+      "path": "chart/color/hulu_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_3",
+      "category": "chart",
+      "path": "chart/color/hulu_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_30",
+      "category": "chart",
+      "path": "chart/color/hulu_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_4",
+      "category": "chart",
+      "path": "chart/color/hulu_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_5",
+      "category": "chart",
+      "path": "chart/color/hulu_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_6",
+      "category": "chart",
+      "path": "chart/color/hulu_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_7",
+      "category": "chart",
+      "path": "chart/color/hulu_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_8",
+      "category": "chart",
+      "path": "chart/color/hulu_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "hulu_top_9",
+      "category": "chart",
+      "path": "chart/color/hulu_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top",
+      "category": "chart",
+      "path": "chart/color/imdb_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_1",
+      "category": "chart",
+      "path": "chart/color/imdb_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_10",
+      "category": "chart",
+      "path": "chart/color/imdb_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_11",
+      "category": "chart",
+      "path": "chart/color/imdb_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_12",
+      "category": "chart",
+      "path": "chart/color/imdb_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_13",
+      "category": "chart",
+      "path": "chart/color/imdb_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_14",
+      "category": "chart",
+      "path": "chart/color/imdb_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_15",
+      "category": "chart",
+      "path": "chart/color/imdb_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_16",
+      "category": "chart",
+      "path": "chart/color/imdb_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_17",
+      "category": "chart",
+      "path": "chart/color/imdb_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_18",
+      "category": "chart",
+      "path": "chart/color/imdb_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_19",
+      "category": "chart",
+      "path": "chart/color/imdb_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_2",
+      "category": "chart",
+      "path": "chart/color/imdb_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_20",
+      "category": "chart",
+      "path": "chart/color/imdb_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_21",
+      "category": "chart",
+      "path": "chart/color/imdb_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_22",
+      "category": "chart",
+      "path": "chart/color/imdb_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_23",
+      "category": "chart",
+      "path": "chart/color/imdb_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_24",
+      "category": "chart",
+      "path": "chart/color/imdb_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_25",
+      "category": "chart",
+      "path": "chart/color/imdb_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_26",
+      "category": "chart",
+      "path": "chart/color/imdb_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_27",
+      "category": "chart",
+      "path": "chart/color/imdb_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_28",
+      "category": "chart",
+      "path": "chart/color/imdb_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_29",
+      "category": "chart",
+      "path": "chart/color/imdb_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_3",
+      "category": "chart",
+      "path": "chart/color/imdb_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_30",
+      "category": "chart",
+      "path": "chart/color/imdb_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_4",
+      "category": "chart",
+      "path": "chart/color/imdb_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_5",
+      "category": "chart",
+      "path": "chart/color/imdb_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_6",
+      "category": "chart",
+      "path": "chart/color/imdb_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_7",
+      "category": "chart",
+      "path": "chart/color/imdb_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_8",
+      "category": "chart",
+      "path": "chart/color/imdb_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "imdb_top_9",
+      "category": "chart",
+      "path": "chart/color/imdb_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top",
+      "category": "chart",
+      "path": "chart/color/itunes_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_1",
+      "category": "chart",
+      "path": "chart/color/itunes_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_10",
+      "category": "chart",
+      "path": "chart/color/itunes_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_11",
+      "category": "chart",
+      "path": "chart/color/itunes_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_12",
+      "category": "chart",
+      "path": "chart/color/itunes_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_13",
+      "category": "chart",
+      "path": "chart/color/itunes_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_14",
+      "category": "chart",
+      "path": "chart/color/itunes_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_15",
+      "category": "chart",
+      "path": "chart/color/itunes_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_16",
+      "category": "chart",
+      "path": "chart/color/itunes_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_17",
+      "category": "chart",
+      "path": "chart/color/itunes_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_18",
+      "category": "chart",
+      "path": "chart/color/itunes_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_19",
+      "category": "chart",
+      "path": "chart/color/itunes_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_2",
+      "category": "chart",
+      "path": "chart/color/itunes_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_20",
+      "category": "chart",
+      "path": "chart/color/itunes_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_21",
+      "category": "chart",
+      "path": "chart/color/itunes_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_22",
+      "category": "chart",
+      "path": "chart/color/itunes_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_23",
+      "category": "chart",
+      "path": "chart/color/itunes_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_24",
+      "category": "chart",
+      "path": "chart/color/itunes_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_25",
+      "category": "chart",
+      "path": "chart/color/itunes_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_26",
+      "category": "chart",
+      "path": "chart/color/itunes_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_27",
+      "category": "chart",
+      "path": "chart/color/itunes_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_28",
+      "category": "chart",
+      "path": "chart/color/itunes_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_29",
+      "category": "chart",
+      "path": "chart/color/itunes_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_3",
+      "category": "chart",
+      "path": "chart/color/itunes_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_30",
+      "category": "chart",
+      "path": "chart/color/itunes_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_4",
+      "category": "chart",
+      "path": "chart/color/itunes_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_5",
+      "category": "chart",
+      "path": "chart/color/itunes_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_6",
+      "category": "chart",
+      "path": "chart/color/itunes_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_7",
+      "category": "chart",
+      "path": "chart/color/itunes_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_8",
+      "category": "chart",
+      "path": "chart/color/itunes_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "itunes_top_9",
+      "category": "chart",
+      "path": "chart/color/itunes_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top",
+      "category": "chart",
+      "path": "chart/color/max_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_1",
+      "category": "chart",
+      "path": "chart/color/max_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_10",
+      "category": "chart",
+      "path": "chart/color/max_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_11",
+      "category": "chart",
+      "path": "chart/color/max_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_12",
+      "category": "chart",
+      "path": "chart/color/max_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_13",
+      "category": "chart",
+      "path": "chart/color/max_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_14",
+      "category": "chart",
+      "path": "chart/color/max_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_15",
+      "category": "chart",
+      "path": "chart/color/max_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_16",
+      "category": "chart",
+      "path": "chart/color/max_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_17",
+      "category": "chart",
+      "path": "chart/color/max_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_18",
+      "category": "chart",
+      "path": "chart/color/max_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_19",
+      "category": "chart",
+      "path": "chart/color/max_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_2",
+      "category": "chart",
+      "path": "chart/color/max_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_20",
+      "category": "chart",
+      "path": "chart/color/max_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_21",
+      "category": "chart",
+      "path": "chart/color/max_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_22",
+      "category": "chart",
+      "path": "chart/color/max_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_23",
+      "category": "chart",
+      "path": "chart/color/max_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_24",
+      "category": "chart",
+      "path": "chart/color/max_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_25",
+      "category": "chart",
+      "path": "chart/color/max_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_26",
+      "category": "chart",
+      "path": "chart/color/max_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_27",
+      "category": "chart",
+      "path": "chart/color/max_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_28",
+      "category": "chart",
+      "path": "chart/color/max_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_29",
+      "category": "chart",
+      "path": "chart/color/max_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_3",
+      "category": "chart",
+      "path": "chart/color/max_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_30",
+      "category": "chart",
+      "path": "chart/color/max_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_4",
+      "category": "chart",
+      "path": "chart/color/max_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_5",
+      "category": "chart",
+      "path": "chart/color/max_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_6",
+      "category": "chart",
+      "path": "chart/color/max_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_7",
+      "category": "chart",
+      "path": "chart/color/max_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_8",
+      "category": "chart",
+      "path": "chart/color/max_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "max_top_9",
+      "category": "chart",
+      "path": "chart/color/max_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top",
+      "category": "chart",
+      "path": "chart/color/netflix_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_1",
+      "category": "chart",
+      "path": "chart/color/netflix_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_10",
+      "category": "chart",
+      "path": "chart/color/netflix_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_11",
+      "category": "chart",
+      "path": "chart/color/netflix_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_12",
+      "category": "chart",
+      "path": "chart/color/netflix_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_13",
+      "category": "chart",
+      "path": "chart/color/netflix_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_14",
+      "category": "chart",
+      "path": "chart/color/netflix_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_15",
+      "category": "chart",
+      "path": "chart/color/netflix_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_16",
+      "category": "chart",
+      "path": "chart/color/netflix_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_17",
+      "category": "chart",
+      "path": "chart/color/netflix_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_18",
+      "category": "chart",
+      "path": "chart/color/netflix_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_19",
+      "category": "chart",
+      "path": "chart/color/netflix_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_2",
+      "category": "chart",
+      "path": "chart/color/netflix_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_20",
+      "category": "chart",
+      "path": "chart/color/netflix_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_21",
+      "category": "chart",
+      "path": "chart/color/netflix_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_22",
+      "category": "chart",
+      "path": "chart/color/netflix_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_23",
+      "category": "chart",
+      "path": "chart/color/netflix_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_24",
+      "category": "chart",
+      "path": "chart/color/netflix_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_25",
+      "category": "chart",
+      "path": "chart/color/netflix_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_26",
+      "category": "chart",
+      "path": "chart/color/netflix_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_27",
+      "category": "chart",
+      "path": "chart/color/netflix_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_28",
+      "category": "chart",
+      "path": "chart/color/netflix_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_29",
+      "category": "chart",
+      "path": "chart/color/netflix_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_3",
+      "category": "chart",
+      "path": "chart/color/netflix_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_30",
+      "category": "chart",
+      "path": "chart/color/netflix_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_4",
+      "category": "chart",
+      "path": "chart/color/netflix_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_5",
+      "category": "chart",
+      "path": "chart/color/netflix_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_6",
+      "category": "chart",
+      "path": "chart/color/netflix_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_7",
+      "category": "chart",
+      "path": "chart/color/netflix_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_8",
+      "category": "chart",
+      "path": "chart/color/netflix_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "netflix_top_9",
+      "category": "chart",
+      "path": "chart/color/netflix_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top",
+      "category": "chart",
+      "path": "chart/color/paramount_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_1",
+      "category": "chart",
+      "path": "chart/color/paramount_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_10",
+      "category": "chart",
+      "path": "chart/color/paramount_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_11",
+      "category": "chart",
+      "path": "chart/color/paramount_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_12",
+      "category": "chart",
+      "path": "chart/color/paramount_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_13",
+      "category": "chart",
+      "path": "chart/color/paramount_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_14",
+      "category": "chart",
+      "path": "chart/color/paramount_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_15",
+      "category": "chart",
+      "path": "chart/color/paramount_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_16",
+      "category": "chart",
+      "path": "chart/color/paramount_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_17",
+      "category": "chart",
+      "path": "chart/color/paramount_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_18",
+      "category": "chart",
+      "path": "chart/color/paramount_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_19",
+      "category": "chart",
+      "path": "chart/color/paramount_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_2",
+      "category": "chart",
+      "path": "chart/color/paramount_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_20",
+      "category": "chart",
+      "path": "chart/color/paramount_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_21",
+      "category": "chart",
+      "path": "chart/color/paramount_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_22",
+      "category": "chart",
+      "path": "chart/color/paramount_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_23",
+      "category": "chart",
+      "path": "chart/color/paramount_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_24",
+      "category": "chart",
+      "path": "chart/color/paramount_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_25",
+      "category": "chart",
+      "path": "chart/color/paramount_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_26",
+      "category": "chart",
+      "path": "chart/color/paramount_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_27",
+      "category": "chart",
+      "path": "chart/color/paramount_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_28",
+      "category": "chart",
+      "path": "chart/color/paramount_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_29",
+      "category": "chart",
+      "path": "chart/color/paramount_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_3",
+      "category": "chart",
+      "path": "chart/color/paramount_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_30",
+      "category": "chart",
+      "path": "chart/color/paramount_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_4",
+      "category": "chart",
+      "path": "chart/color/paramount_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_5",
+      "category": "chart",
+      "path": "chart/color/paramount_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_6",
+      "category": "chart",
+      "path": "chart/color/paramount_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_7",
+      "category": "chart",
+      "path": "chart/color/paramount_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_8",
+      "category": "chart",
+      "path": "chart/color/paramount_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "paramount_top_9",
+      "category": "chart",
+      "path": "chart/color/paramount_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_1",
+      "category": "chart",
+      "path": "chart/color/peacock_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_10",
+      "category": "chart",
+      "path": "chart/color/peacock_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_11",
+      "category": "chart",
+      "path": "chart/color/peacock_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_12",
+      "category": "chart",
+      "path": "chart/color/peacock_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_13",
+      "category": "chart",
+      "path": "chart/color/peacock_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_14",
+      "category": "chart",
+      "path": "chart/color/peacock_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_15",
+      "category": "chart",
+      "path": "chart/color/peacock_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_16",
+      "category": "chart",
+      "path": "chart/color/peacock_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_17",
+      "category": "chart",
+      "path": "chart/color/peacock_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_18",
+      "category": "chart",
+      "path": "chart/color/peacock_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_19",
+      "category": "chart",
+      "path": "chart/color/peacock_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_2",
+      "category": "chart",
+      "path": "chart/color/peacock_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_20",
+      "category": "chart",
+      "path": "chart/color/peacock_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_21",
+      "category": "chart",
+      "path": "chart/color/peacock_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_22",
+      "category": "chart",
+      "path": "chart/color/peacock_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_23",
+      "category": "chart",
+      "path": "chart/color/peacock_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_24",
+      "category": "chart",
+      "path": "chart/color/peacock_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_25",
+      "category": "chart",
+      "path": "chart/color/peacock_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_26",
+      "category": "chart",
+      "path": "chart/color/peacock_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_27",
+      "category": "chart",
+      "path": "chart/color/peacock_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_28",
+      "category": "chart",
+      "path": "chart/color/peacock_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_29",
+      "category": "chart",
+      "path": "chart/color/peacock_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_3",
+      "category": "chart",
+      "path": "chart/color/peacock_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_30",
+      "category": "chart",
+      "path": "chart/color/peacock_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_4",
+      "category": "chart",
+      "path": "chart/color/peacock_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_5",
+      "category": "chart",
+      "path": "chart/color/peacock_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_6",
+      "category": "chart",
+      "path": "chart/color/peacock_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_7",
+      "category": "chart",
+      "path": "chart/color/peacock_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_8",
+      "category": "chart",
+      "path": "chart/color/peacock_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "peacock_top_9",
+      "category": "chart",
+      "path": "chart/color/peacock_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top",
+      "category": "chart",
+      "path": "chart/color/prime_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_1",
+      "category": "chart",
+      "path": "chart/color/prime_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_10",
+      "category": "chart",
+      "path": "chart/color/prime_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_11",
+      "category": "chart",
+      "path": "chart/color/prime_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_12",
+      "category": "chart",
+      "path": "chart/color/prime_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_13",
+      "category": "chart",
+      "path": "chart/color/prime_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_14",
+      "category": "chart",
+      "path": "chart/color/prime_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_15",
+      "category": "chart",
+      "path": "chart/color/prime_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_16",
+      "category": "chart",
+      "path": "chart/color/prime_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_17",
+      "category": "chart",
+      "path": "chart/color/prime_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_18",
+      "category": "chart",
+      "path": "chart/color/prime_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_19",
+      "category": "chart",
+      "path": "chart/color/prime_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_2",
+      "category": "chart",
+      "path": "chart/color/prime_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_20",
+      "category": "chart",
+      "path": "chart/color/prime_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_21",
+      "category": "chart",
+      "path": "chart/color/prime_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_22",
+      "category": "chart",
+      "path": "chart/color/prime_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_23",
+      "category": "chart",
+      "path": "chart/color/prime_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_24",
+      "category": "chart",
+      "path": "chart/color/prime_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_25",
+      "category": "chart",
+      "path": "chart/color/prime_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_26",
+      "category": "chart",
+      "path": "chart/color/prime_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_27",
+      "category": "chart",
+      "path": "chart/color/prime_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_28",
+      "category": "chart",
+      "path": "chart/color/prime_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_29",
+      "category": "chart",
+      "path": "chart/color/prime_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_3",
+      "category": "chart",
+      "path": "chart/color/prime_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_30",
+      "category": "chart",
+      "path": "chart/color/prime_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_4",
+      "category": "chart",
+      "path": "chart/color/prime_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_5",
+      "category": "chart",
+      "path": "chart/color/prime_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_6",
+      "category": "chart",
+      "path": "chart/color/prime_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_7",
+      "category": "chart",
+      "path": "chart/color/prime_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_8",
+      "category": "chart",
+      "path": "chart/color/prime_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "prime_top_9",
+      "category": "chart",
+      "path": "chart/color/prime_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top",
+      "category": "chart",
+      "path": "chart/color/star_plus_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_1",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_10",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_11",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_12",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_13",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_14",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_15",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_16",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_17",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_18",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_19",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_2",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_20",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_21",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_22",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_23",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_24",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_25",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_26",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_27",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_28",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_29",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_3",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_30",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_4",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_5",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_6",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_7",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_8",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "star_plus_top_9",
+      "category": "chart",
+      "path": "chart/color/star_plus_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_1",
+      "category": "chart",
+      "path": "chart/color/starz_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_10",
+      "category": "chart",
+      "path": "chart/color/starz_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_11",
+      "category": "chart",
+      "path": "chart/color/starz_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_12",
+      "category": "chart",
+      "path": "chart/color/starz_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_13",
+      "category": "chart",
+      "path": "chart/color/starz_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_14",
+      "category": "chart",
+      "path": "chart/color/starz_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_15",
+      "category": "chart",
+      "path": "chart/color/starz_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_16",
+      "category": "chart",
+      "path": "chart/color/starz_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_17",
+      "category": "chart",
+      "path": "chart/color/starz_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_18",
+      "category": "chart",
+      "path": "chart/color/starz_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_19",
+      "category": "chart",
+      "path": "chart/color/starz_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_2",
+      "category": "chart",
+      "path": "chart/color/starz_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_20",
+      "category": "chart",
+      "path": "chart/color/starz_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_21",
+      "category": "chart",
+      "path": "chart/color/starz_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_22",
+      "category": "chart",
+      "path": "chart/color/starz_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_23",
+      "category": "chart",
+      "path": "chart/color/starz_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_24",
+      "category": "chart",
+      "path": "chart/color/starz_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_25",
+      "category": "chart",
+      "path": "chart/color/starz_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_26",
+      "category": "chart",
+      "path": "chart/color/starz_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_27",
+      "category": "chart",
+      "path": "chart/color/starz_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_28",
+      "category": "chart",
+      "path": "chart/color/starz_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_29",
+      "category": "chart",
+      "path": "chart/color/starz_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_3",
+      "category": "chart",
+      "path": "chart/color/starz_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_30",
+      "category": "chart",
+      "path": "chart/color/starz_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_4",
+      "category": "chart",
+      "path": "chart/color/starz_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_5",
+      "category": "chart",
+      "path": "chart/color/starz_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_6",
+      "category": "chart",
+      "path": "chart/color/starz_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_7",
+      "category": "chart",
+      "path": "chart/color/starz_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_8",
+      "category": "chart",
+      "path": "chart/color/starz_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "starz_top_9",
+      "category": "chart",
+      "path": "chart/color/starz_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top",
+      "category": "chart",
+      "path": "chart/color/vudu_top.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_1",
+      "category": "chart",
+      "path": "chart/color/vudu_top_1.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_10",
+      "category": "chart",
+      "path": "chart/color/vudu_top_10.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_11",
+      "category": "chart",
+      "path": "chart/color/vudu_top_11.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_12",
+      "category": "chart",
+      "path": "chart/color/vudu_top_12.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_13",
+      "category": "chart",
+      "path": "chart/color/vudu_top_13.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_14",
+      "category": "chart",
+      "path": "chart/color/vudu_top_14.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_15",
+      "category": "chart",
+      "path": "chart/color/vudu_top_15.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_16",
+      "category": "chart",
+      "path": "chart/color/vudu_top_16.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_17",
+      "category": "chart",
+      "path": "chart/color/vudu_top_17.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_18",
+      "category": "chart",
+      "path": "chart/color/vudu_top_18.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_19",
+      "category": "chart",
+      "path": "chart/color/vudu_top_19.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_2",
+      "category": "chart",
+      "path": "chart/color/vudu_top_2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_20",
+      "category": "chart",
+      "path": "chart/color/vudu_top_20.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_21",
+      "category": "chart",
+      "path": "chart/color/vudu_top_21.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_22",
+      "category": "chart",
+      "path": "chart/color/vudu_top_22.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_23",
+      "category": "chart",
+      "path": "chart/color/vudu_top_23.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_24",
+      "category": "chart",
+      "path": "chart/color/vudu_top_24.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_25",
+      "category": "chart",
+      "path": "chart/color/vudu_top_25.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_26",
+      "category": "chart",
+      "path": "chart/color/vudu_top_26.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_27",
+      "category": "chart",
+      "path": "chart/color/vudu_top_27.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_28",
+      "category": "chart",
+      "path": "chart/color/vudu_top_28.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_29",
+      "category": "chart",
+      "path": "chart/color/vudu_top_29.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_3",
+      "category": "chart",
+      "path": "chart/color/vudu_top_3.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_30",
+      "category": "chart",
+      "path": "chart/color/vudu_top_30.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_4",
+      "category": "chart",
+      "path": "chart/color/vudu_top_4.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_5",
+      "category": "chart",
+      "path": "chart/color/vudu_top_5.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_6",
+      "category": "chart",
+      "path": "chart/color/vudu_top_6.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_7",
+      "category": "chart",
+      "path": "chart/color/vudu_top_7.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_8",
+      "category": "chart",
+      "path": "chart/color/vudu_top_8.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "vudu_top_9",
+      "category": "chart",
+      "path": "chart/color/vudu_top_9.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1880s",
+      "category": "decade",
+      "path": "decade/1880.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1890s",
+      "category": "decade",
+      "path": "decade/1890.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1900s",
+      "category": "decade",
+      "path": "decade/1900.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1910s",
+      "category": "decade",
+      "path": "decade/1910.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1920s",
+      "category": "decade",
+      "path": "decade/1920.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1930s",
+      "category": "decade",
+      "path": "decade/1930.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1940s",
+      "category": "decade",
+      "path": "decade/1940.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1950s",
+      "category": "decade",
+      "path": "decade/1950.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1960s",
+      "category": "decade",
+      "path": "decade/1960.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1970s",
+      "category": "decade",
+      "path": "decade/1970.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1980s",
+      "category": "decade",
+      "path": "decade/1980.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1990s",
+      "category": "decade",
+      "path": "decade/1990.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "2000s",
+      "category": "decade",
+      "path": "decade/2000.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "2010s",
+      "category": "decade",
+      "path": "decade/2010.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "2020s",
+      "category": "decade",
+      "path": "decade/2020.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "1001 Movies You Must See Before You Die",
+      "category": "genre",
+      "path": "genre/1001 Movies You Must See Before You Die.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Absurd Comedy",
+      "category": "genre",
+      "path": "genre/Absurd Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Absurdism",
+      "category": "genre",
+      "path": "genre/Absurdism.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Action & Adventure",
+      "category": "genre",
+      "path": "genre/Action & Adventure.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Action Comedy",
+      "category": "genre",
+      "path": "genre/Action Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Action",
+      "category": "genre",
+      "path": "genre/Action.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Adult Cartoon",
+      "category": "genre",
+      "path": "genre/Adult Cartoon.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Adult Cartoons",
+      "category": "genre",
+      "path": "genre/Adult Cartoons.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Adult",
+      "category": "genre",
+      "path": "genre/Adult.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Adventure",
+      "category": "genre",
+      "path": "genre/Adventure.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Alien",
+      "category": "genre",
+      "path": "genre/Alien.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Alternate History",
+      "category": "genre",
+      "path": "genre/Alternate History.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "America",
+      "category": "genre",
+      "path": "genre/America.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Animal",
+      "category": "genre",
+      "path": "genre/Animal.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Animals",
+      "category": "genre",
+      "path": "genre/Animals.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Animated Short",
+      "category": "genre",
+      "path": "genre/Animated Short.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Animated Shorts",
+      "category": "genre",
+      "path": "genre/Animated Shorts.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Animation",
+      "category": "genre",
+      "path": "genre/Animation.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Anime",
+      "category": "genre",
+      "path": "genre/Anime.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Anthology",
+      "category": "genre",
+      "path": "genre/Anthology.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Anti-Hero",
+      "category": "genre",
+      "path": "genre/Anti-Hero.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Apocalypse",
+      "category": "genre",
+      "path": "genre/Apocalypse.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Arthouse",
+      "category": "genre",
+      "path": "genre/Arthouse.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Artificial Intelligence",
+      "category": "genre",
+      "path": "genre/Artificial Intelligence.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Assassin",
+      "category": "genre",
+      "path": "genre/Assassin.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Astronaut",
+      "category": "genre",
+      "path": "genre/Astronaut.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Award Shows",
+      "category": "genre",
+      "path": "genre/Award Shows.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Backroads Horror",
+      "category": "genre",
+      "path": "genre/Backroads Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Betrayal",
+      "category": "genre",
+      "path": "genre/Betrayal.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Biography",
+      "category": "genre",
+      "path": "genre/Biography.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Biopic",
+      "category": "genre",
+      "path": "genre/Biopic.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Blaxploitation",
+      "category": "genre",
+      "path": "genre/Blaxploitation.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Body Horror",
+      "category": "genre",
+      "path": "genre/Body Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Bottle",
+      "category": "genre",
+      "path": "genre/Bottle.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Boxing",
+      "category": "genre",
+      "path": "genre/Boxing.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Boys Love",
+      "category": "genre",
+      "path": "genre/Boys Love.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Buddy Comedy",
+      "category": "genre",
+      "path": "genre/Buddy Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Bug",
+      "category": "genre",
+      "path": "genre/Bug.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Building",
+      "category": "genre",
+      "path": "genre/Building.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Cannibal",
+      "category": "genre",
+      "path": "genre/Cannibal.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Caper",
+      "category": "genre",
+      "path": "genre/Caper.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Cars",
+      "category": "genre",
+      "path": "genre/Cars.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Chick Flick",
+      "category": "genre",
+      "path": "genre/Chick Flick.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Children's Cartoon",
+      "category": "genre",
+      "path": "genre/Children's Cartoon.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Children's Cartoons",
+      "category": "genre",
+      "path": "genre/Children's Cartoons.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Children",
+      "category": "genre",
+      "path": "genre/Children.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Christmas",
+      "category": "genre",
+      "path": "genre/Christmas.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Colorado",
+      "category": "genre",
+      "path": "genre/Colorado.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Comedy Horror",
+      "category": "genre",
+      "path": "genre/Comedy Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Comedy",
+      "category": "genre",
+      "path": "genre/Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Coming of Age",
+      "category": "genre",
+      "path": "genre/Coming of Age.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Competition",
+      "category": "genre",
+      "path": "genre/Competition.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Con Artist",
+      "category": "genre",
+      "path": "genre/Con Artist.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Conspiracy",
+      "category": "genre",
+      "path": "genre/Conspiracy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Cop",
+      "category": "genre",
+      "path": "genre/Cop.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Costume Drama",
+      "category": "genre",
+      "path": "genre/Costume Drama.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Courtroom",
+      "category": "genre",
+      "path": "genre/Courtroom.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Creature Feature",
+      "category": "genre",
+      "path": "genre/Creature Feature.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Creature Horror",
+      "category": "genre",
+      "path": "genre/Creature Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Crime Comedy",
+      "category": "genre",
+      "path": "genre/Crime Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Crime",
+      "category": "genre",
+      "path": "genre/Crime.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Criterion Collection",
+      "category": "genre",
+      "path": "genre/Criterion Collection.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Cult Classics",
+      "category": "genre",
+      "path": "genre/Cult Classics.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Cyber-Thriller",
+      "category": "genre",
+      "path": "genre/Cyber-Thriller.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Cyberpunk",
+      "category": "genre",
+      "path": "genre/Cyberpunk.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Dark Comedy",
+      "category": "genre",
+      "path": "genre/Dark Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Dark Fantasy",
+      "category": "genre",
+      "path": "genre/Dark Fantasy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Demons",
+      "category": "genre",
+      "path": "genre/Demons.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Detective",
+      "category": "genre",
+      "path": "genre/Detective.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Dinosaur",
+      "category": "genre",
+      "path": "genre/Dinosaur.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Dinosaurs",
+      "category": "genre",
+      "path": "genre/Dinosaurs.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Disney Pixar Dreamworks",
+      "category": "genre",
+      "path": "genre/Disney Pixar Dreamworks.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Disney",
+      "category": "genre",
+      "path": "genre/Disney.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Documentary",
+      "category": "genre",
+      "path": "genre/Documentary.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Dragon",
+      "category": "genre",
+      "path": "genre/Dragon.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Drama",
+      "category": "genre",
+      "path": "genre/Drama.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Dramedy",
+      "category": "genre",
+      "path": "genre/Dramedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Dreamworks",
+      "category": "genre",
+      "path": "genre/Dreamworks.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Dystopian",
+      "category": "genre",
+      "path": "genre/Dystopian.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Ecchi",
+      "category": "genre",
+      "path": "genre/Ecchi.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Elevated Horror",
+      "category": "genre",
+      "path": "genre/Elevated Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Engineering Disaster",
+      "category": "genre",
+      "path": "genre/Engineering Disaster.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Engineering Disasters",
+      "category": "genre",
+      "path": "genre/Engineering Disasters.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Engineering",
+      "category": "genre",
+      "path": "genre/Engineering.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Epic",
+      "category": "genre",
+      "path": "genre/Epic.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Erotica",
+      "category": "genre",
+      "path": "genre/Erotica.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Espionage",
+      "category": "genre",
+      "path": "genre/Espionage.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Experimental",
+      "category": "genre",
+      "path": "genre/Experimental.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Exploitation",
+      "category": "genre",
+      "path": "genre/Exploitation.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Extreme",
+      "category": "genre",
+      "path": "genre/Extreme.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Fairy Tale",
+      "category": "genre",
+      "path": "genre/Fairy Tale.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Family",
+      "category": "genre",
+      "path": "genre/Family.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Fantasy Horror",
+      "category": "genre",
+      "path": "genre/Fantasy Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Fantasy",
+      "category": "genre",
+      "path": "genre/Fantasy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Film Noir",
+      "category": "genre",
+      "path": "genre/Film Noir.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "First Responder",
+      "category": "genre",
+      "path": "genre/First Responder.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Folk Horror",
+      "category": "genre",
+      "path": "genre/Folk Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Food",
+      "category": "genre",
+      "path": "genre/Food.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Football",
+      "category": "genre",
+      "path": "genre/Football.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Foreign Giallo",
+      "category": "genre",
+      "path": "genre/Foreign Giallo.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Foreign Noir",
+      "category": "genre",
+      "path": "genre/Foreign Noir.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Foreign",
+      "category": "genre",
+      "path": "genre/Foreign.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Found Footage Horror",
+      "category": "genre",
+      "path": "genre/Found Footage Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Found Footage",
+      "category": "genre",
+      "path": "genre/Found Footage.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Fringe",
+      "category": "genre",
+      "path": "genre/Fringe.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Fugitive",
+      "category": "genre",
+      "path": "genre/Fugitive.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Funny Sci-Fi",
+      "category": "genre",
+      "path": "genre/Funny Sci-Fi.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Gaijinsploitation",
+      "category": "genre",
+      "path": "genre/Gaijinsploitation.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Game Show",
+      "category": "genre",
+      "path": "genre/Game Show.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Game",
+      "category": "genre",
+      "path": "genre/Game.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Gangster",
+      "category": "genre",
+      "path": "genre/Gangster.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Ghost",
+      "category": "genre",
+      "path": "genre/Ghost.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Girls Love",
+      "category": "genre",
+      "path": "genre/Girls Love.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Gothic",
+      "category": "genre",
+      "path": "genre/Gothic.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Gourmet",
+      "category": "genre",
+      "path": "genre/Gourmet.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Guilty Pleasure",
+      "category": "genre",
+      "path": "genre/Guilty Pleasure.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Harem",
+      "category": "genre",
+      "path": "genre/Harem.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Heartbreak",
+      "category": "genre",
+      "path": "genre/Heartbreak.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Heist",
+      "category": "genre",
+      "path": "genre/Heist.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Hentai",
+      "category": "genre",
+      "path": "genre/Hentai.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Historical Event",
+      "category": "genre",
+      "path": "genre/Historical Event.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Historical Fiction",
+      "category": "genre",
+      "path": "genre/Historical Fiction.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "History",
+      "category": "genre",
+      "path": "genre/History.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Home and Garden",
+      "category": "genre",
+      "path": "genre/Home and Garden.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Horror Parody",
+      "category": "genre",
+      "path": "genre/Horror Parody.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Horror",
+      "category": "genre",
+      "path": "genre/Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Hostage",
+      "category": "genre",
+      "path": "genre/Hostage.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Human Body",
+      "category": "genre",
+      "path": "genre/Human Body.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Hustle",
+      "category": "genre",
+      "path": "genre/Hustle.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Indie",
+      "category": "genre",
+      "path": "genre/Indie.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Inspirational",
+      "category": "genre",
+      "path": "genre/Inspirational.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Jungle Adventure",
+      "category": "genre",
+      "path": "genre/Jungle Adventure.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Kids",
+      "category": "genre",
+      "path": "genre/Kids.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "LGBTQ+",
+      "category": "genre",
+      "path": "genre/LGBTQ+.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Lost Treasure",
+      "category": "genre",
+      "path": "genre/Lost Treasure.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Louisiana",
+      "category": "genre",
+      "path": "genre/Louisiana.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Lovecraftian",
+      "category": "genre",
+      "path": "genre/Lovecraftian.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "MMA",
+      "category": "genre",
+      "path": "genre/MMA.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Manufacturing",
+      "category": "genre",
+      "path": "genre/Manufacturing.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Martial Arts",
+      "category": "genre",
+      "path": "genre/Martial Arts.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "May the Fourth",
+      "category": "genre",
+      "path": "genre/May the Fourth.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mecha",
+      "category": "genre",
+      "path": "genre/Mecha.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Medical",
+      "category": "genre",
+      "path": "genre/Medical.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Medieval",
+      "category": "genre",
+      "path": "genre/Medieval.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Melodrama",
+      "category": "genre",
+      "path": "genre/Melodrama.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Military",
+      "category": "genre",
+      "path": "genre/Military.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mind-Bend",
+      "category": "genre",
+      "path": "genre/Mind-Bend.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mind-Fuck",
+      "category": "genre",
+      "path": "genre/Mind-Fuck.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mind-Fuck2",
+      "category": "genre",
+      "path": "genre/Mind-Fuck2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mini-Series",
+      "category": "genre",
+      "path": "genre/Mini-Series.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mockumentary",
+      "category": "genre",
+      "path": "genre/Mockumentary.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Monster",
+      "category": "genre",
+      "path": "genre/Monster.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Movies That Defined Our Childhood",
+      "category": "genre",
+      "path": "genre/Movies That Defined Our Childhood.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Music",
+      "category": "genre",
+      "path": "genre/Music.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Musical",
+      "category": "genre",
+      "path": "genre/Musical.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mystery Box",
+      "category": "genre",
+      "path": "genre/Mystery Box.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mystery",
+      "category": "genre",
+      "path": "genre/Mystery.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mythology",
+      "category": "genre",
+      "path": "genre/Mythology.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Natural Disaster",
+      "category": "genre",
+      "path": "genre/Natural Disaster.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Nature",
+      "category": "genre",
+      "path": "genre/Nature.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Naval",
+      "category": "genre",
+      "path": "genre/Naval.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Neo-Noir",
+      "category": "genre",
+      "path": "genre/Neo-Noir.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "New Years Eve",
+      "category": "genre",
+      "path": "genre/New Years Eve.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "News & Politics",
+      "category": "genre",
+      "path": "genre/News & Politics.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "News",
+      "category": "genre",
+      "path": "genre/News.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Ninja",
+      "category": "genre",
+      "path": "genre/Ninja.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Occult",
+      "category": "genre",
+      "path": "genre/Occult.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Outdoor Adventure",
+      "category": "genre",
+      "path": "genre/Outdoor Adventure.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Outlaw",
+      "category": "genre",
+      "path": "genre/Outlaw.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Pandemic",
+      "category": "genre",
+      "path": "genre/Pandemic.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Paranormal",
+      "category": "genre",
+      "path": "genre/Paranormal.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Parody",
+      "category": "genre",
+      "path": "genre/Parody.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Period Drama",
+      "category": "genre",
+      "path": "genre/Period Drama.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Philosophy",
+      "category": "genre",
+      "path": "genre/Philosophy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Pinku",
+      "category": "genre",
+      "path": "genre/Pinku.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Pixar",
+      "category": "genre",
+      "path": "genre/Pixar.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Plant",
+      "category": "genre",
+      "path": "genre/Plant.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Plants",
+      "category": "genre",
+      "path": "genre/Plants.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Police",
+      "category": "genre",
+      "path": "genre/Police.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Politics",
+      "category": "genre",
+      "path": "genre/Politics.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Post-Apocalyptic",
+      "category": "genre",
+      "path": "genre/Post-Apocalyptic.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Prehistoric",
+      "category": "genre",
+      "path": "genre/Prehistoric.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "President",
+      "category": "genre",
+      "path": "genre/President.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Prison",
+      "category": "genre",
+      "path": "genre/Prison.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Psychedelic",
+      "category": "genre",
+      "path": "genre/Psychedelic.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Psychological Horror",
+      "category": "genre",
+      "path": "genre/Psychological Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Psychological",
+      "category": "genre",
+      "path": "genre/Psychological.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Reality",
+      "category": "genre",
+      "path": "genre/Reality.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Religion",
+      "category": "genre",
+      "path": "genre/Religion.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Remake",
+      "category": "genre",
+      "path": "genre/Remake.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Revenge",
+      "category": "genre",
+      "path": "genre/Revenge.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Robot",
+      "category": "genre",
+      "path": "genre/Robot.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Romance",
+      "category": "genre",
+      "path": "genre/Romance.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Romantic Comedy",
+      "category": "genre",
+      "path": "genre/Romantic Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Romantic Drama",
+      "category": "genre",
+      "path": "genre/Romantic Drama.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Samurai",
+      "category": "genre",
+      "path": "genre/Samurai.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Satire",
+      "category": "genre",
+      "path": "genre/Satire.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "School",
+      "category": "genre",
+      "path": "genre/School.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Sci-Fi & Fantasy",
+      "category": "genre",
+      "path": "genre/Sci-Fi & Fantasy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Sci-Fi Horror",
+      "category": "genre",
+      "path": "genre/Sci-Fi Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Science Fiction",
+      "category": "genre",
+      "path": "genre/Science Fiction.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Seductive",
+      "category": "genre",
+      "path": "genre/Seductive.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Serial Killer",
+      "category": "genre",
+      "path": "genre/Serial Killer.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Sexploitation",
+      "category": "genre",
+      "path": "genre/Sexploitation.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Short",
+      "category": "genre",
+      "path": "genre/Short.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Shoujo",
+      "category": "genre",
+      "path": "genre/Shoujo.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Shounen",
+      "category": "genre",
+      "path": "genre/Shounen.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Silent",
+      "category": "genre",
+      "path": "genre/Silent.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Silent2",
+      "category": "genre",
+      "path": "genre/Silent2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Sinister Screens",
+      "category": "genre",
+      "path": "genre/Sinister Screens.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Slapstick",
+      "category": "genre",
+      "path": "genre/Slapstick.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Slasher",
+      "category": "genre",
+      "path": "genre/Slasher.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Sleazy",
+      "category": "genre",
+      "path": "genre/Sleazy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Slice of Life",
+      "category": "genre",
+      "path": "genre/Slice of Life.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Soap",
+      "category": "genre",
+      "path": "genre/Soap.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Space Opera",
+      "category": "genre",
+      "path": "genre/Space Opera.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Space",
+      "category": "genre",
+      "path": "genre/Space.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Spaghetti Western",
+      "category": "genre",
+      "path": "genre/Spaghetti Western.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Splatter",
+      "category": "genre",
+      "path": "genre/Splatter.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Sport",
+      "category": "genre",
+      "path": "genre/Sport.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Spy",
+      "category": "genre",
+      "path": "genre/Spy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Stand-Up Comedy",
+      "category": "genre",
+      "path": "genre/Stand-Up Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Steampunk",
+      "category": "genre",
+      "path": "genre/Steampunk.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Stephen King",
+      "category": "genre",
+      "path": "genre/Stephen King.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Stoner Comedy",
+      "category": "genre",
+      "path": "genre/Stoner Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Stop-Motion",
+      "category": "genre",
+      "path": "genre/Stop-Motion.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Super Power",
+      "category": "genre",
+      "path": "genre/Super Power.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Superhero",
+      "category": "genre",
+      "path": "genre/Superhero.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Supernatural",
+      "category": "genre",
+      "path": "genre/Supernatural.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Surreal Comedy",
+      "category": "genre",
+      "path": "genre/Surreal Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Surreal Horror",
+      "category": "genre",
+      "path": "genre/Surreal Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Surreal",
+      "category": "genre",
+      "path": "genre/Surreal.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Surrealism",
+      "category": "genre",
+      "path": "genre/Surrealism.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Survival",
+      "category": "genre",
+      "path": "genre/Survival.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Suspense",
+      "category": "genre",
+      "path": "genre/Suspense.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Swashbuckler",
+      "category": "genre",
+      "path": "genre/Swashbuckler.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Sword & Sandal",
+      "category": "genre",
+      "path": "genre/Sword & Sandal.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Sword & Sorcery",
+      "category": "genre",
+      "path": "genre/Sword & Sorcery.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "TV Movie",
+      "category": "genre",
+      "path": "genre/TV Movie.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Talk Show",
+      "category": "genre",
+      "path": "genre/Talk Show.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Technology",
+      "category": "genre",
+      "path": "genre/Technology.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "The Arts",
+      "category": "genre",
+      "path": "genre/The Arts.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Thriller",
+      "category": "genre",
+      "path": "genre/Thriller.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Time Loop",
+      "category": "genre",
+      "path": "genre/Time Loop.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Time Travel",
+      "category": "genre",
+      "path": "genre/Time Travel.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top Grossing Films Annually",
+      "category": "genre",
+      "path": "genre/Top Grossing Films Annually.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Top Grossing Films of All-Time",
+      "category": "genre",
+      "path": "genre/Top Grossing Films of All-Time.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Trains",
+      "category": "genre",
+      "path": "genre/Trains.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Travel",
+      "category": "genre",
+      "path": "genre/Travel.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Treasure Hunt",
+      "category": "genre",
+      "path": "genre/Treasure Hunt.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "True Crime",
+      "category": "genre",
+      "path": "genre/True Crime.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Ufo",
+      "category": "genre",
+      "path": "genre/Ufo.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Ultimate Bass",
+      "category": "genre",
+      "path": "genre/Ultimate Bass.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Unexpectedly Amazing",
+      "category": "genre",
+      "path": "genre/Unexpectedly Amazing.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Urban Fantasy",
+      "category": "genre",
+      "path": "genre/Urban Fantasy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Utopia",
+      "category": "genre",
+      "path": "genre/Utopia.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Vampire",
+      "category": "genre",
+      "path": "genre/Vampire.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Video Game",
+      "category": "genre",
+      "path": "genre/Video Game.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Video Nasty",
+      "category": "genre",
+      "path": "genre/Video Nasty.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Visually Insane",
+      "category": "genre",
+      "path": "genre/Visually Insane.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "War & Politics",
+      "category": "genre",
+      "path": "genre/War & Politics.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "War",
+      "category": "genre",
+      "path": "genre/War.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Weather",
+      "category": "genre",
+      "path": "genre/Weather.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Wedding",
+      "category": "genre",
+      "path": "genre/Wedding.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Werewolf",
+      "category": "genre",
+      "path": "genre/Werewolf.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Western",
+      "category": "genre",
+      "path": "genre/Western.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Whodunit",
+      "category": "genre",
+      "path": "genre/Whodunit.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Witch",
+      "category": "genre",
+      "path": "genre/Witch.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Wizardry & Witchcraft",
+      "category": "genre",
+      "path": "genre/Wizardry & Witchcraft.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "World War",
+      "category": "genre",
+      "path": "genre/World War.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Wuxia",
+      "category": "genre",
+      "path": "genre/Wuxia.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Zombie Comedy",
+      "category": "genre",
+      "path": "genre/Zombie Comedy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Zombie Horror",
+      "category": "genre",
+      "path": "genre/Zombie Horror.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Zombie",
+      "category": "genre",
+      "path": "genre/Zombie.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "other",
+      "category": "genre",
+      "path": "genre/other.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "420",
+      "category": "seasonal",
+      "path": "seasonal/420.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Aapi",
+      "category": "seasonal",
+      "path": "seasonal/aapi.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Black History",
+      "category": "seasonal",
+      "path": "seasonal/black_history.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Black History2",
+      "category": "seasonal",
+      "path": "seasonal/black_history2.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Christmas",
+      "category": "seasonal",
+      "path": "seasonal/christmas.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Christmas Cartoons",
+      "category": "seasonal",
+      "path": "seasonal/christmas_cartoons.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Christmas Episodes",
+      "category": "seasonal",
+      "path": "seasonal/christmas_episodes.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Disabilities",
+      "category": "seasonal",
+      "path": "seasonal/disabilities.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Easter",
+      "category": "seasonal",
+      "path": "seasonal/easter.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Father",
+      "category": "seasonal",
+      "path": "seasonal/father.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Halloween",
+      "category": "seasonal",
+      "path": "seasonal/halloween.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Independence",
+      "category": "seasonal",
+      "path": "seasonal/independence.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Labor",
+      "category": "seasonal",
+      "path": "seasonal/labor.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Latinx",
+      "category": "seasonal",
+      "path": "seasonal/latinx.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Lgbtq",
+      "category": "seasonal",
+      "path": "seasonal/lgbtq.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Memorial",
+      "category": "seasonal",
+      "path": "seasonal/memorial.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Mother",
+      "category": "seasonal",
+      "path": "seasonal/mother.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Patrick",
+      "category": "seasonal",
+      "path": "seasonal/patrick.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Thanksgiving",
+      "category": "seasonal",
+      "path": "seasonal/thanksgiving.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Valentine",
+      "category": "seasonal",
+      "path": "seasonal/valentine.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Veteran",
+      "category": "seasonal",
+      "path": "seasonal/veteran.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Women",
+      "category": "seasonal",
+      "path": "seasonal/women.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Years",
+      "category": "seasonal",
+      "path": "seasonal/years.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Arrowverse",
+      "category": "universe",
+      "path": "universe/arrow.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "View Askewniverse",
+      "category": "universe",
+      "path": "universe/askew.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Alien vs Predator",
+      "category": "universe",
+      "path": "universe/avp.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "The Conjuring",
+      "category": "universe",
+      "path": "universe/conjuring.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "DC Animated Universe",
+      "category": "universe",
+      "path": "universe/dca.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "DC Extended Universe",
+      "category": "universe",
+      "path": "universe/dceu.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "DC Universe",
+      "category": "universe",
+      "path": "universe/dcu.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Fast and Furious",
+      "category": "universe",
+      "path": "universe/fast.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Marvel",
+      "category": "universe",
+      "path": "universe/marvel.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Marvel Cinematic Universe",
+      "category": "universe",
+      "path": "universe/mcu.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Middle Earth",
+      "category": "universe",
+      "path": "universe/middle.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Monsterverse",
+      "category": "universe",
+      "path": "universe/monsterverse.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "The Mummy",
+      "category": "universe",
+      "path": "universe/mummy.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Rocky",
+      "category": "universe",
+      "path": "universe/rocky.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Star (1)",
+      "category": "universe",
+      "path": "universe/star (1).jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Star",
+      "category": "universe",
+      "path": "universe/star.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Starsky",
+      "category": "universe",
+      "path": "universe/starsky.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Trek",
+      "category": "universe",
+      "path": "universe/trek.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Wizard",
+      "category": "universe",
+      "path": "universe/wizard.jpg",
+      "source": "Kometa Default Images"
+    },
+    {
+      "title": "Xmen",
+      "category": "universe",
+      "path": "universe/xmen.jpg",
+      "source": "Kometa Default Images"
+    }
+  ]
+}
