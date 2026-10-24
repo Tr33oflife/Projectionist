@@ -747,6 +747,30 @@ func (s *Server) handleAdvisorSuggestions(w http.ResponseWriter, r *http.Request
 			valid = append(valid, c)
 		}
 	}
+	// v1.25: bundle-kind cards are suppressed when a near-duplicate
+	// collection already exists (Jaccard >= 0.8, the AI mechanism).
+	// A failed collections fetch degrades to NO dedupe rather than
+	// failing the whole suggestions view — unlike the AI endpoint,
+	// this is the Advisor's main list, and a collections hiccup must
+	// not cost the owner every suggestion. One collection's members
+	// failing degrades that collection to title-only, as in AI.
+	existing := make([]advisor.ExistingCollection, 0)
+	for _, section := range scan.Sections {
+		colls, cerr := s.plexClient.GetCollections(r.Context(), server, section.Key)
+		if cerr != nil {
+			continue
+		}
+		for _, c := range colls {
+			ec := advisor.ExistingCollection{Title: c.Title}
+			if items, ierr := s.plexClient.GetCollectionItems(r.Context(), server, c.RatingKey); ierr == nil {
+				for _, it := range items {
+					ec.Keys = append(ec.Keys, it.RatingKey)
+				}
+			}
+			existing = append(existing, ec)
+		}
+	}
+	valid = advisor.DedupeCovered(valid, existing)
 	ok(w, envelope{"cards": valid, "topLists": topLists})
 }
 

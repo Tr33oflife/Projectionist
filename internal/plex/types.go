@@ -154,21 +154,26 @@ type Tags struct {
 // FUTURE AI: keep the raw Guids — normalizeItem drops them, and the TMDb
 // join in the advisor needs them.
 type LibraryItem struct {
-	RatingKey     string   `json:"ratingKey"`
-	Title         string   `json:"title"`
-	Year          *int     `json:"year"`
-	Type          string   `json:"type"`
-	Guids         []string `json:"guids"`
-	ViewCount     int      `json:"viewCount"`
-	ViewOffset    int      `json:"viewOffset"`
-	ChildCount    int      `json:"childCount"`
-	Thumb         string   `json:"thumb"`
-	AddedAt       int64    `json:"addedAt"`
-	PlexRating    *float64 `json:"plexRating"`
-	DurationMin   *int     `json:"durationMin"`
-	SectionKey    string   `json:"sectionKey"`
-	Tags          Tags     `json:"tags"`
-	ContentRating string   `json:"contentRating"`
+	RatingKey  string   `json:"ratingKey"`
+	Title      string   `json:"title"`
+	Year       *int     `json:"year"`
+	Type       string   `json:"type"`
+	Guids      []string `json:"guids"`
+	ViewCount  int      `json:"viewCount"`
+	ViewOffset int      `json:"viewOffset"`
+	ChildCount int      `json:"childCount"`
+	Thumb      string   `json:"thumb"`
+	AddedAt    int64    `json:"addedAt"`
+	PlexRating *float64 `json:"plexRating"`
+	// v1.25: Plex audience score (the `audienceRating` field on /all),
+	// nil when Plex does not report one. Powers the Advisor's
+	// critics-vs-audiences divergence generator; generators that need
+	// it skip items where it is missing, exactly like PlexRating.
+	AudienceRating *float64 `json:"audienceRating"`
+	DurationMin    *int     `json:"durationMin"`
+	SectionKey     string   `json:"sectionKey"`
+	Tags           Tags     `json:"tags"`
+	ContentRating  string   `json:"contentRating"`
 }
 
 // PinResult is the JS pinStart return minus the PIN code itself: the code

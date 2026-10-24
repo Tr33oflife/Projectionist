@@ -293,6 +293,10 @@ func (s *Server) routes() {
 	s.mux.HandleFunc("POST /api/leaving/set", api(s.handleLeavingSet))
 	s.mux.HandleFunc("POST /api/leaving/remove", api(s.handleLeavingRemove))
 
+	s.mux.HandleFunc("POST /api/custompins/list", api(s.handleCustomPinsList))
+	s.mux.HandleFunc("POST /api/custompins/set", api(s.handleCustomPinsSet))
+	s.mux.HandleFunc("POST /api/custompins/remove", api(s.handleCustomPinsRemove))
+
 	s.mux.HandleFunc("GET /api/events", api(s.handleEvents))
 	s.mux.HandleFunc("GET /art", api(s.handleArt))
 	s.mux.HandleFunc("GET /badges/bundle/{file}", api(s.handleBadgeFile("bundle")))

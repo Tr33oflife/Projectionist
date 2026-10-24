@@ -5,7 +5,7 @@
 // must receive their label from the rule result.
 'use strict';
 const assert = require('node:assert');
-const { evaluateRule, evaluateRun, evaluateFamily, layoutFamilyDrawables, defaultFamilies, familySettings, familyDef, FAMILY_DEFS, FAMILY_STACK_ORDER, audioFormatName, audioChannelLabel, auroraShell, signatureTextWidth, streamingDisplayName, groupApplyOutcomes, BADGE_MAX_WFRAC, LEGIBILITY_MIN_TEXT_PX, geometryFor, legibilityFloorPx, EPISODE_FAMILIES, EPISODE_BADGE_CAP, CANONICAL_GEOM, LANDSCAPE_GEOM, aspectRatioText, originLanguageText, FAMILY_RATING_VOCAB, FAMILY_RATINGS_DEFAULT, FAMILY_RATING_GROUPS, clampFamilyRatings } = require('./composite.js');
+const { evaluateRule, evaluateRun, evaluateFamily, layoutFamilyDrawables, defaultFamilies, familySettings, familyDef, FAMILY_DEFS, FAMILY_STACK_ORDER, audioFormatName, audioChannelLabel, auroraShell, signatureTextWidth, streamingDisplayName, groupApplyOutcomes, BADGE_MAX_WFRAC, LEGIBILITY_MIN_TEXT_PX, geometryFor, legibilityFloorPx, EPISODE_FAMILIES, EPISODE_BADGE_CAP, CANONICAL_GEOM, LANDSCAPE_GEOM, aspectRatioText, originLanguageText, FAMILY_RATING_VOCAB, FAMILY_RATINGS_DEFAULT, FAMILY_RATING_GROUPS, clampFamilyRatings, evaluateCustomRule, sanitizeCustomBadge } = require('./composite.js');
 
 let n = 0;
 function ev(rule, facts) { n++; return evaluateRule(rule, facts); }
@@ -344,7 +344,9 @@ console.log(`composite.test.cjs: all ${n} evaluateRule checks passed`);
   assert.deepStrictEqual(richBadges.map((b) => b.badgeId), ['pill-versions', 'badge-hdr']);
   // All families off + no custom = an empty layout, said plainly.
   const empty = evaluateRun(items, fbk, { families: { resolution: { on: false } }, custom: [] }, aspectOf);
-  assert.strictEqual(empty.skipped[0].reason, 'no families or badges enabled in the layout');
+  // v1.24: the skip reason names all three content kinds — a layout
+  // with only custom badges or pins enabled is no longer "empty".
+  assert.strictEqual(empty.skipped[0].reason, 'no families, custom badges, or pins enabled in the layout');
   m += 9;
 
   // ---- aurora variants: same layout, richer art ids -------------------
@@ -929,8 +931,10 @@ console.log(`composite.test.cjs: all ${n} evaluateRule checks passed`);
   // v1.11: the gate gains the three families whose facts are
   // natively per-episode (hdr, channels, aspect-ratio); franchise,
   // origin and collection stay dark (asserted in the v1.11 section).
+  // v1.24: bitrate + in-progress join — both are natively per-episode
+  // facts (the episode's own file bitrate / playback position).
   assert.deepStrictEqual(EPISODE_FAMILIES.slice().sort(),
-    ['aspect-ratio', 'audio', 'channels', 'hdr', 'languages', 'new', 'resolution', 'runtime', 'subtitles', 'video-codec', 'watch-status']);
+    ['aspect-ratio', 'audio', 'bitrate', 'channels', 'hdr', 'in-progress', 'languages', 'new', 'resolution', 'runtime', 'subtitles', 'video-codec', 'watch-status']);
   e += 3;
 
   // Geometry: episode facts lay out in the landscape space; the
@@ -1100,7 +1104,8 @@ console.log(`composite.test.cjs: all ${n} evaluateRule checks passed`);
 
   // Registration: six new families, all default OFF, signature-first;
   // the collection family's classic shell is the ribbon shell.
-  assert.strictEqual(FAMILY_DEFS.length, 30); v++;
+  // v1.24: 30 + awards + rt-fresh + bitrate + in-progress = 34.
+  assert.strictEqual(FAMILY_DEFS.length, 34); v++;
   for (const id of ['hdr', 'channels', 'aspect-ratio', 'franchise', 'origin', 'collection']) {
     const d = defaultFamilies()[id];
     assert.ok(familyDef(id), `${id} registered`);
@@ -1625,4 +1630,180 @@ console.log(`composite.test.cjs: all ${n} evaluateRule checks passed`);
     'default movie miss note is the shipped wording');
 
   console.log(`composite.test.cjs: pill-settings checks passed (${ps} assertions)`);
+}
+
+// ---- v1.24: new families + custom badges ----------------------------------
+// The "true Kometa adversary" set: four genuinely new built-ins
+// (decade + studio already existed and are verified, not duplicated),
+// plus Tier 1 pins and Tier 2 rule badges. Every family fires ONLY
+// on its fact; every miss names what was missing.
+{
+  let q = 0;
+  const A = (cond, msg) => { q++; assert.ok(cond, msg); };
+  const F = (id, settings, facts) => evaluateFamily(id, settings || {}, facts);
+
+  // Built-in count: 30 shipped families + awards + rt-fresh +
+  // bitrate + in-progress = 34. Decade + studio are pre-existing.
+  A(FAMILY_DEFS.length === 34, `FAMILY_DEFS must be 34 (got ${FAMILY_DEFS.length})`);
+  for (const id of ['awards', 'rt-fresh', 'bitrate', 'in-progress', 'decade', 'studio']) {
+    A(!!familyDef(id), `${id} must be a registered family`);
+  }
+
+  // Awards: Oscar-only, literal reading of the OMDb line.
+  A(F('awards', {}, { type: 'movie', awardsText: 'Won 2 Oscars. Another 3 wins.' }).text === 'OSCAR WINNER', 'Oscar win fires');
+  A(F('awards', {}, { type: 'movie', awardsText: 'Nominated for 1 Oscar. Another 2 wins.' }).text === 'OSCAR NOMINEE', 'Oscar nomination fires');
+  A(F('awards', {}, { type: 'show', awardsText: 'Won 1 Oscar.' }).show === true, 'awards fires on shows too');
+  A(F('awards', {}, { type: 'movie', awardsText: 'Won 3 Primetime Emmys.' }).show === false, 'Emmy-only line must NOT fire the Oscar family');
+  A(/no Oscar/.test(F('awards', {}, { type: 'movie', awardsText: 'Won 3 Primetime Emmys.' }).note), 'Emmy-only miss names the missing Oscar');
+  A(F('awards', {}, { type: 'movie' }).show === false, 'no awards line stays dark');
+  A(/no OMDb awards line/.test(F('awards', {}, { type: 'movie' }).note), 'no-line miss names the missing OMDb line');
+  A(F('awards', {}, { type: 'season', awardsText: 'Won 1 Oscar.' }).show === false, 'seasons never fire awards');
+  A(F('awards', {}, { type: 'episode' }).show === false, 'episodes never fire awards (episode gate)');
+
+  // RT Fresh: 60% is Fresh by Rotten Tomatoes' own definition.
+  A(F('rt-fresh', {}, { type: 'movie', rtRating: 60 }).text === 'FRESH', 'exactly 60% is Fresh');
+  A(F('rt-fresh', {}, { type: 'movie', rtRating: 91 }).show === true, '91% is Fresh');
+  A(F('rt-fresh', {}, { type: 'movie', rtRating: 59 }).show === false, '59% is not Fresh');
+  A(/below Fresh/.test(F('rt-fresh', {}, { type: 'movie', rtRating: 59 }).note), 'below-Fresh miss names the threshold');
+  A(F('rt-fresh', {}, { type: 'movie' }).show === false, 'no meter stays dark');
+  A(F('rt-fresh', {}, { type: 'season', rtRating: 91 }).show === false, 'seasons never fire rt-fresh');
+  A(F('rt-fresh', {}, { type: 'episode' }).show === false, 'episodes never fire rt-fresh');
+
+  // Bitrate: the winning version's bitrate, stated as Mbps.
+  A(F('bitrate', {}, { type: 'movie', bitrateKbps: 25000 }).text === '25 Mbps', '25000 kbps draws as 25 Mbps');
+  A(F('bitrate', {}, { type: 'movie', bitrateKbps: 8500 }).text === '8.5 Mbps', 'sub-10 Mbps keeps one decimal');
+  A(F('bitrate', {}, { type: 'episode', bitrateKbps: 12000 }).text === '12 Mbps', 'episodes carry their own bitrate');
+  A(F('bitrate', {}, { type: 'movie' }).show === false, 'no bitrate stays dark');
+  A(/no bitrate/.test(F('bitrate', {}, { type: 'movie' }).note), 'no-bitrate miss names the missing fact');
+  A(F('bitrate', {}, { type: 'show', bitrateKbps: 25000 }).show === false, 'shows never fire bitrate (no single bitrate)');
+  A(F('bitrate', {}, { type: 'season' }).show === false, 'seasons never fire bitrate');
+  A(EPISODE_FAMILIES.includes('bitrate'), 'bitrate must be an episode family');
+
+  // In progress: started but not finished, with a percentage where
+  // duration + offset make it computable.
+  A(F('in-progress', {}, { type: 'movie', viewOffsetMs: 3600000, viewCount: 0, runtimeMinutes: 120 }).text === 'CONTINUE 50%', 'half-watched movie draws CONTINUE 50%');
+  A(F('in-progress', {}, { type: 'movie', viewOffsetMs: 60000, viewCount: 0 }).text === 'CONTINUE', 'no runtime still draws CONTINUE without a percent');
+  A(F('in-progress', {}, { type: 'episode', viewOffsetMs: 300000, viewCount: 0, runtimeMinutes: 30 }).text === 'CONTINUE 17%', 'episodes carry their own progress');
+  A(F('in-progress', {}, { type: 'movie', viewCount: 0 }).show === false, 'never started stays bare');
+  A(/never started/.test(F('in-progress', {}, { type: 'movie', viewCount: 0 }).note), 'never-started miss names it');
+  A(F('in-progress', {}, { type: 'movie', viewOffsetMs: 60000, viewCount: 1 }).show === false, 'a finished play voids the badge');
+  A(F('in-progress', {}, { type: 'show', viewOffsetMs: 60000 }).show === false, 'shows never fire in-progress');
+  A(EPISODE_FAMILIES.includes('in-progress'), 'in-progress must be an episode family');
+
+  // Decade + studio: PRE-EXISTING families (v1.11), verified in
+  // place — the v1.24 brief named them, but duplicating them would
+  // have forked the registry.
+  A(F('decade', {}, { type: 'movie', year: 1984 }).text === '1980s', 'decade draws 1980s from 1984');
+  A(F('decade', {}, { type: 'movie' }).show === false, 'no year stays dark for decade');
+  A(F('decade', {}, { type: 'season', year: 1984 }).show === false, 'seasons never fire decade');
+  A(F('studio', {}, { type: 'movie', studio: 'A24' }).text === 'A24', 'studio draws the Plex name verbatim');
+  A(F('studio', {}, { type: 'movie' }).show === false, 'no studio stays dark');
+
+  // Opt-in discipline: every new family defaults OFF, and a legacy
+  // template object (no new keys at all) evaluates identically —
+  // no existing template's badge set changes silently.
+  const fresh = defaultFamilies();
+  for (const id of ['awards', 'rt-fresh', 'bitrate', 'in-progress']) {
+    A(fresh[id] && fresh[id].on === false, `${id} must default OFF`);
+  }
+  const legacyLayout = { resolution: { on: true, variant: 'signature' } };
+  const laidLegacy = layoutFamilyDrawables(legacyLayout, { type: 'movie', resolutionTier: '4K', awardsText: 'Won 2 Oscars.', rtRating: 91, bitrateKbps: 25000, viewOffsetMs: 60000, viewCount: 0 }, () => 0.5);
+  A(!laidLegacy.verdicts.some((v) => ['awards', 'rt-fresh', 'bitrate', 'in-progress'].includes(v.family)),
+    'a legacy layout (no new keys) must not evaluate the new families at all');
+  A(laidLegacy.verdicts.some((v) => v.family === 'resolution' && v.show), 'legacy layout still fires its own families');
+
+  // Rule evaluator: match + non-match for every shipped field, and
+  // the first failing condition is named.
+  const richFacts = { type: 'movie', genres: ['Horror', 'Comedy'], studio: 'A24', tags: ['Criterion', 'Staff Pick'], contentRating: 'R', unwatchedCount: 0, tmdbRating: 8.4, year: 1984 };
+  A(evaluateCustomRule({ genre: 'horror' }, richFacts).show === true, 'genre contains is case-insensitive');
+  A(evaluateCustomRule({ genre: 'Drama' }, richFacts).show === false, 'genre non-match stays dark');
+  A(/genre does not include/.test(evaluateCustomRule({ genre: 'Drama' }, richFacts).note), 'genre miss names the condition');
+  A(evaluateCustomRule({ studio: 'a24' }, richFacts).show === true, 'studio contains is case-insensitive');
+  A(evaluateCustomRule({ studio: 'HBO' }, richFacts).show === false, 'studio non-match stays dark');
+  A(evaluateCustomRule({ tag: 'criterion' }, richFacts).show === true, 'tag contains matches');
+  A(evaluateCustomRule({ tag: 'Nope' }, richFacts).show === false, 'tag non-match stays dark');
+  A(evaluateCustomRule({ contentRating: 'R' }, richFacts).show === true, 'content rating exact match fires');
+  A(evaluateCustomRule({ contentRating: 'PG-13' }, richFacts).show === false, 'content rating mismatch stays dark');
+  A(evaluateCustomRule({ watchStatus: 'watched' }, richFacts).show === true, 'watched matches unwatchedCount 0');
+  A(evaluateCustomRule({ watchStatus: 'unwatched' }, richFacts).show === false, 'unwatched mismatches a watched title');
+  A(evaluateCustomRule({ watchStatus: 'unwatched' }, { ...richFacts, unwatchedCount: 3 }).show === true, 'unwatched matches unwatchedCount > 0');
+  A(evaluateCustomRule({ ratingMin: 8 }, richFacts).show === true, 'ratingMin met fires');
+  A(evaluateCustomRule({ ratingMin: 9 }, richFacts).show === false, 'ratingMin unmet stays dark');
+  A(/TMDb 8.4 is below 9/.test(evaluateCustomRule({ ratingMin: 9 }, richFacts).note), 'rating miss names the values');
+  A(evaluateCustomRule({ ratingMin: 8 }, { ...richFacts, tmdbRating: undefined }).show === false, 'no TMDb rating cannot meet a threshold');
+  A(evaluateCustomRule({ yearMin: 1980, yearMax: 1989 }, richFacts).show === true, 'year range inclusive fires');
+  A(evaluateCustomRule({ yearMin: 1990 }, richFacts).show === false, 'year below range stays dark');
+  A(evaluateCustomRule({ yearMax: 1980 }, richFacts).show === false, 'year above range stays dark');
+  A(evaluateCustomRule({ genre: 'Horror', studio: 'A24', yearMin: 1980 }, richFacts).show === true, 'AND-combined conditions all pass');
+  A(evaluateCustomRule({ genre: 'Horror', studio: 'HBO' }, richFacts).show === false, 'one failing AND condition darkens the badge');
+  A(evaluateCustomRule({}, richFacts).show === true, 'an empty rule matches everything (editor requires a condition; a hand-edited empty rule must not silently fire nowhere)');
+
+  // Sanitizer mirrors the server: bad presentation falls back,
+  // empty text/name drops, unknown rule fields drop.
+  const clean = sanitizeCustomBadge({ name: 'Horror shelf', text: 'HORROR', color: '#f87171', corner: 'bl', variant: 'aurora', rule: { genre: 'Horror', bogus: 1 } });
+  A(clean && clean.text === 'HORROR' && clean.color === '#f87171', 'valid badge sanitizes intact');
+  A(!('bogus' in clean.rule), 'unknown rule field dropped');
+  A(sanitizeCustomBadge({ name: 'X', text: '' }) === null, 'empty text drops');
+  A(sanitizeCustomBadge({ name: '', text: 'X' }) === null, 'empty name drops');
+  const fb = sanitizeCustomBadge({ name: 'F', text: 'F', color: '#nope', corner: 'xx', variant: 'neon' });
+  A(fb.color === '#e2e8f0' && fb.corner === 'bl' && fb.variant === 'signature', 'bad presentation falls back');
+
+  // Layout integration: rule badges + pins draw through the normal
+  // pipeline, on matching items only, with verdict rows.
+  const horrorBadge = { id: 'custom-horror', name: 'Horror shelf', text: 'HORROR', color: '#f87171', corner: 'bl', variant: 'signature', rule: { genre: 'Horror' } };
+  const laidMatch = layoutFamilyDrawables({}, richFacts, () => 0.5, { customBadges: [horrorBadge], pins: [] });
+  A(laidMatch.verdicts.some((v) => v.family === 'custom:custom-horror' && v.show && v.text === 'HORROR'), 'matching rule badge gets a firing verdict');
+  A(laidMatch.drawables.some((d) => d.family === 'custom' && d.label === 'HORROR'), 'matching rule badge draws');
+  A(laidMatch.drawables.some((d) => d.family === 'custom' && d.accent === '#f87171'), 'custom accent rides the drawable');
+  const laidMiss = layoutFamilyDrawables({}, { ...richFacts, genres: ['Drama'] }, () => 0.5, { customBadges: [horrorBadge], pins: [] });
+  A(laidMiss.verdicts.some((v) => v.family === 'custom:custom-horror' && !v.show), 'non-matching rule badge gets a dark verdict');
+  A(!laidMiss.drawables.some((d) => d.family === 'custom'), 'non-matching rule badge draws nothing');
+  const pin = { id: 'pin-1', text: 'STAFF PICK', color: '#fbbf24', corner: 'tr', variant: 'signature' };
+  const laidPin = layoutFamilyDrawables({}, richFacts, () => 0.5, { customBadges: [], pins: [pin] });
+  A(laidPin.drawables.some((d) => d.family === 'custom' && d.label === 'STAFF PICK'), 'pin draws on its item');
+  const laidNoPin = layoutFamilyDrawables({}, richFacts, () => 0.5, { customBadges: [], pins: [] });
+  A(!laidNoPin.drawables.some((d) => d.family === 'custom'), 'no pin on an unpinned item');
+
+  // Episode cap: customs count AFTER built-ins, never silently cut.
+  const epFacts = { type: 'episode', resolutionTier: '1080p', bitrateKbps: 12000, viewOffsetMs: 60000, viewCount: 0, runtimeMinutes: 30 };
+  const epLayout = { resolution: { on: true, variant: 'signature' }, bitrate: { on: true, variant: 'signature' }, 'in-progress': { on: true, variant: 'signature' } };
+  const epLaid = layoutFamilyDrawables(epLayout, epFacts, () => 0.5, { customBadges: [horrorBadge], pins: [pin] });
+  const epCustomVerdicts = epLaid.verdicts.filter((v) => v.custom);
+  A(epCustomVerdicts.length === 2, 'both customs get verdicts on an episode');
+  A(epCustomVerdicts.find((v) => v.family === 'custom:custom-horror').show === false, 'horror rule misses on an episode with no genres');
+  const epPinVerdict = epCustomVerdicts.find((v) => v.family === 'pin:pin-1');
+  A(epPinVerdict.show === true && !epPinVerdict.undrawn, 'pin draws as the 4th badge — within the cap, after 3 built-ins');
+  // One more built-in (runtime fires on runtimeMinutes) fills the
+  // cap, and the pin becomes 5th: undrawn, with the cap named.
+  const epLayoutFull = { ...epLayout, runtime: { on: true, variant: 'signature' } };
+  const epLaidFull = layoutFamilyDrawables(epLayoutFull, epFacts, () => 0.5, { customBadges: [], pins: [pin] });
+  const fullPin = epLaidFull.verdicts.find((v) => v.family === 'pin:pin-1');
+  A(fullPin.show === true && fullPin.undrawn === true, 'pin past the cap is marked undrawn, not silently cut');
+  A(/episode badge cap/.test(fullPin.note || ''), 'cap verdict names the cap');
+  A(!epLaidFull.drawables.some((d) => d.family === 'custom'), 'undrawn pin draws nothing');
+
+  // evaluateRun: rule badges fire exactly on matching items across
+  // a mixed set; pins fire only on their item.
+  const items = [
+    { ratingKey: '1', title: 'Horror One' },
+    { ratingKey: '2', title: 'Drama One' },
+    { ratingKey: '3', title: 'Horror Two' },
+  ];
+  const factsByKey = {
+    1: { ...richFacts },
+    2: { ...richFacts, genres: ['Drama'] },
+    3: { ...richFacts },
+  };
+  const run = evaluateRun(items, factsByKey, { families: {}, custom: [], customBadges: [horrorBadge], pinsByKey: { 2: [pin] } }, () => 0.5);
+  A(run.willApply.length === 3, 'all three items apply (rule badge on 1+3, pin on 2)');
+  const badgesFor = (k) => (run.willApply.find((w) => String(w.item.ratingKey) === k) || { badges: [] }).badges;
+  A(badgesFor('1').some((b) => b.family === 'custom'), 'rule badge on matching item 1');
+  A(!badgesFor('2').some((b) => b.family === 'custom' && b.label === 'HORROR'), 'no rule badge on non-matching item 2');
+  A(badgesFor('2').some((b) => b.label === 'STAFF PICK'), 'pin on item 2 only');
+  A(!badgesFor('1').some((b) => b.label === 'STAFF PICK'), 'no pin on unpinned item 1');
+  const runNone = evaluateRun(items, factsByKey, { families: {}, custom: [], customBadges: [{ ...horrorBadge, rule: { genre: 'Western' } }], pinsByKey: {} }, () => 0.5);
+  A(runNone.willApply.length === 0, 'a rule badge matching nothing fires nowhere');
+  A(runNone.skipped.length === 3 && /Horror shelf/.test(runNone.skipped[0].reason), 'match-nothing skip names the badge');
+
+  console.log(`composite.test.cjs: v1.24 checks passed (${q} assertions)`);
 }

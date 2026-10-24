@@ -215,7 +215,7 @@
     overlayReapplyCheck: () => rpc('overlay/reapplyCheck'),
     onOverlayProgress: (cb) => { overlayListeners.add(cb); return () => overlayListeners.delete(cb); },
     overlayTemplatesList: () => rpc('overlay/templatesList'),
-    overlayTemplateSave: (name, placements, families) => rpc('overlay/templateSave', { name, placements, families: families || null }),
+    overlayTemplateSave: (name, placements, families, customBadges) => rpc('overlay/templateSave', { name, placements, families: families || null, customBadges: customBadges || null }),
     overlayTemplateLoad: (name) => rpc('overlay/templateLoad', { name }),
     overlayTemplateDelete: (name) => rpc('overlay/templateDelete', { name }),
     // -- appearance / themes (v1.19) ----------------------------------------------
@@ -231,6 +231,13 @@
     leavingList: () => rpc('leaving/list'),
     leavingSet: (items, date) => rpc('leaving/set', { items, date }),
     leavingRemove: (ratingKey) => rpc('leaving/remove', { ratingKey }),
+    // -- custom badge pins (v1.24, Tier 1) ----------------------------------------
+    // Free-text badges the user pins to titles (or, expanded by the
+    // UI, to every current member of a collection). Mutations answer
+    // with the fresh list.
+    customPinsList: () => rpc('custompins/list'),
+    customPinsSet: (items, text, color, corner, variant, source) => rpc('custompins/set', { items, text, color, corner, variant, source }),
+    customPinsRemove: (id) => rpc('custompins/remove', { id }),
   };
 
   // ---- app version ----------------------------------------------------

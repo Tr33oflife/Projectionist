@@ -28,12 +28,16 @@ optional services you add keys for).
 
 ## What it does
 
-**Poster overlays.** 30 badge families in three styles (classic, aurora,
+**Poster overlays.** 34 badge families in three styles (classic, aurora,
 and a procedural frosted-glass "signature" style): resolution, HDR
 (Dolby Vision / HDR10 / HLG), audio channels, video codec, subtitles and
 languages, runtime, watch status, new releases, ratings, content rating,
 franchise and saga position, origin, genre banners, collection membership,
-"Leaving Soon" dates you set, and more. Badges fire only when the underlying
+"Leaving Soon" dates you set, awards, Rotten Tomatoes Fresh, bitrate,
+in-progress, decade, studio, and more. Plus **custom badges**: pin any
+free text to a title or collection, or define rule-based badges (genre,
+studio, tag, rating, year, watch status) that fire like built-ins. Every
+badge is opt-in — nothing new is forced into an existing template. Badges fire only when the underlying
 fact exists in Plex metadata — a missing fact means no badge, never a
 guessed one. Overlays apply to movies, shows, seasons, and episodes
 (episodes get a 4-badge cap on a landscape canvas). Every apply writes a
@@ -54,7 +58,10 @@ are supported, including content rating on create.
 
 **Advisor.** Scans a library section and suggests collections it is
 missing: franchises, genres, decades, ratings standouts, hidden gems,
-dub/sub groups, and more. Each suggestion opens in a full editor (title,
+dub/sub groups, director and actor spotlights, studio shelves, decade ×
+genre pairs, unwatched gems, rewatchables, quick picks, epics, and
+critic/audience divergence shelves — all mined from the library itself,
+and suppressed when they overlap an existing collection. And more. Each suggestion opens in a full editor (title,
 reason, rules summary, member wall) before anything is created. Two AI
 features, both optional and both using your own configured provider:
 natural-language collection rules ("movies like…") and **AI collection

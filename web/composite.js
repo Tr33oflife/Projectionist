@@ -237,8 +237,8 @@ function compare(actual, op, expected) {
 // this is our weight table. Families sharing a corner stack in this
 // order with a consistent gap (see layoutFamilyDrawables).
 const FAMILY_STACK_ORDER = {
-  tl: ['resolution', 'hdr', 'audio', 'channels', 'video-codec', 'aspect-ratio', 'versions'],
-  tr: ['status', 'ribbon', 'leaving', 'collection', 'family', 'new', 'watch-status'],
+  tl: ['resolution', 'hdr', 'audio', 'channels', 'video-codec', 'aspect-ratio', 'versions', 'bitrate'],
+  tr: ['status', 'ribbon', 'awards', 'rt-fresh', 'leaving', 'collection', 'family', 'new', 'watch-status', 'in-progress'],
   bl: ['edition', 'details', 'runtime', 'quick-watch', 'source', 'decade', 'studio', 'genre', 'franchise', 'saga-position', 'origin', 'streaming', 'ratings'],
   br: ['content-rating', 'languages', 'subtitles'],
 };
@@ -255,6 +255,7 @@ const FAMILY_WIDTH = {
   hdr: 0.30, channels: 0.24, 'aspect-ratio': 0.28, franchise: 0.48, origin: 0.32,
   collection: 0.54, leaving: 0.54,
   family: 0.46, 'saga-position': 0.40, 'quick-watch': 0.36,
+  awards: 0.40, 'rt-fresh': 0.30, bitrate: 0.30, 'in-progress': 0.36,
 };
 // The genre family's BANNER presentation (v1.11.1) draws its ribbon
 // shell at ribbon width instead of the genre pill's FAMILY_WIDTH —
@@ -383,6 +384,14 @@ const FAMILY_DEFS = [
     description: 'A friendly ribbon reading “FAMILY” when the title’s own content rating is in the family set — G / PG for movies and TV-Y / TV-Y7 / TV-G for shows by default, and the set is yours to change with the rating toggles in the settings below. Anything outside the set (PG-13, TV-MA, unrated…) draws nothing, and the verdict names the actual rating. Movies and shows only.' },
   { id: 'leaving', name: 'Leaving soon', shell: 'ribbon-leaving', corner: 'tr',
     description: 'A banner from YOUR Leaving soon list (the card on the Apply page — dates are set there, in the app, never read from Plex or any outside source): “LEAVING SOON” when the date falls inside your window, or “LEAVING ON MM/DD/YYYY” in date mode. The banner shows the list AS OF APPLY TIME — changing a date afterwards does not redraw posters already badged until they are re-applied. Movies and shows only.' },
+  { id: 'awards', name: 'Awards', shell: 'pill', corner: 'tr',
+    description: 'Oscar honors read literally from OMDb’s awards line: “OSCAR WINNER” when the line says the title won Oscars, “OSCAR NOMINEE” when it was only nominated. Other awards (Emmy, Golden Globe, festival wins…) do not fire this family — the ribbon family covers those. Movies and shows only; needs an OMDb key and a match.' },
+  { id: 'rt-fresh', name: 'RT Fresh', shell: 'pill', corner: 'tr',
+    description: '“FRESH” when the Rotten Tomatoes critics meter from OMDb is 60% or higher — Rotten Tomatoes’ own Fresh definition. Below 60% or with no meter, the badge stays off and the verdict says why. Movies and shows only; needs an OMDb key and a match.' },
+  { id: 'bitrate', name: 'Bitrate', shell: 'pill', corner: 'tl',
+    description: 'The winning version’s bitrate as Plex states it — “25 Mbps”. A show or season has no single bitrate, so it never fires there. No Remux claim is made from bitrate: a high-bitrate WEB-DL overlaps a remux, so no threshold rule is defensible.' },
+  { id: 'in-progress', name: 'In progress', shell: 'pill', corner: 'tr',
+    description: '“CONTINUE” with the watched percentage when Plex says playback started but did not finish (viewOffset against duration). Fully watched or never started titles get nothing from this family. Movies and episodes only — a show has no single playback position.' },
 ];
 
 function familyDef(id) { return FAMILY_DEFS.find((d) => d.id === id) || null; }
@@ -425,6 +434,10 @@ function defaultFamilies() {
     collection: { on: false, variant: 'signature' },
     family: { on: false, variant: 'signature' },
     leaving: { on: false, mode: 'soon', windowDays: 30, variant: 'signature' },
+    awards: { on: false, variant: 'signature' },
+    'rt-fresh': { on: false, variant: 'signature' },
+    bitrate: { on: false, variant: 'signature' },
+    'in-progress': { on: false, variant: 'signature' },
   };
 }
 
@@ -731,6 +744,7 @@ const EPISODE_FAMILIES = [
   'resolution', 'audio', 'video-codec', 'subtitles', 'languages',
   'runtime', 'watch-status', 'new',
   'hdr', 'channels', 'aspect-ratio',
+  'bitrate', 'in-progress',
 ];
 const EPISODE_FAMILY_NOTES = {
   ratings: 'episode ratings are not badged — ratings belong to the movie or show',
@@ -752,6 +766,8 @@ const EPISODE_FAMILY_NOTES = {
   leaving: 'leaving dates are set on the movie or show, not one episode',
   'saga-position': 'saga position is a movie fact, not an episode badge',
   'quick-watch': 'nearly every episode runs under the threshold — a quick-watch badge on episodes would be noise, not information',
+  awards: 'honors belong to movies and shows, not episodes',
+  'rt-fresh': 'freshness belongs to movies and shows, not episodes',
 };
 
 // evaluateFamily judges ONE family for ONE item. Pure:
@@ -1298,6 +1314,64 @@ function evaluateFamily(id, settings, facts) {
         note: `leaves ${usDate} — ${days} ${days === 1 ? 'day' : 'days'} away, inside the ${win}-day soon window`,
       };
     }
+    case 'awards': {
+      // Oscar-only pill (v1.24): the ribbon family's awards variant
+      // covers Oscar/Emmy/Globe; this family is the Oscar slice on
+      // its own badge. The parse is literal — "Won 2 Oscars." wins,
+      // "Nominated for 1 Oscar." nominates; an Emmy-only line fires
+      // nothing here and the verdict says exactly that. Seasons are
+      // dark by fact, not by gate: the facts layer nils awardsText
+      // for seasons, so a season lands on the no-line note below.
+      if (facts.type === 'season') return no('honors belong to movies and shows, not seasons');
+      if (!facts.awardsText) return no('no OMDb awards line for this title (needs an OMDb key and an IMDb match)');
+      const t = String(facts.awardsText);
+      if (/won\s+\d+\s+oscars?/i.test(t)) return { show: true, text: 'OSCAR WINNER', note: `OMDb awards: ${t}` };
+      if (/nominated for\s+\d+\s+oscars?/i.test(t)) return { show: true, text: 'OSCAR NOMINEE', note: `OMDb awards: ${t}` };
+      return no('OMDb lists no Oscar win or nomination for this title');
+    }
+    case 'rt-fresh': {
+      // Standalone Fresh pill (v1.24): the ribbon family's rt-fresh
+      // variant shares the rule — 60% is Rotten Tomatoes' own Fresh
+      // definition. Seasons are dark by fact (no rtRating survives
+      // the season facts rebuild); the note below names the season
+      // case plainly instead of pretending a meter is missing.
+      if (facts.type === 'season') return no('freshness belongs to movies and shows, not seasons');
+      if (typeof facts.rtRating !== 'number') return no('no Rotten Tomatoes score for this title (needs an OMDb key and an IMDb match)');
+      return facts.rtRating >= 60
+        ? { show: true, text: 'FRESH', note: `RT ${Math.round(facts.rtRating)}% ≥ 60% — Fresh by Rotten Tomatoes' own definition` }
+        : no(`RT ${Math.round(facts.rtRating)}% is below Fresh (60%)`);
+    }
+    case 'bitrate': {
+      // The winning version's bitrate as Plex states it (v1.24).
+      // Shows and seasons have no single bitrate — the facts layer
+      // never sets one for them — so they land on the first note,
+      // not on a guessed average. No Remux inference: a high-bitrate
+      // WEB-DL overlaps a remux, so no threshold rule is defensible.
+      if (facts.type === 'show' || facts.type === 'season') return no('a show or season has no single bitrate');
+      const kbps = Number(facts.bitrateKbps);
+      if (!Number.isFinite(kbps) || kbps <= 0) return no('Plex states no bitrate for this title’s file');
+      const mbps = kbps / 1000;
+      const text = mbps >= 10 ? `${Math.round(mbps)} Mbps` : `${mbps.toFixed(1)} Mbps`;
+      return { show: true, text, note: `Plex bitrate ${kbps} kbps` };
+    }
+    case 'in-progress': {
+      // Continue pill (v1.24): playback started but not finished.
+      // viewOffsetMs is set only when Plex reports an offset > 0;
+      // viewCount > 0 means a completed play, which voids the badge
+      // even with a stale offset. Fully watched or never started
+      // both stay bare — the verdict names which. Shows/seasons
+      // carry no single offset, so they never fire.
+      if (facts.type === 'show' || facts.type === 'season') return no('a show or season has no single playback position');
+      const off = Number(facts.viewOffsetMs);
+      if (!Number.isFinite(off) || off <= 0) return no('playback never started on this title');
+      if (Number(facts.viewCount) > 0) return no('already watched — a finished play voids the continue badge');
+      const dur = Number(facts.runtimeMinutes);
+      if (Number.isFinite(dur) && dur > 0) {
+        const pct = Math.min(99, Math.max(1, Math.round((off / 60000 / dur) * 100)));
+        return { show: true, text: `CONTINUE ${pct}%`, note: `${pct}% watched (${Math.round(off / 60000)} of ${dur} min)` };
+      }
+      return { show: true, text: 'CONTINUE', note: 'playback started, not finished (no runtime to percent against)' };
+    }
   }
   return no(`unknown family: ${id}`);
 }
@@ -1324,6 +1398,8 @@ const SIGNATURE_MICRO_LABELS = {
   collection: 'COLLECTION', family: 'RATED',
   'saga-position': 'SAGA', 'quick-watch': 'QUICK',
   leaving: 'LEAVING',
+  awards: 'AWARD', 'rt-fresh': 'FRESH', bitrate: 'BITRATE',
+  'in-progress': 'CONTINUE', custom: 'CUSTOM',
 };
 const SIGNATURE_RATING_MICRO_LABELS = {
   tmdb: 'TMDB', imdb: 'IMDB', 'rt-critic': 'RT', 'rt-audience': 'RT AUDIENCE', metascore: 'METASCORE',
@@ -1475,7 +1551,105 @@ function signatureSpecForPart(def, s, p, geom) {
 // shift it from its slot. Episode items additionally obey
 // EPISODE_BADGE_CAP (below). aspectOf(badgeId) → height/width of
 // the shell art (0.5 fallback).
-function layoutFamilyDrawables(families, facts, aspectOf) {
+// ---------------------------------------------------------------------------
+// CUSTOM BADGES (v1.24). Two tiers share this pipeline:
+//  - Tier 1 pins: free text the user attaches to items (stored in the
+//    app's own pins file, passed in as extra.pins for the item).
+//  - Tier 2 rule badges: text + color + corner + an AND-combined
+//    condition over the facts map, stored on the template as
+//    customBadges and passed in as extra.customBadges.
+// Both evaluate exactly like a built-in family: a match draws through
+// the normal pipeline (classic pill / aurora pill / signature spec
+// with the badge's own accent); a non-match lands in the verdicts
+// with the FIRST failing condition named, never a silent absence.
+// A custom badge whose rule is empty matches everything — the editor
+// requires at least one condition, but a hand-edited template must
+// not become a badge that fires nowhere without explanation: an
+// empty rule is treated as "always", and the verdict note says so.
+// ---------------------------------------------------------------------------
+
+const CUSTOM_BADGE_COLORS = ['#fbbf24', '#22d3ee', '#a78bfa', '#34d399', '#f87171', '#e2e8f0', '#fb923c', '#f472b6'];
+const CUSTOM_BADGE_CORNERS = ['tl', 'tr', 'bl', 'br'];
+
+// sanitizeCustomBadge cleans one decoded custom badge the same way
+// the server does (templates.go SanitizeCustomBadge): bad colors
+// fall back to slate, bad corners to bl, unknown rule fields are
+// dropped, empty text/name drops the badge. Returns null to drop.
+function sanitizeCustomBadge(v) {
+  if (!v || typeof v !== 'object') return null;
+  const name = String(v.name == null ? '' : v.name).trim();
+  const text = String(v.text == null ? '' : v.text).trim();
+  if (!name || !text) return null;
+  const color = CUSTOM_BADGE_COLORS.includes(String(v.color || '').toLowerCase())
+    ? String(v.color).toLowerCase() : '#e2e8f0';
+  const corner = CUSTOM_BADGE_CORNERS.includes(v.corner) ? v.corner : 'bl';
+  const variant = v.variant === 'aurora' || v.variant === 'classic' ? v.variant : 'signature';
+  const id = String(v.id || '').trim() || ('custom-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''));
+  const rule = {};
+  if (v.rule && typeof v.rule === 'object') {
+    for (const k of ['genre', 'studio', 'tag', 'contentRating']) {
+      const s = String(v.rule[k] == null ? '' : v.rule[k]).trim();
+      if (s) rule[k] = s.slice(0, 60);
+    }
+    if (v.rule.watchStatus === 'watched' || v.rule.watchStatus === 'unwatched') rule.watchStatus = v.rule.watchStatus;
+    for (const k of ['ratingMin', 'yearMin', 'yearMax']) {
+      const n = Number(v.rule[k]);
+      if (Number.isFinite(n)) rule[k] = n;
+    }
+  }
+  return { id, name: name.slice(0, 60), text: text.slice(0, 40), color, corner, variant, rule };
+}
+
+// evaluateCustomRule(rule, facts) → { show, note }. Every set
+// condition must pass (AND). Contains matches are case-insensitive
+// substring matches against the fact's value(s); contentRating is
+// an exact match (ratings are codes, not prose); watchStatus reads
+// unwatchedCount (0 = watched); ratingMin reads the TMDb rating —
+// the editor labels the source, so the verdict can too.
+function evaluateCustomRule(rule, facts) {
+  const r = rule || {};
+  const no = (note) => ({ show: false, note });
+  if (!facts) return no('facts unavailable for this title');
+  const contains = (hay, needle) => String(hay == null ? '' : hay).toLowerCase().includes(String(needle).toLowerCase());
+  if (r.genre) {
+    const genres = Array.isArray(facts.genres) ? facts.genres : [];
+    if (!genres.some((g) => contains(g, r.genre))) return no(`genre does not include '${r.genre}'`);
+  }
+  if (r.studio) {
+    if (!contains(facts.studio, r.studio)) return no(`studio is not '${r.studio}'`);
+  }
+  if (r.tag) {
+    const tags = Array.isArray(facts.tags) ? facts.tags : [];
+    if (!tags.some((t) => contains(t, r.tag))) return no(`no tag includes '${r.tag}'`);
+  }
+  if (r.contentRating) {
+    if (String(facts.contentRating || '') !== String(r.contentRating)) return no(`content rating is '${facts.contentRating || 'unset'}', not '${r.contentRating}'`);
+  }
+  if (r.watchStatus) {
+    const watched = Number(facts.unwatchedCount) === 0;
+    if (r.watchStatus === 'watched' && !watched) return no('title is not watched');
+    if (r.watchStatus === 'unwatched' && watched) return no('title is already watched');
+  }
+  if (typeof r.ratingMin === 'number') {
+    const v = Number(facts.tmdbRating);
+    if (!Number.isFinite(v)) return no('no TMDb rating to compare against the threshold');
+    if (v < r.ratingMin) return no(`TMDb ${v} is below ${r.ratingMin}`);
+  }
+  if (typeof r.yearMin === 'number') {
+    const y = Number(facts.year);
+    if (!Number.isFinite(y)) return no('no year to compare against the range');
+    if (y < r.yearMin) return no(`year ${y} is before ${r.yearMin}`);
+  }
+  if (typeof r.yearMax === 'number') {
+    const y = Number(facts.year);
+    if (!Number.isFinite(y)) return no('no year to compare against the range');
+    if (y > r.yearMax) return no(`year ${y} is after ${r.yearMax}`);
+  }
+  const n = Object.keys(r).length;
+  return { show: true, note: n === 0 ? 'no conditions set — matches every title' : 'all conditions met' };
+}
+
+function layoutFamilyDrawables(families, facts, aspectOf, extra) {
   const aspect = typeof aspectOf === 'function' ? aspectOf : () => 0.5;
   const geom = geometryFor(facts);
   const W = geom.w, H = geom.h, unit = H / CANONICAL_GEOM.h;
@@ -1533,6 +1707,58 @@ function layoutFamilyDrawables(families, facts, aspectOf) {
       : null;
     byCorner[s.corner].push({ def, s, v, verdict, parts, sigParts });
   }
+  // Custom badges (v1.24) join the SAME corner queues, after the
+  // built-ins: rule badges in template order, then pins. They count
+  // toward the episode cap exactly like a built-in — never silently
+  // cut — and their verdicts ride the same verdicts array so the
+  // dry run and the verdicts rail explain them.
+  const customDef = { id: 'custom', name: 'Custom' };
+  const pushCustom = (verdict, corner, variant, text, accent) => {
+    if (isEpisode) {
+      if (episodeDrawn >= EPISODE_BADGE_CAP) {
+        verdict.undrawn = true;
+        verdict.note = verdict.note ? `${verdict.note} · ${capNote}` : capNote;
+        return;
+      }
+      episodeDrawn++;
+    }
+    // dx/dy must be present (0): the signature layout adds s.dx * W
+    // to the row position, and an undefined offset poisons the rect
+    // to NaN — which crashes the canvas roundRect downstream.
+    const s = { corner, size: 1, variant, dx: 0, dy: 0 };
+    let parts = [{ badgeId: 'pill', text, slot: null }];
+    if (variant === 'aurora') parts = parts.map((p) => ({ ...p, badgeId: auroraShell(p.badgeId) }));
+    const sigParts = variant === 'signature'
+      ? parts.map((pt) => { const sp = signatureSpecForPart(customDef, s, pt, geom); sp.accent = accent; return sp; })
+      : null;
+    byCorner[corner].push({ def: customDef, s, v: { show: true }, verdict, parts, sigParts });
+  };
+  if (extra && Array.isArray(extra.customBadges)) {
+    for (const raw of extra.customBadges) {
+      const c = sanitizeCustomBadge(raw);
+      if (!c) continue;
+      const ev = evaluateCustomRule(c.rule, facts);
+      const verdict = { family: 'custom:' + c.id, name: c.name, show: ev.show, text: ev.show ? c.text : null, note: ev.note, custom: true };
+      verdicts.push(verdict);
+      if (!ev.show) continue;
+      pushCustom(verdict, c.corner, c.variant, c.text, c.color);
+    }
+  }
+  if (extra && Array.isArray(extra.pins)) {
+    for (const pin of extra.pins) {
+      const text = String(pin.text == null ? '' : pin.text).trim();
+      const color = CUSTOM_BADGE_COLORS.includes(String(pin.color || '').toLowerCase()) ? String(pin.color).toLowerCase() : '#e2e8f0';
+      const corner = CUSTOM_BADGE_CORNERS.includes(pin.corner) ? pin.corner : 'bl';
+      if (!text || [...text].length > 40) {
+        verdicts.push({ family: 'pin:' + String(pin.id || ''), name: 'Pinned badge', show: false, text: null, note: 'stored pin text is invalid — delete it and re-pin the title', custom: true });
+        continue;
+      }
+      const verdict = { family: 'pin:' + String(pin.id || ''), name: 'Pinned badge', show: true, text, note: pin.source ? `pinned from ${pin.source}` : 'pinned to this title', custom: true };
+      verdicts.push(verdict);
+      const variant = pin.variant === 'aurora' || pin.variant === 'classic' ? pin.variant : 'signature';
+      pushCustom(verdict, corner, variant, text, color);
+    }
+  }
   const drawables = [];
   // Margins and gaps in the geometry's design px: the canonical 20px
   // margin is 2% of the space's width horizontally and scales by the
@@ -1555,8 +1781,12 @@ function layoutFamilyDrawables(families, facts, aspectOf) {
     v.note = v.note ? `${v.note} · ${n2}` : n2;
   };
   for (const corner of Object.keys(byCorner)) {
+    // Stack order is the built-in order; custom badges (def.id
+    // 'custom', absent from the order) sort AFTER every built-in in
+    // the corner and keep their insertion order (sort is stable).
+    const stackIdx = (x) => { const i = FAMILY_STACK_ORDER[corner].indexOf(x.def.id); return i === -1 ? 1000 : i; };
     const queue = byCorner[corner].slice().sort(
-      (a, b) => FAMILY_STACK_ORDER[corner].indexOf(a.def.id) - FAMILY_STACK_ORDER[corner].indexOf(b.def.id));
+      (a, b) => stackIdx(a) - stackIdx(b));
     let used = 0; // stacked height consumed in this corner (design px)
     for (const { def, s, verdict, parts, sigParts } of queue) {
       if (sigParts) {
@@ -1597,6 +1827,7 @@ function layoutFamilyDrawables(families, facts, aspectOf) {
             x: xS / W, y: yS / H, wFrac: w / W, hFrac: sp.hFrac, opacity: 1,
             label: sp.text, text: sp.text, family: def.id, slot: sp.slot,
             renderMode: 'signature', microLabel: sp.microLabel, shape: sp.shape,
+            ...(sp.accent ? { accent: sp.accent } : {}),
             rule: { kind: 'family', family: def.id },
           });
           xS += w + ROWGAP;
@@ -1687,6 +1918,11 @@ function evaluateRun(items, factsByKey, layout, aspectOf) {
   const enabledFamilies = families
     ? FAMILY_DEFS.filter((d) => familySettings(families, d.id).on).length
     : 0;
+  // Custom badges (v1.24) are layout-level like families: rule badges
+  // ride the template, pins ride the item (pinsByKey: ratingKey →
+  // pin array, built by the caller from the pins list endpoint).
+  const customBadges = layout && typeof layout === 'object' && Array.isArray(layout.customBadges) ? layout.customBadges : [];
+  const pinsByKey = layout && typeof layout === 'object' && layout.pinsByKey && typeof layout.pinsByKey === 'object' ? layout.pinsByKey : {};
   for (const item of items || []) {
     const key = String(item.ratingKey);
     const facts = factsByKey ? factsByKey[key] : undefined;
@@ -1694,14 +1930,15 @@ function evaluateRun(items, factsByKey, layout, aspectOf) {
       failedFacts.push({ item, error: facts?.__error || 'metadata unavailable' });
       continue;
     }
-    if (!enabledFamilies && !places.length) {
-      skipped.push({ item, reason: Array.isArray(layout) ? 'no badges in the layout' : 'no families or badges enabled in the layout' });
+    const itemPins = Array.isArray(pinsByKey[key]) ? pinsByKey[key] : [];
+    if (!enabledFamilies && !places.length && !customBadges.length && !itemPins.length) {
+      skipped.push({ item, reason: Array.isArray(layout) ? 'no badges in the layout' : 'no families, custom badges, or pins enabled in the layout' });
       continue;
     }
     const badges = [];
     const misses = [];
-    if (families) {
-      const laid = layoutFamilyDrawables(families, facts, aspectOf);
+    if (families || customBadges.length || itemPins.length) {
+      const laid = layoutFamilyDrawables(families || {}, facts, aspectOf, { customBadges, pins: itemPins });
       for (const v of laid.verdicts) {
         if (!v.show) misses.push(`${v.name}: ${v.note || 'condition not met'}`);
         else if (v.undrawn) misses.push(`${v.name}: ${v.note || 'badge not drawn'}`);
@@ -1742,7 +1979,7 @@ function sidecarFor({ ratingKey, title, sourceUrl, badgeSet, posterHash, content
     sourceUrl: sourceUrl || '',
     contentType: contentType || '',
     posterHash: posterHash || '', // sha256 of the ORIGINAL poster bytes
-    badgeSet: badgeSet ? { name: badgeSet.name || '', placements: badgeSet.placements || [], ...(badgeSet.families ? { families: badgeSet.families } : {}) } : null,
+    badgeSet: badgeSet ? { name: badgeSet.name || '', placements: badgeSet.placements || [], ...(badgeSet.families ? { families: badgeSet.families } : {}), ...(badgeSet.customBadges ? { customBadges: badgeSet.customBadges } : {}) } : null,
     runId: runId || '',
   };
 }
@@ -1775,6 +2012,8 @@ const SIGNATURE_ACCENTS = {
   collection: '#f9a8d4', family: '#34d399',
   'saga-position': '#fda4af', 'quick-watch': '#2dd4bf',
   leaving: '#f87171',
+  awards: '#fbbf24', 'rt-fresh': '#34d399', bitrate: '#38bdf8',
+  'in-progress': '#facc15',
 };
 // Deep navy/charcoal gradient tints per family (top, bottom).
 const SIGNATURE_TINTS = {
@@ -1806,6 +2045,11 @@ const SIGNATURE_TINTS = {
   family: ['rgba(6,64,48,0.89)', 'rgba(3,24,19,0.87)'],
   'saga-position': ['rgba(96,26,44,0.89)', 'rgba(28,7,14,0.87)'],
   'quick-watch': ['rgba(8,60,72,0.89)', 'rgba(3,22,28,0.87)'],
+  awards: ['rgba(84,58,4,0.90)', 'rgba(22,16,3,0.87)'],
+  'rt-fresh': ['rgba(6,64,48,0.89)', 'rgba(3,24,19,0.87)'],
+  bitrate: ['rgba(8,51,84,0.88)', 'rgba(3,14,28,0.86)'],
+  'in-progress': ['rgba(92,72,4,0.90)', 'rgba(24,19,3,0.87)'],
+  custom: ['rgba(43,52,68,0.88)', 'rgba(9,12,20,0.86)'],
 };
 
 function sigHexRgba(hex, a) {
@@ -1819,6 +2063,15 @@ function sigHexRgba(hex, a) {
 // their family's accent over the family tint.
 function sigPalette(spec) {
   const fam = spec.family || '';
+  // Custom badges (v1.24) carry their own accent, validated to the
+  // eight-color palette by the editor and the server sanitizer. The
+  // accent overrides the family accent only — the tint stays the
+  // custom family's own, and built-ins (which never set accent) are
+  // untouched.
+  if (spec.accent && /^#[0-9a-f]{6}$/i.test(String(spec.accent))) {
+    const tint = SIGNATURE_TINTS[fam] || SIGNATURE_TINTS.details;
+    return { accent: spec.accent, top: tint[0], bottom: tint[1] };
+  }
   const t = String(spec.text == null ? '' : spec.text).toUpperCase();
   if (fam === 'status') {
     if (t.includes('RETURN') || t.includes('AIRING') || t.includes('CONTINU')) {
@@ -2524,6 +2777,10 @@ const __compositeAPI = {
   familySettings,
   evaluateFamily,
   layoutFamilyDrawables,
+  evaluateCustomRule,
+  sanitizeCustomBadge,
+  CUSTOM_BADGE_COLORS,
+  CUSTOM_BADGE_CORNERS,
   audioFormatName,
   audioChannelLabel,
   runtimeText,

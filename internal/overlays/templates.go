@@ -219,6 +219,114 @@ type templateFile struct {
 	// apply through the placements pipeline. Never drop this field or
 	// silently reinterpret a legacy file.
 	Families map[string]any `json:"families,omitempty"`
+	// CustomBadges is the v1.24 rule-based custom badge set:
+	// [{ id, name, text, color, corner, variant, rule }]. They are
+	// part of the template (unlike free-text pins, which live in
+	// their own store file) and are sanitized on save AND load.
+	CustomBadges []map[string]any `json:"customBadges,omitempty"`
+}
+
+// ---- custom badge sanitizing (v1.24) ------------------------------------
+// A rule-based custom badge: display fields + one AND-combined rule.
+// Rule fields: genre (contains), studio (contains), tag (contains),
+// contentRating (exact), watchStatus (watched|unwatched), ratingMin
+// (TMDb rating number), yearMin, yearMax (years). Unknown fields,
+// bad colors, bad corners, or empty text/name drop the badge —
+// never stored verbatim.
+var customBadgeColors = map[string]bool{
+	"#fbbf24": true, "#22d3ee": true, "#a78bfa": true, "#34d399": true,
+	"#f87171": true, "#e2e8f0": true, "#fb923c": true, "#f472b6": true,
+}
+
+var customRuleFields = map[string]bool{
+	"genre": true, "studio": true, "tag": true, "contentRating": true,
+	"watchStatus": true, "ratingMin": true, "yearMin": true, "yearMax": true,
+}
+
+// SanitizeCustomBadge cleans one decoded custom badge. Returns
+// (nil, false) to drop it.
+func SanitizeCustomBadge(v any) (map[string]any, bool) {
+	m, ok := v.(map[string]any)
+	if !ok {
+		return nil, false
+	}
+	name := strings.TrimSpace(jsString(m["name"]))
+	text := strings.TrimSpace(jsString(m["text"]))
+	if name == "" || text == "" {
+		return nil, false
+	}
+	if len([]rune(text)) > 40 {
+		text = string([]rune(text)[:40])
+	}
+	color := strings.ToLower(strings.TrimSpace(jsString(m["color"])))
+	if !customBadgeColors[color] {
+		color = "#e2e8f0"
+	}
+	corner := strings.TrimSpace(jsString(m["corner"]))
+	if corner != "tl" && corner != "tr" && corner != "bl" && corner != "br" {
+		corner = "bl"
+	}
+	variant := strings.TrimSpace(jsString(m["variant"]))
+	if variant != "aurora" && variant != "classic" {
+		variant = "signature"
+	}
+	id := strings.TrimSpace(jsString(m["id"]))
+	if id == "" {
+		id = "custom-" + Slugify(name)
+	}
+	out := map[string]any{
+		"id": id, "name": sliceRunes(name, 60), "text": text,
+		"color": color, "corner": corner, "variant": variant,
+	}
+	if rawRule, ok := m["rule"].(map[string]any); ok {
+		rule := map[string]any{}
+		for k, val := range rawRule {
+			if !customRuleFields[k] {
+				continue
+			}
+			switch k {
+			case "genre", "studio", "tag", "contentRating":
+				if s := strings.TrimSpace(jsString(val)); s != "" {
+					rule[k] = sliceRunes(s, 60)
+				}
+			case "watchStatus":
+				if s := strings.TrimSpace(jsString(val)); s == "watched" || s == "unwatched" {
+					rule[k] = s
+				}
+			case "ratingMin", "yearMin", "yearMax":
+				if n := jsNumber(val, true); !math.IsNaN(n) {
+					rule[k] = n
+				}
+			}
+		}
+		out["rule"] = rule
+	} else {
+		out["rule"] = map[string]any{}
+	}
+	return out, true
+}
+
+// SanitizeCustomBadges cleans a decoded custom badge array.
+func SanitizeCustomBadges(v any) []map[string]any {
+	arr, ok := v.([]any)
+	if !ok {
+		return nil
+	}
+	out := []map[string]any{}
+	seen := map[string]bool{}
+	for _, raw := range arr {
+		if c, ok := SanitizeCustomBadge(raw); ok {
+			if seen[c["id"].(string)] {
+				continue
+			}
+			seen[c["id"].(string)] = true
+			out = append(out, c)
+		}
+	}
+	if len(out) == 0 {
+		return nil
+	}
+	return out
 }
 
 // ---- family layout sanitizing ------------------------------------------------
@@ -251,6 +359,12 @@ var familyIDs = map[string]bool{
 	// the leaving entry (the mode case below was unreachable);
 	// restored in v1.15 when the family's settings were audited.
 	"leaving": true,
+	// New families (v1.24): awards + RT Fresh pills, bitrate,
+	// in-progress. Studio + decade already existed (they are in
+	// this list above via the earlier entries) — the v1.24 brief
+	// named them, but duplicating them would have forked the
+	// registry, so they were verified in place, not re-added.
+	"awards": true, "rt-fresh": true, "bitrate": true, "in-progress": true,
 }
 
 // familyRatingVocab is the full content-rating list the family
@@ -513,14 +627,20 @@ func (t *TemplateStore) Save(name string, placements json.RawMessage) (map[strin
 	return t.SaveLayout(name, placements, nil)
 }
 
-// SaveLayout additionally stores a Kometa-style family layout
-// (familiesRaw = the raw JSON object of family settings, nil for a
-// legacy badge-only template). With families present, zero custom
+// SaveLayout stores a Kometa-style family layout (familiesRaw =
+// the raw JSON object of family settings, nil for a legacy
+// badge-only template). With families present, zero custom
 // placements is a valid template (a pure family layout); without them
 // the legacy rule stands — at least one saveable badge is required.
 // Returns { name, placements, skippedFanart, kind, families } where
 // kind is "families" or "legacy" and families counts ENABLED families.
 func (t *TemplateStore) SaveLayout(name string, placements json.RawMessage, familiesRaw json.RawMessage) (map[string]any, error) {
+	return t.SaveLayoutCustom(name, placements, familiesRaw, nil)
+}
+
+// SaveLayoutCustom is SaveLayout plus v1.24 rule-based custom badges
+// (customBadgesRaw, sanitized the same way as on load).
+func (t *TemplateStore) SaveLayoutCustom(name string, placements json.RawMessage, familiesRaw json.RawMessage, customBadgesRaw json.RawMessage) (map[string]any, error) {
 	cleanName := sliceRunes(strings.TrimSpace(name), 80)
 	if cleanName == "" {
 		return nil, fmt.Errorf("Template needs a name")
@@ -532,12 +652,22 @@ func (t *TemplateStore) SaveLayout(name string, placements json.RawMessage, fami
 			families = SanitizeFamilies(decoded)
 		}
 	}
+	// Custom badges decode FIRST: like a family layout, a template
+	// whose only content is rule badges is valid — the legacy
+	// "at least one badge" gate must not refuse it.
+	var customsEarly []map[string]any
+	if len(customBadgesRaw) > 0 && string(customBadgesRaw) != "null" {
+		var decoded any
+		if err := json.Unmarshal(customBadgesRaw, &decoded); err == nil {
+			customsEarly = SanitizeCustomBadges(decoded)
+		}
+	}
 	var rawArr []json.RawMessage
 	if len(placements) == 0 || json.Unmarshal(placements, &rawArr) != nil || len(rawArr) == 0 {
-		if families == nil {
+		if families == nil && len(customsEarly) == 0 {
 			return nil, fmt.Errorf("Template needs at least one badge")
 		}
-		rawArr = nil // pure family layout — custom placements are optional
+		rawArr = nil // pure family/custom layout — custom placements are optional
 	}
 	raw := parsePlacements(placements)
 	t.ensureDir()
@@ -554,10 +684,11 @@ func (t *TemplateStore) SaveLayout(name string, placements json.RawMessage, fami
 			clean = append(clean, c)
 		}
 	}
-	if len(clean) == 0 && families == nil {
+	if len(clean) == 0 && families == nil && len(customsEarly) == 0 {
 		return nil, fmt.Errorf("No saveable badges — fanart logos are per-title and cannot be templated")
 	}
-	tpl := templateFile{Name: cleanName, CreatedAt: isoNow(), Placements: clean, Families: families}
+	customs := customsEarly
+	tpl := templateFile{Name: cleanName, CreatedAt: isoNow(), Placements: clean, Families: families, CustomBadges: customs}
 	b, _ := json.MarshalIndent(tpl, "", "  ")
 	if err := os.WriteFile(t.fileFor(cleanName), b, 0o644); err != nil {
 		return nil, err
@@ -566,7 +697,7 @@ func (t *TemplateStore) SaveLayout(name string, placements json.RawMessage, fami
 	if families != nil {
 		kind = "families"
 	}
-	return map[string]any{"name": cleanName, "placements": len(clean), "skippedFanart": skippedFanart, "kind": kind, "families": EnabledFamilies(families)}, nil
+	return map[string]any{"name": cleanName, "placements": len(clean), "skippedFanart": skippedFanart, "kind": kind, "families": EnabledFamilies(families), "customBadges": len(customs)}, nil
 }
 
 // List templates: [{ name, createdAt, placements (count) }], sorted by
@@ -587,10 +718,11 @@ func (t *TemplateStore) List() []map[string]any {
 			continue
 		}
 		var tpl struct {
-			Name       string            `json:"name"`
-			CreatedAt  string            `json:"createdAt"`
-			Placements []json.RawMessage `json:"placements"`
-			Families   map[string]any    `json:"families"`
+			Name         string            `json:"name"`
+			CreatedAt    string            `json:"createdAt"`
+			Placements   []json.RawMessage `json:"placements"`
+			Families     map[string]any    `json:"families"`
+			CustomBadges []json.RawMessage `json:"customBadges"`
 		}
 		if err := json.Unmarshal(raw, &tpl); err != nil || tpl.Name == "" {
 			continue
@@ -605,7 +737,7 @@ func (t *TemplateStore) List() []map[string]any {
 			kind = "families"
 			famCount = EnabledFamilies(tpl.Families)
 		}
-		out = append(out, map[string]any{"name": tpl.Name, "createdAt": tpl.CreatedAt, "placements": count, "kind": kind, "families": famCount})
+		out = append(out, map[string]any{"name": tpl.Name, "createdAt": tpl.CreatedAt, "placements": count, "kind": kind, "families": famCount, "customBadges": len(tpl.CustomBadges)})
 	}
 	sort.SliceStable(out, func(i, j int) bool {
 		return out[i]["name"].(string) < out[j]["name"].(string)
@@ -624,10 +756,11 @@ func (t *TemplateStore) Load(name string) (map[string]any, error) {
 		return nil, err
 	}
 	var tpl struct {
-		Name       string          `json:"name"`
-		CreatedAt  string          `json:"createdAt"`
-		Placements json.RawMessage `json:"placements"`
-		Families   map[string]any  `json:"families"`
+		Name         string          `json:"name"`
+		CreatedAt    string          `json:"createdAt"`
+		Placements   json.RawMessage `json:"placements"`
+		Families     map[string]any  `json:"families"`
+		CustomBadges json.RawMessage `json:"customBadges"`
 	}
 	var probe map[string]any
 	if err := json.Unmarshal(raw, &probe); err != nil {
@@ -649,12 +782,22 @@ func (t *TemplateStore) Load(name string) (map[string]any, error) {
 		}
 	}
 	families := SanitizeFamilies(tpl.Families)
-	if len(clean) == 0 && families == nil {
+	var customs []map[string]any
+	if len(tpl.CustomBadges) > 0 {
+		var decoded any
+		if err := json.Unmarshal(tpl.CustomBadges, &decoded); err == nil {
+			customs = SanitizeCustomBadges(decoded)
+		}
+	}
+	if len(clean) == 0 && families == nil && len(customs) == 0 {
 		return nil, fmt.Errorf("Template %q has no usable badge placements", name)
 	}
 	out := map[string]any{"name": tpl.Name, "createdAt": tpl.CreatedAt, "placements": clean, "legacy": families == nil}
 	if families != nil {
 		out["families"] = families
+	}
+	if len(customs) > 0 {
+		out["customBadges"] = customs
 	}
 	return out, nil
 }
@@ -729,9 +872,10 @@ func (t *TemplateStore) ImportRaw(raw json.RawMessage) (string, error) {
 // writes the first one.
 func ValidateTemplateRaw(raw json.RawMessage) (string, error) {
 	var probe struct {
-		Name       string          `json:"name"`
-		Placements json.RawMessage `json:"placements"`
-		Families   json.RawMessage `json:"families"`
+		Name         string          `json:"name"`
+		Placements   json.RawMessage `json:"placements"`
+		Families     json.RawMessage `json:"families"`
+		CustomBadges json.RawMessage `json:"customBadges"`
 	}
 	if err := json.Unmarshal(raw, &probe); err != nil {
 		return "", fmt.Errorf("template is not valid JSON: %w", err)
@@ -752,7 +896,13 @@ func ValidateTemplateRaw(raw json.RawMessage) (string, error) {
 			return "", fmt.Errorf("template %q has families that are not an object", name)
 		}
 	}
-	if len(probe.Placements) == 0 && (len(probe.Families) == 0 || string(probe.Families) == "null") {
+	if len(probe.CustomBadges) > 0 && string(probe.CustomBadges) != "null" {
+		var arr []json.RawMessage
+		if err := json.Unmarshal(probe.CustomBadges, &arr); err != nil {
+			return "", fmt.Errorf("template %q has customBadges that are not an array", name)
+		}
+	}
+	if len(probe.Placements) == 0 && (len(probe.Families) == 0 || string(probe.Families) == "null") && len(probe.CustomBadges) == 0 {
 		return "", fmt.Errorf("template %q has neither placements nor families", name)
 	}
 	return name, nil

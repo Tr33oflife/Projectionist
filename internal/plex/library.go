@@ -464,6 +464,12 @@ func (c *Client) GetSectionItemsAll(ctx context.Context, s *Server, sectionKey s
 				f := numOrZero(v)
 				plexRating = &f
 			}
+			// v1.25: audience score, same defensive shape as rating.
+			var audienceRating *float64
+			if v, present := m["audienceRating"]; present && v != nil {
+				f := numOrZero(v)
+				audienceRating = &f
+			}
 			var durationMin *int
 			if v, present := m["duration"]; present && v != nil {
 				d := int(math.Round(numOrZero(v) / 60000))
@@ -476,17 +482,18 @@ func (c *Client) GetSectionItemsAll(ctx context.Context, s *Server, sectionKey s
 				studioRaw = m["studio"]
 			}
 			items = append(items, LibraryItem{
-				RatingKey:  jsString(m["ratingKey"]),
-				Title:      titleOrUntitled(m),
-				Year:       year,
-				Type:       stringField(m, "type"),
-				Guids:      guids,
-				ViewCount:  int(numOrZero(m["viewCount"])),
-				ViewOffset: int(numOrZero(m["viewOffset"])),
-				Thumb:      stringField(m, "thumb"),
-				ChildCount: int(numOrZero(m["childCount"])), // shows: season count (TV completeness generator)
-				AddedAt:    intField(m, "addedAt"),
-				PlexRating: plexRating,
+				RatingKey:      jsString(m["ratingKey"]),
+				Title:          titleOrUntitled(m),
+				Year:           year,
+				Type:           stringField(m, "type"),
+				Guids:          guids,
+				ViewCount:      int(numOrZero(m["viewCount"])),
+				ViewOffset:     int(numOrZero(m["viewOffset"])),
+				Thumb:          stringField(m, "thumb"),
+				ChildCount:     int(numOrZero(m["childCount"])), // shows: season count (TV completeness generator)
+				AddedAt:        intField(m, "addedAt"),
+				PlexRating:     plexRating,
+				AudienceRating: audienceRating,
 				// v0.4 Plex-native tags — powers the zero-key Advisor
 				// generators (genres, directors, actors, studios, content
 				// ratings). TMDb is now only a fallback for genres.

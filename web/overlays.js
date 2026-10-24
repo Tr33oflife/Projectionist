@@ -119,6 +119,11 @@ const ov = {
   // COMPLETE settings object (composite.defaultFamilies shape);
   // `familyDrawables` caches the last stage layout for canvas hit-tests.
   families: null, selFamily: null, familyDrawables: [],
+  // Custom badges (v1.24): rule badges live on the working layout
+  // (they save into templates); pins live on the server (they apply
+  // to their titles whatever the layout). `pins` is the server's
+  // whole list, loaded lazily; null means "not loaded yet".
+  customBadges: [], pins: null,
 };
 
 // GO BUILD: badge pack art is the server's /badges route; the session
@@ -451,6 +456,8 @@ function init() {
   });
   $('btn-leaving-set-picked').addEventListener('click', leavingSetOnPicked);
   $('btn-leaving-set-collection').addEventListener('click', leavingSetOnCollection);
+  $('btn-pin-to-target').addEventListener('click', pinToTarget);
+  $('btn-pins-set-collection').addEventListener('click', pinToCollection);
   $('btn-overlay-reapply-check').addEventListener('click', () => reapplyCheck(true));
   $('btn-overlay-save-template').addEventListener('click', saveTemplate);
   $('btn-families-aurora-all').addEventListener('click', () => setAllFamilyVariants('aurora'));
@@ -496,7 +503,7 @@ function switchView(v) {
   // the Apply view: its init-time load can run before a server is
   // connected, and a select that failed once must not stay dead for
   // the whole session (the v1.8.0 live report).
-  if (v === 'apply') { loadRestoreSections(); loadLeaving(); loadBackupList(); }
+  if (v === 'apply') { loadRestoreSections(); loadLeaving(); loadBackupList(); loadPinsCard(); }
 }
 
 // ---------- badge packs ----------
@@ -570,6 +577,35 @@ function famEntry(id) {
 }
 // Any family change: restack the stage, re-judge the verdicts, refresh
 // the cards, and void any outstanding apply evaluation.
+function touchFamilies() { redraw(); renderVerdicts(); renderFamilies(); invalidateEvaluation(); }
+
+// ---------- custom badges (v1.24) ----------
+// Pins are server state: loadPins caches the whole list in ov.pins
+// (null = not loaded yet). Canvas/verdict/apply paths read through
+// pinsForItem / pinsByKeyFor, which tolerate "not loaded" as "none
+// yet" — a pins fetch must never break the stage. The pins card
+// calls loadPins with its own error display.
+async function loadPins() {
+  try {
+    const { pins } = await P().call(window.pcm.customPinsList());
+    ov.pins = pins || [];
+  } catch { if (ov.pins === null) ov.pins = []; }
+  return ov.pins;
+}
+function pinsForItem(ratingKey) {
+  if (!ov.pins || ratingKey == null) return [];
+  return ov.pins.filter((p) => String(p.ratingKey) === String(ratingKey));
+}
+function pinsByKeyFor(items) {
+  const map = {};
+  for (const it of items || []) {
+    const ps = pinsForItem(it.ratingKey);
+    if (ps.length) map[String(it.ratingKey)] = ps;
+  }
+  return map;
+}
+function touchCustom() { redraw(); renderVerdicts(); renderFamilies(); invalidateEvaluation(); }
+
 function touchFamilies() { redraw(); renderVerdicts(); renderFamilies(); invalidateEvaluation(); }
 // Header bulk switch: every family to one art pack at once (variants
 // are per-family settings; this just writes them all, then the usual
@@ -809,7 +845,7 @@ function renderFamilies() {
       <p class="muted small family-desc">${P().esc(def.description)}</p>
       ${s.on ? `<div class="family-settings">${familySettingsHtml(def, s)}</div>` : ''}
     </div>`;
-  }).join('');
+  }).join('') + customBadgesSectionHtml();
   host.querySelectorAll('[data-fam-on]').forEach((el) => el.addEventListener('change', () => {
     famEntry(el.dataset.famOn).on = el.checked;
     touchFamilies();
@@ -906,6 +942,115 @@ function renderFamilies() {
     entry.dx = 0; entry.dy = 0;
     touchFamilies();
   }));
+  host.querySelectorAll('[data-custom-add]').forEach((el) => el.addEventListener('click', () => openCustomBadgeEditor(null)));
+  host.querySelectorAll('[data-custom-edit]').forEach((el) => el.addEventListener('click', () => openCustomBadgeEditor(Number(el.dataset.customEdit))));
+  host.querySelectorAll('[data-custom-del]').forEach((el) => el.addEventListener('click', () => {
+    ov.customBadges.splice(Number(el.dataset.customDel), 1);
+    touchCustom();
+  }));
+}
+
+// Custom badge section inside the Families panel (v1.24): rule badges
+// live on the working layout, so they render, judge, and save with
+// the template. Each row judges itself against the current target
+// with the same evaluator the apply flow uses.
+function customBadgesSectionHtml() {
+  const rows = (ov.customBadges || []).map((c, i) => {
+    let verdict = '<span class="muted">pick a poster to judge it</span>';
+    if (ov.factsError) verdict = '<span class="muted">metadata failed — can\'t judge</span>';
+    else if (ov.facts) {
+      const ev = CMP().evaluateCustomRule(c.rule || {}, ov.facts);
+      verdict = ev.show
+        ? `<b class="ok-text">FIRES</b> — will draw “${P().esc(c.text)}”`
+        : `<span class="muted">won't fire — ${P().esc(ev.note || 'condition not met')}</span>`;
+    }
+    return `<div class="family-card">
+      <div class="family-head">
+        <label class="family-toggle"><b>${P().esc(c.name)}</b> <span class="muted small">“${P().esc(c.text)}”</span></label>
+        <span class="family-verdict small">${verdict}</span>
+      </div>
+      <p class="muted small family-desc">${P().esc(customRuleSummary(c.rule || {}))} · corner ${P().esc(c.corner)} · ${P().esc(c.variant)} style · <span style="color:${P().esc(c.color)}">■</span></p>
+      <div class="row"><button class="btn ghost small" data-custom-edit="${i}">Edit</button><button class="btn ghost small" data-custom-del="${i}">Delete</button></div>
+    </div>`;
+  }).join('');
+  return `<div class="row-between" style="margin-top:12px"><h3>Custom badges</h3><button class="btn secondary small" data-custom-add>Add rule badge</button></div>
+    <p class="muted small">Your own badges, judged exactly like a built-in family: they fire only on titles whose facts meet every condition you set. A badge that matches nothing fires nowhere and says so in preview. Custom badges save into templates; pinned badges (below, on the Apply page) attach to titles directly.</p>
+    ${rows || '<p class="muted small">No custom badges yet — add one to badge a genre, a studio, a rating band, or anything else the built-ins don\'t cover.</p>'}`;
+}
+
+function customRuleSummary(rule) {
+  const parts = [];
+  if (rule.genre) parts.push(`genre includes “${rule.genre}”`);
+  if (rule.studio) parts.push(`studio includes “${rule.studio}”`);
+  if (rule.tag) parts.push(`tag includes “${rule.tag}”`);
+  if (rule.contentRating) parts.push(`content rating is ${rule.contentRating}`);
+  if (rule.watchStatus) parts.push(rule.watchStatus === 'watched' ? 'already watched' : 'not yet watched');
+  if (typeof rule.ratingMin === 'number') parts.push(`TMDb rating ≥ ${rule.ratingMin}`);
+  if (typeof rule.yearMin === 'number') parts.push(`year ≥ ${rule.yearMin}`);
+  if (typeof rule.yearMax === 'number') parts.push(`year ≤ ${rule.yearMax}`);
+  return parts.length ? parts.join(' · ') : 'no conditions — matches every title';
+}
+
+function customColorOptions(selected) {
+  return CMP().CUSTOM_BADGE_COLORS.map((c) => `<option value="${c}" ${c === selected ? 'selected' : ''}>${c}</option>`).join('');
+}
+
+function openCustomBadgeEditor(index) {
+  const existing = index != null ? ov.customBadges[index] : null;
+  const r = (existing && existing.rule) || {};
+  const m = P().openModal({
+    title: existing ? `Edit custom badge “${existing.name}”` : 'New custom badge',
+    bodyHTML: `<p class="muted small">Text is what draws on the poster (1–40 characters). The rule is AND-combined: every condition you set must match. Leave a field blank to ignore it. At least one condition is required — a badge with no conditions would fire on everything.</p>
+      <label class="field">Name<input id="cb-name" class="input" value="${P().esc(existing?.name || '')}" maxlength="60" placeholder="e.g. Horror shelf" autocomplete="off"></label>
+      <label class="field">Badge text<input id="cb-text" class="input" value="${P().esc(existing?.text || '')}" maxlength="40" placeholder="e.g. HORROR" autocomplete="off"></label>
+      <div class="field-row">
+        <label class="field">Color<select id="cb-color" class="input">${customColorOptions(existing?.color || '#e2e8f0')}</select></label>
+        <label class="field">Corner<select id="cb-corner" class="input">${[['tl', 'Top left'], ['tr', 'Top right'], ['bl', 'Bottom left'], ['br', 'Bottom right']].map(([v, l]) => `<option value="${v}" ${existing?.corner === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+        <label class="field">Style<select id="cb-variant" class="input">${[['signature', 'Signature'], ['aurora', 'Aurora'], ['classic', 'Classic']].map(([v, l]) => `<option value="${v}" ${(existing?.variant || 'signature') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+      </div>
+      <p class="tray-label">Rule — every set condition must match</p>
+      <div class="field-row">
+        <label class="field">Genre includes<input id="cb-genre" class="input" value="${P().esc(r.genre || '')}" maxlength="60" placeholder="e.g. Horror" autocomplete="off"></label>
+        <label class="field">Studio includes<input id="cb-studio" class="input" value="${P().esc(r.studio || '')}" maxlength="60" placeholder="e.g. A24" autocomplete="off"></label>
+      </div>
+      <div class="field-row">
+        <label class="field">Tag includes<input id="cb-tag" class="input" value="${P().esc(r.tag || '')}" maxlength="60" placeholder="e.g. Criterion" autocomplete="off"></label>
+        <label class="field">Content rating is<input id="cb-cr" class="input" value="${P().esc(r.contentRating || '')}" maxlength="60" placeholder="e.g. R" autocomplete="off"></label>
+      </div>
+      <div class="field-row">
+        <label class="field">Watch status<select id="cb-watch" class="input"><option value="">Any</option><option value="watched" ${r.watchStatus === 'watched' ? 'selected' : ''}>Watched</option><option value="unwatched" ${r.watchStatus === 'unwatched' ? 'selected' : ''}>Unwatched</option></select></label>
+        <label class="field">TMDb rating ≥<input id="cb-rating" class="input" type="number" step="0.1" min="0" max="10" value="${r.ratingMin ?? ''}" placeholder="e.g. 8"></label>
+      </div>
+      <div class="field-row">
+        <label class="field">Year from<input id="cb-ymin" class="input" type="number" value="${r.yearMin ?? ''}" placeholder="e.g. 1980"></label>
+        <label class="field">Year to<input id="cb-ymax" class="input" type="number" value="${r.yearMax ?? ''}" placeholder="e.g. 1989"></label>
+      </div>
+      <p class="muted small">Classic style draws the standard pill (the color shows in Signature and Aurora styles). The rating threshold reads the TMDb rating, labeled here so the verdict can say so too.</p>`,
+    footHTML: '<button class="btn ghost" data-close="cancel">Cancel</button><button class="btn primary" id="cb-save">Save badge</button>',
+  });
+  m.root.querySelector('#cb-save').addEventListener('click', () => {
+    const q = (id) => m.root.querySelector(id).value.trim();
+    const num = (id) => { const v = q(id); return v === '' ? undefined : Number(v); };
+    const rule = {};
+    if (q('#cb-genre')) rule.genre = q('#cb-genre');
+    if (q('#cb-studio')) rule.studio = q('#cb-studio');
+    if (q('#cb-tag')) rule.tag = q('#cb-tag');
+    if (q('#cb-cr')) rule.contentRating = q('#cb-cr');
+    if (q('#cb-watch')) rule.watchStatus = q('#cb-watch');
+    if (num('#cb-rating') != null && Number.isFinite(num('#cb-rating'))) rule.ratingMin = num('#cb-rating');
+    if (num('#cb-ymin') != null && Number.isFinite(num('#cb-ymin'))) rule.yearMin = num('#cb-ymin');
+    if (num('#cb-ymax') != null && Number.isFinite(num('#cb-ymax'))) rule.yearMax = num('#cb-ymax');
+    if (!Object.keys(rule).length) { P().toast('Set at least one rule condition — a badge with no conditions would fire on everything.', 'error'); return; }
+    const clean = CMP().sanitizeCustomBadge({
+      id: existing?.id, name: q('#cb-name'), text: q('#cb-text'),
+      color: q('#cb-color'), corner: q('#cb-corner'), variant: q('#cb-variant'), rule,
+    });
+    if (!clean) { P().toast('Name and badge text are both required.', 'error'); return; }
+    if (index != null) ov.customBadges[index] = clean;
+    else ov.customBadges.push(clean);
+    m.close('saved');
+    touchCustom();
+  });
 }
 
 // ---------- design target + facts + verdicts ----------
@@ -937,6 +1082,10 @@ async function setTarget(t) {
   renderFanartTray();
   renderFacts(); renderVerdicts(); renderFamilies();
   redraw(); renderSelected();
+  // Pins are server state that can change outside the Studio (the
+  // pins card) — refresh them for the new target so the stage and
+  // the verdicts rail judge with the current list.
+  loadPins().then(() => { renderVerdicts(); redraw(); });
   syncItemTarget();
 }
 // The "Apply" scope IS the Studio target: keep it in sync so the two
@@ -1083,9 +1232,17 @@ function renderVerdicts() {
   if (!ov.facts) { host.innerHTML = '<p class="muted small">Loading…</p>'; return; }
   const f = ov.facts;
   // Families first — one row per ENABLED family, judged by the same
-  // pure layout pass the stage and the apply flow use.
-  const laid = CMP().layoutFamilyDrawables(ov.families || CMP().defaultFamilies(), f, famAspectOf);
-  const famRows = laid.verdicts.map((v) => v.undrawn
+  // pure layout pass the stage and the apply flow use. Custom
+  // verdicts (rule badges + pins) ride the same pass but render
+  // under their own header — they are not built-in families.
+  const laid = CMP().layoutFamilyDrawables(ov.families || CMP().defaultFamilies(), f, famAspectOf,
+    { customBadges: ov.customBadges, pins: pinsForItem(ov.target ? ov.target.ratingKey : null) });
+  const famRows = laid.verdicts.filter((v) => !v.custom).map((v) => v.undrawn
+    ? `<div class="verdict-row"><span class="verdict-dot off"></span><span class="verdict-name">${P().esc(v.name)}</span><span class="verdict-note muted">won't draw — ${P().esc(v.note || 'below the legibility floor at this size')}</span></div>`
+    : v.show
+      ? `<div class="verdict-row"><span class="verdict-dot on"></span><span class="verdict-name">${P().esc(v.name)}</span><span class="verdict-note"><b class="ok-text">FIRES</b> — will draw “${P().esc(v.text || '')}”${v.note ? ` <span class="muted">(${P().esc(v.note)})</span>` : ''}</span></div>`
+      : `<div class="verdict-row"><span class="verdict-dot off"></span><span class="verdict-name">${P().esc(v.name)}</span><span class="verdict-note muted">won't fire — ${P().esc(v.note || 'condition not met')}</span></div>`);
+  const customVerdictRows = laid.verdicts.filter((v) => v.custom).map((v) => v.undrawn
     ? `<div class="verdict-row"><span class="verdict-dot off"></span><span class="verdict-name">${P().esc(v.name)}</span><span class="verdict-note muted">won't draw — ${P().esc(v.note || 'below the legibility floor at this size')}</span></div>`
     : v.show
       ? `<div class="verdict-row"><span class="verdict-dot on"></span><span class="verdict-name">${P().esc(v.name)}</span><span class="verdict-note"><b class="ok-text">FIRES</b> — will draw “${P().esc(v.text || '')}”${v.note ? ` <span class="muted">(${P().esc(v.note)})</span>` : ''}</span></div>`
@@ -1099,9 +1256,10 @@ function renderVerdicts() {
     }
     return `<div class="verdict-row"><span class="verdict-dot off"></span><span class="verdict-name">${P().esc(name)}</span><span class="verdict-note muted">won't fire — ${P().esc(verdictReason(p.rule, ev, f))}</span></div>`;
   });
+  const allCustomRows = customVerdictRows.concat(customRows);
   host.innerHTML =
     (famRows.length ? '<p class="tray-label">Families</p>' + famRows.join('') : '<p class="muted small">No families enabled — enable some in the Families panel, or place custom badges.</p>')
-    + (customRows.length ? '<p class="tray-label">Custom badges</p>' + customRows.join('') : '');
+    + (allCustomRows.length ? '<p class="tray-label">Custom badges</p>' + allCustomRows.join('') : '');
 }
 
 // ---------- designer canvas ----------
@@ -1236,7 +1394,8 @@ async function compositeFor(item, layout, facts) {
   const cv = document.createElement('canvas');
   cv.width = dims.w; cv.height = dims.h;
   const drawables = [];
-  const laid = CMP().layoutFamilyDrawables(layout.families, facts, famAspectOf);
+  const laid = CMP().layoutFamilyDrawables(layout.families, facts, famAspectOf,
+    { customBadges: layout.customBadges || [], pins: (layout.pinsByKey && layout.pinsByKey[String(item.ratingKey)]) || [] });
   for (const d of laid.drawables) {
     if (d.renderMode === 'signature') {
       drawables.push({ signature: d, rect: familyRect(d, dims) });
@@ -1286,7 +1445,8 @@ async function redraw() {
   // feeds the canvas hit-test cache.
   ov.familyDrawables = [];
   if (ov.facts) {
-    const laid = CMP().layoutFamilyDrawables(ov.families || CMP().defaultFamilies(), ov.facts, famAspectOf);
+    const laid = CMP().layoutFamilyDrawables(ov.families || CMP().defaultFamilies(), ov.facts, famAspectOf,
+      { customBadges: ov.customBadges, pins: pinsForItem(ov.target ? ov.target.ratingKey : null) });
     ov.familyDrawables = laid.drawables;
     for (const d of laid.drawables) {
       if (d.renderMode === 'signature') {
@@ -1493,10 +1653,11 @@ function ruleFromUI(kind, old) {
 // says so). Templates never write to Plex themselves.
 async function saveTemplate() {
   const famCount = enabledFamilyCount();
-  if (!famCount && !ov.placements.length) { P().toast('Enable at least one family — or place a custom badge — first.', 'error'); return; }
+  const customCount = (ov.customBadges || []).length;
+  if (!famCount && !ov.placements.length && !customCount) { P().toast('Enable at least one family — or place a custom badge — first.', 'error'); return; }
   const m = P().openModal({
     title: 'Save as template',
-    bodyHTML: `<p class="muted small">This layout will be saved: ${famCount} famil${famCount === 1 ? 'y' : 'ies'} enabled${ov.placements.length ? ` + ${ov.placements.length} custom badge(s)` : ''}. Fanart logos can't be templated (they're per-title) and are skipped.</p>
+    bodyHTML: `<p class="muted small">This layout will be saved: ${famCount} famil${famCount === 1 ? 'y' : 'ies'} enabled${ov.placements.length ? ` + ${ov.placements.length} custom badge(s)` : ''}${customCount ? ` + ${customCount} rule badge(s)` : ''}. Fanart logos can't be templated (they're per-title) and are skipped.</p>
       <label class="field">Template name<input id="tpl-name" class="input" placeholder="e.g. Kometa-style defaults" maxlength="80" autocomplete="off"></label>`,
     footHTML: '<button class="btn ghost" data-close="cancel">Cancel</button><button class="btn primary" id="tpl-save-go">Save template</button>',
   });
@@ -1505,12 +1666,13 @@ async function saveTemplate() {
     if (!name) return;
     try {
       // Families are only sent when at least one is enabled — a
-      // custom-badges-only design stays a legacy-shaped save.
-      const r = await P().call(window.pcm.overlayTemplateSave(name, ov.placements, famCount ? ov.families : null));
+      // custom-badges-only design stays a legacy-shaped save. Rule
+      // badges ride along whenever any exist.
+      const r = await P().call(window.pcm.overlayTemplateSave(name, ov.placements, famCount ? ov.families : null, customCount ? ov.customBadges : null));
       m.close('saved');
       P().toast(r.kind === 'families'
-        ? `Template \u201c${name}\u201d saved (${r.families} families${r.placements ? ` + ${r.placements} custom badges` : ''}${r.skippedFanart ? `, ${r.skippedFanart} fanart skipped` : ''}).`
-        : `Template \u201c${name}\u201d saved (${r.placements} badges${r.skippedFanart ? `, ${r.skippedFanart} fanart skipped` : ''}).`, 'success');
+        ? `Template \u201c${name}\u201d saved (${r.families} families${r.placements ? ` + ${r.placements} custom badges` : ''}${r.customBadges ? ` + ${r.customBadges} rule badges` : ''}${r.skippedFanart ? `, ${r.skippedFanart} fanart skipped` : ''}).`
+        : `Template \u201c${name}\u201d saved (${r.placements} badges${r.customBadges ? ` + ${r.customBadges} rule badges` : ''}${r.skippedFanart ? `, ${r.skippedFanart} fanart skipped` : ''}).`, 'success');
     } catch (e) { P().toastErr(e); }
   });
   await m.closed;
@@ -1532,8 +1694,8 @@ async function renderTemplates() {
         ? '<span class="kind-chip">legacy</span>'
         : '<span class="kind-chip">families</span>'}
       <p class="muted small">${t.kind === 'families'
-        ? `${t.families} famil${t.families === 1 ? 'y' : 'ies'}${t.placements ? ` + ${t.placements} custom badge(s)` : ''}`
-        : `${t.placements} badge(s)`}${t.createdAt ? ` \u00b7 saved ${P().esc(new Date(t.createdAt).toLocaleDateString())}` : ''}</p></div>
+        ? `${t.families} famil${t.families === 1 ? 'y' : 'ies'}${t.placements ? ` + ${t.placements} custom badge(s)` : ''}${t.customBadges ? ` + ${t.customBadges} rule badge(s)` : ''}`
+        : `${t.placements} badge(s)${t.customBadges ? ` + ${t.customBadges} rule badge(s)` : ''}`}${t.createdAt ? ` \u00b7 saved ${P().esc(new Date(t.createdAt).toLocaleDateString())}` : ''}</p></div>
       <div class="btn-row">
         <button class="btn primary small" data-tapply="${P().esc(t.name)}">Apply template</button>
         <button class="btn ghost small danger" data-tdel="${P().esc(t.name)}">Delete</button>
@@ -1563,18 +1725,21 @@ async function applyTemplate(name) {
   catch (e) { P().toastErr(e); return; }
   ov.placements = tpl.placements.map((p) => ({ ...p, uid: uid() }));
   ov.sel = null; ov.selFamily = null;
+  // Rule badges load through the same sanitizer the editor uses —
+  // a template saved before v1.24 simply has none.
+  ov.customBadges = (tpl.customBadges || []).map((c) => CMP().sanitizeCustomBadge(c)).filter(Boolean);
   if (tpl.families) {
     ov.families = familiesFromStored(tpl.families);
     renderSelected();
     touchLayout(); renderFamilies();
     switchView('apply');
-    P().toast(`Template \u201c${tpl.name}\u201d loaded (family layout${ov.placements.length ? ` + ${ov.placements.length} custom badges` : ''}) — pick a target below, then Apply overlays.`, 'success');
+    P().toast(`Template \u201c${tpl.name}\u201d loaded (family layout${ov.placements.length ? ` + ${ov.placements.length} custom badges` : ''}${ov.customBadges.length ? ` + ${ov.customBadges.length} rule badges` : ''}) — pick a target below, then Apply overlays.`, 'success');
   } else {
     ov.families = familiesFromStored(null);
     renderSelected();
     touchLayout(); renderFamilies();
     switchView('apply');
-    P().toast(`Legacy template \u201c${tpl.name}\u201d loaded (${ov.placements.length} badges) — it predates families, so all families are off. Pick a target below, then Apply overlays.`, 'success');
+    P().toast(`Legacy template \u201c${tpl.name}\u201d loaded (${ov.placements.length} badges${ov.customBadges.length ? ` + ${ov.customBadges.length} rule badges` : ''}) — it predates families, so all families are off. Pick a target below, then Apply overlays.`, 'success');
   }
 }
 
@@ -1785,6 +1950,7 @@ function evalSnapshot() {
     ov.applyItems.map((i) => String(i.ratingKey)),
     ov.placements.map((p) => [p.badgeId, p.x, p.y, p.wFrac, p.opacity, p.rule, p.text || '']),
     fams,
+    (ov.customBadges || []).map((c) => [c.id, c.name, c.text, c.color, c.corner, c.variant, c.rule]),
   ]);
 }
 function invalidateEvaluation() {
@@ -1800,7 +1966,7 @@ function invalidateEvaluation() {
 // the item is listed as "couldn't be checked" and is never composited.
 async function evaluateTargets() {
   if (ov.evaluating || ov.applying) return;
-  if (!enabledFamilyCount() && !ov.placements.length) { P().toast('Enable at least one family — or place a custom badge — first.', 'error'); return; }
+  if (!enabledFamilyCount() && !ov.placements.length && !(ov.customBadges || []).length) { P().toast('Enable at least one family — or place a custom badge — first.', 'error'); return; }
   if (!ov.applyItems.length) { P().toast('Resolve a target first.', 'error'); return; }
   ov.evaluating = true;
   $('btn-overlay-evaluate').disabled = true;
@@ -1829,7 +1995,8 @@ async function evaluateTargets() {
     $('btn-overlay-evaluate').disabled = false;
   }
   if (snapshot !== evalSnapshot()) { P().toast('Targets or layout changed while previewing — this preview is out of date (Apply still judges fresh).', 'error'); return; }
-  const result = CMP().evaluateRun(items, factsByKey, { families: ov.families, custom: ov.placements }, famAspectOf);
+  await loadPins();
+  const result = CMP().evaluateRun(items, factsByKey, { families: ov.families, custom: ov.placements, customBadges: ov.customBadges, pinsByKey: pinsByKeyFor(items) }, famAspectOf);
   ov.evaluation = { snapshot, factsByKey, ...result };
   renderEvaluation();
 }
@@ -1926,7 +2093,7 @@ function wireSummaryCard(host, runId) {
 }
 async function runApplyNow() {
   if (ov.applying || ov.evaluating) return;
-  if (!enabledFamilyCount() && !ov.placements.length) { P().toast('Enable at least one family — or place a custom badge — first.', 'error'); return; }
+  if (!enabledFamilyCount() && !ov.placements.length && !(ov.customBadges || []).length) { P().toast('Enable at least one family — or place a custom badge — first.', 'error'); return; }
   // Scope guard: the collection/library/tag scopes must pass their
   // one-line confirm first; the main button cannot bypass it.
   if (ov.scope !== 'selected' && ov.pendingScope) {
@@ -1939,11 +2106,16 @@ async function runApplyNow() {
   const scopeTarget = ov.scope === 'selected'
     ? { type: 'item', count: items.length }
     : (ov.scopeTarget || { type: ov.scope, count: items.length });
+  // Pins are read fresh at apply time — a pin set since the Studio
+  // loaded still lands on its title's poster.
+  await loadPins();
   const layout = {
     families: JSON.parse(JSON.stringify(ov.families)),
     custom: JSON.parse(JSON.stringify(ov.placements)),
+    customBadges: JSON.parse(JSON.stringify(ov.customBadges || [])),
+    pinsByKey: pinsByKeyFor(items),
   };
-  const badgeSet = { name: 'studio', placements: layout.custom, families: layout.families };
+  const badgeSet = { name: 'studio', placements: layout.custom, families: layout.families, customBadges: layout.customBadges };
   const runId = newClientRunID();
   ov.applying = true;
   ov.runCancel = false;
@@ -2057,6 +2229,135 @@ function onApplyProgress(p) {
   if (!bar) return;
   bar.style.width = Math.round((p.done / Math.max(1, p.total)) * 100) + '%';
   note.textContent = `${p.done}/${p.total}: ${p.title} — ${p.ok ? '✓' : '✗'}`;
+}
+
+// ---------- pinned badges (v1.24, Tier 1) ----------
+// The pins card mirrors the Leaving card: one list, edited from the
+// server's fresh answer after every mutation. A collection pin is
+// expanded HERE into one pin per current member (the store only ever
+// sees items), and the card states plainly that later members are
+// not covered.
+const pinsState = { collections: [] };
+
+async function loadPinsCard() {
+  const note = $('pins-load-note');
+  try {
+    const { pins } = await P().call(window.pcm.customPinsList());
+    ov.pins = pins || [];
+    if (note) { note.hidden = true; note.textContent = ''; }
+  } catch (e) {
+    if (ov.pins === null) ov.pins = [];
+    if (note) {
+      note.textContent = `Couldn't load the pinned badges: ${e.message || String(e)} — opening this view again retries.`;
+      note.hidden = false;
+    }
+  }
+  renderPinsList();
+  await loadPinsCollections();
+}
+
+function renderPinsList() {
+  const host = $('pins-list');
+  if (!host) return;
+  const pins = ov.pins || [];
+  if (!pins.length) {
+    host.innerHTML = '<p class="muted small">No badges pinned yet. Pin one from the Studio, or pin a badge to a whole collection above.</p>';
+    return;
+  }
+  host.innerHTML = pins.map((p) => `
+    <div class="leaving-row">
+      <span class="leaving-title">${P().esc(p.title || 'Untitled')} — “${P().esc(p.text)}”</span>
+      <span class="leaving-when">${P().esc(p.corner)} · ${P().esc(p.variant || 'signature')} · <span style="color:${P().esc(p.color)}">■</span>${p.source ? ` · from ${P().esc(p.source)}` : ''}</span>
+      <button class="btn ghost small" data-pin-remove="${P().esc(p.id)}">Remove</button>
+    </div>`).join('');
+  host.querySelectorAll('[data-pin-remove]').forEach((btn) => btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    try {
+      const { pins: fresh } = await P().call(window.pcm.customPinsRemove(btn.dataset.pinRemove));
+      ov.pins = fresh || [];
+      renderPinsList();
+      touchCustom();
+      P().toast('Pin removed.');
+    } catch (e) { P().toastErr(e); btn.disabled = false; }
+  }));
+}
+
+async function loadPinsCollections() {
+  const sel = $('pins-collection');
+  if (!sel) return;
+  const prev = sel.value;
+  try {
+    const { sections } = await P().call(window.pcm.getSections());
+    const all = [];
+    for (const sec of sections || []) {
+      try {
+        const { collections } = await P().call(window.pcm.getCollections(sec.key));
+        for (const c of collections || []) all.push({ ...c, sectionTitle: sec.title });
+      } catch { /* one library's collections failing doesn't sink the picker */ }
+    }
+    pinsState.collections = all;
+    sel.innerHTML = all.length
+      ? all.map((c) => `<option value="${P().esc(c.ratingKey)}">${P().esc(c.title)} (${P().esc(c.sectionTitle || '')})</option>`).join('')
+      : '<option value="">No collections on this server</option>';
+    if (prev && [...sel.options].some((o) => o.value === prev)) sel.value = prev;
+  } catch {
+    sel.innerHTML = '<option value="">Could not load collections</option>';
+  }
+}
+
+function openPinEditor(items, source) {
+  if (!items.length) { P().toast('Nothing to pin to.', 'error'); return; }
+  const m = P().openModal({
+    title: source ? `Pin a badge to “${source}”` : `Pin a badge to “${items[0].title || 'this title'}”`,
+    bodyHTML: `<p class="muted small">Text is what draws on the poster (1–40 characters). ${source ? `This expands into one pin per current member (${items.length} title${items.length === 1 ? '' : 's'}) — titles added later do not get the pin.` : 'The pin draws on this title\'s poster whatever the layout or template.'}</p>
+      <label class="field">Badge text<input id="pin-text" class="input" maxlength="40" placeholder="e.g. STAFF PICK" autocomplete="off"></label>
+      <div class="field-row">
+        <label class="field">Color<select id="pin-color" class="input">${customColorOptions('#e2e8f0')}</select></label>
+        <label class="field">Corner<select id="pin-corner" class="input">${[['tl', 'Top left'], ['tr', 'Top right'], ['bl', 'Bottom left'], ['br', 'Bottom right']].map(([v, l]) => `<option value="${v}">${l}</option>`).join('')}</select></label>
+        <label class="field">Style<select id="pin-variant" class="input">${[['signature', 'Signature'], ['aurora', 'Aurora'], ['classic', 'Classic']].map(([v, l]) => `<option value="${v}">${l}</option>`).join('')}</select></label>
+      </div>
+      <p class="muted small">Classic style draws the standard pill (the color shows in Signature and Aurora styles).</p>`,
+    footHTML: '<button class="btn ghost" data-close="cancel">Cancel</button><button class="btn primary" id="pin-save">Pin badge</button>',
+  });
+  m.root.querySelector('#pin-save').addEventListener('click', async () => {
+    const text = m.root.querySelector('#pin-text').value.trim();
+    const color = m.root.querySelector('#pin-color').value;
+    const corner = m.root.querySelector('#pin-corner').value;
+    const variant = m.root.querySelector('#pin-variant').value;
+    if (!text || [...text].length > 40) { P().toast('Badge text must be 1–40 characters.', 'error'); return; }
+    try {
+      const { pins } = await P().call(window.pcm.customPinsSet(items, text, color, corner, variant, source || ''));
+      ov.pins = pins || [];
+      m.close('saved');
+      renderPinsList();
+      touchCustom();
+      P().toast(source
+        ? `Badge “${text}” pinned to all ${items.length} member${items.length === 1 ? '' : 's'} of “${source}”.`
+        : `Badge “${text}” pinned to “${items[0].title || 'this title'}”.`, 'success');
+    } catch (e) { P().toastErr(e); }
+  });
+}
+
+async function pinToTarget() {
+  const t = ov.target;
+  if (!t) { P().toast('Pick a poster in the Studio first.', 'error'); return; }
+  openPinEditor([{ ratingKey: String(t.ratingKey), title: t.title || '' }], '');
+}
+
+async function pinToCollection() {
+  const sel = $('pins-collection');
+  const rk = sel ? sel.value : '';
+  if (!rk) { P().toast('Pick a collection first.', 'error'); return; }
+  const c = pinsState.collections.find((x) => String(x.ratingKey) === String(rk));
+  const btn = $('btn-pins-set-collection');
+  if (btn) btn.disabled = true;
+  try {
+    const r = await loadCollectionItems(rk);
+    if (r.cancelled) { P().toast('Could not load that collection — the load was interrupted. Try again.', 'error'); return; }
+    const members = (r.items || []).filter((it) => it && !it.level);
+    if (!members.length) { P().toast('That collection has no top-level items to pin to.', 'error'); return; }
+    openPinEditor(members.map((it) => ({ ratingKey: String(it.ratingKey), title: it.title || '' })), c ? c.title : '');
+  } catch (e) { P().toastErr(e); } finally { if (btn) btn.disabled = false; }
 }
 
 // ---------- restore default Plex posters ----------

@@ -76,6 +76,7 @@ type backupDocument struct {
 	AdvisorSettings map[string]any                           `json:"advisorSettings"`
 	Templates       map[string]json.RawMessage               `json:"templates"`
 	Leaving         map[string]map[string]store.LeavingEntry `json:"leaving"`
+	CustomPins      map[string]map[string]store.CustomPin    `json:"customPins"`
 	Keys            map[string]string                        `json:"keys,omitempty"`
 }
 
@@ -98,6 +99,7 @@ func (s *Server) handleSettingsExportBackup(w http.ResponseWriter, r *http.Reque
 		Settings:      s.store.PortableSettings(),
 		Templates:     map[string]json.RawMessage{},
 		Leaving:       map[string]map[string]store.LeavingEntry{},
+		CustomPins:    map[string]map[string]store.CustomPin{},
 	}
 	if adv, err := s.advisorStore.GetSettings(); err == nil {
 		raw, _ := json.Marshal(adv)
@@ -108,6 +110,9 @@ func (s *Server) handleSettingsExportBackup(w http.ResponseWriter, r *http.Reque
 	}
 	if lv, err := s.store.LeavingAll(); err == nil {
 		doc.Leaving = lv
+	}
+	if cp, err := s.store.CustomPinsAll(); err == nil {
+		doc.CustomPins = cp
 	}
 	if body.IncludeKeys {
 		keys := map[string]string{}
@@ -170,6 +175,22 @@ func (s *Server) handleSettingsImportBackup(w http.ResponseWriter, r *http.Reque
 			}
 			if !store.ValidLeavingDate(e.Date) {
 				failMsg(w, fmt.Sprintf("Leaving entry %q on %q has an invalid date %q.", k, m, e.Date), "")
+				return
+			}
+		}
+	}
+	for m, per := range doc.CustomPins {
+		for id, p := range per {
+			if id == "" || p.ID == "" {
+				failMsg(w, fmt.Sprintf("A custom pin on %q is missing its id.", m), "")
+				return
+			}
+			if p.RatingKey == "" {
+				failMsg(w, fmt.Sprintf("Custom pin %q on %q is missing its ratingKey.", id, m), "")
+				return
+			}
+			if !store.ValidCustomPinText(p.Text) {
+				failMsg(w, fmt.Sprintf("Custom pin %q on %q has invalid text.", id, m), "")
 				return
 			}
 		}
@@ -259,6 +280,16 @@ func (s *Server) handleSettingsImportBackup(w http.ResponseWriter, r *http.Reque
 			leavingDates += len(per)
 		}
 	}
+	customPinsImported := 0
+	if doc.CustomPins != nil {
+		if err := s.store.SetCustomPinsAll(doc.CustomPins); err != nil {
+			failErr(w, err)
+			return
+		}
+		for _, per := range doc.CustomPins {
+			customPinsImported += len(per)
+		}
+	}
 	keysImported := 0
 	keysSkipped := false
 	if len(doc.Keys) > 0 {
@@ -282,6 +313,7 @@ func (s *Server) handleSettingsImportBackup(w http.ResponseWriter, r *http.Reque
 		"advisorApplied":    doc.AdvisorSettings != nil,
 		"templatesImported": templatesImported,
 		"leavingDates":      leavingDates,
+		"customPins":        customPinsImported,
 		"keysImported":      keysImported,
 		"keysSkipped":       keysSkipped,
 		"dropped":           dropped,

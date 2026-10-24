@@ -54,8 +54,11 @@
     trakt: 'Trakt', top100: 'Top 100s', seasonal: 'Seasonal',
     dubsub: 'Dub / Sub', tv: 'TV completeness',
     ai: 'AI suggestions',
+    'decade-genre': 'Decade × genre', 'unwatched-gems': 'Unwatched gems',
+    rewatchables: 'Rewatchables', 'quick-picks': 'Quick picks',
+    epics: 'Epics', divergence: 'Critics vs audiences',
   };
-  const KIND_ORDER = ['ai', 'franchise', 'hiddengems', 'trakt', 'top100', 'genre', 'decade', 'director', 'actor', 'studio', 'contentrating', 'unwatched', 'seasonal', 'dubsub', 'tv'];
+  const KIND_ORDER = ['ai', 'franchise', 'hiddengems', 'trakt', 'top100', 'genre', 'decade', 'director', 'actor', 'studio', 'contentrating', 'unwatched', 'seasonal', 'dubsub', 'tv', 'decade-genre', 'unwatched-gems', 'rewatchables', 'quick-picks', 'epics', 'divergence'];
 
   const tmdbImg = (posterPath, size = 'w342') =>
     posterPath ? `https://image.tmdb.org/t/p/${size}${posterPath}` : '';
@@ -1025,6 +1028,7 @@
       if (r.advisorApplied) bits.push('Advisor tuning');
       if (r.templatesImported) bits.push(`${r.templatesImported} template${r.templatesImported === 1 ? '' : 's'}`);
       if (r.leavingDates) bits.push(`${r.leavingDates} Leaving Soon date${r.leavingDates === 1 ? '' : 's'}`);
+      if (r.customPins) bits.push(`${r.customPins} pinned badge${r.customPins === 1 ? '' : 's'}`);
       if (r.keysImported) bits.push(`${r.keysImported} key${r.keysImported === 1 ? '' : 's'}`);
       let line = bits.length ? `Imported ${bits.join(', ')}.` : 'Import applied — nothing in the file changed this install.';
       if (r.keysSkipped) line += ' Keys in the file were left out: tick the import-keys box to include them.';

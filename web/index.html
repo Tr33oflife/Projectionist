@@ -562,6 +562,7 @@
             <div class="overlay-targetbar">
               <span class="muted small">Designing on</span>
               <span id="overlay-target-name">No poster selected</span>
+              <button class="btn secondary small" id="btn-pin-to-target" title="Attach a free-text badge to this title — it draws on this title's poster whatever the layout">Pin a badge to this title</button>
             </div>
             <div class="overlay-canvas-wrap">
               <canvas id="overlay-canvas" width="1000" height="1500"></canvas>
@@ -694,6 +695,18 @@
           </div>
           <p class="muted small" id="leaving-load-note" hidden></p>
           <div id="leaving-list"></div>
+        </div>
+        <div class="overlay-applybar" id="pins-card">
+          <h3>Pinned badges</h3>
+          <p class="muted small">Free-text badges you pin to titles directly — they draw on that title's poster whatever the layout or template, and they are NOT part of any template. Pin from the Studio's “Pin a badge to this title” button, or pin one badge to a whole collection below. A collection pin expands into one pin per <strong>current</strong> member: titles added to the collection later do not get the pin — pin again to cover them.</p>
+          <div class="field-row">
+            <label class="field">Collection
+              <select id="pins-collection" class="input"></select>
+            </label>
+            <button class="btn secondary" id="btn-pins-set-collection">Pin badge to whole collection</button>
+          </div>
+          <p class="muted small" id="pins-load-note" hidden></p>
+          <div id="pins-list"></div>
         </div>
       </div>
 

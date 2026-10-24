@@ -601,6 +601,8 @@ func (s *Server) handleOverlayItemFacts(w http.ResponseWriter, r *http.Request) 
 		"bestAudioChannels": sf.BestAudioChannels,
 		"bestAudioLang":     strOrNil(sf.BestAudioLang),
 		"aspectRatio":       floatOrNil(sf.AspectRatio),
+		"bitrateKbps":       intOrNil(sf.BitrateKbps),
+		"tags":              tagsOf(full),
 		"franchiseName":     franchiseName,
 		"originalLanguage":  originalLanguage,
 		"originCountries":   originCountries,
@@ -657,6 +659,14 @@ func (s *Server) handleOverlayItemFacts(w http.ResponseWriter, r *http.Request) 
 		if d := numOf(full["duration"]); d > 0 {
 			facts["runtimeMinutes"] = (d + 30000) / 60000
 		}
+		// In-progress facts (v1.24): the record's own view state.
+		// viewOffsetMs is Plex's playback position in milliseconds;
+		// viewCount is the completed-play count. A show carries no
+		// single offset, so neither fact is set for shows.
+		if o := numOf(full["viewOffset"]); o > 0 {
+			facts["viewOffsetMs"] = o
+		}
+		facts["viewCount"] = numOf(full["viewCount"])
 	}
 	if itemType == "show" {
 		if c := numOf(full["childCount"]); c > 0 {
@@ -913,6 +923,13 @@ func floatPtrAny(f *float64) any {
 
 // floatOrNil: non-positive → nil (JSON null), else the value. For
 // facts where 0 is the parser's "Plex didn't state it" (aspectRatio).
+func intOrNil(n int) any {
+	if n <= 0 {
+		return nil
+	}
+	return n
+}
+
 func floatOrNil(f float64) any {
 	if f <= 0 {
 		return nil
@@ -1129,15 +1146,16 @@ func (s *Server) handleOverlayTemplatesList(w http.ResponseWriter, r *http.Reque
 
 func (s *Server) handleOverlayTemplateSave(w http.ResponseWriter, r *http.Request) {
 	var body struct {
-		Name       string          `json:"name"`
-		Placements json.RawMessage `json:"placements"`
-		Families   json.RawMessage `json:"families"`
+		Name         string          `json:"name"`
+		Placements   json.RawMessage `json:"placements"`
+		Families     json.RawMessage `json:"families"`
+		CustomBadges json.RawMessage `json:"customBadges"`
 	}
 	if err := decodeBody(r, &body); err != nil {
 		failErr(w, err)
 		return
 	}
-	res, err := s.templates.SaveLayout(body.Name, body.Placements, body.Families)
+	res, err := s.templates.SaveLayoutCustom(body.Name, body.Placements, body.Families, body.CustomBadges)
 	if err != nil {
 		failErr(w, err)
 		return

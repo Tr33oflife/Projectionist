@@ -40,6 +40,7 @@ type streamFacts struct {
 	BestAudioChannels int      // channels on that same best-scored audio stream
 	BestAudioLang     string   // languageCode (preferred) / language of that stream
 	AspectRatio       float64  // aspect ratio of the WINNING version's Media (its aspectRatio field, else width/height); 0 = unstated
+	BitrateKbps       int      // bitrate (kbps) of the WINNING version's Media (Plex's own bitrate field); 0 = unstated
 	SourceTag         string   // literal source token read from the first Part file name
 	AudioLangs        []string // sorted unique, languageCode preferred
 	SubtitleLangs     []string // sorted unique
@@ -228,6 +229,13 @@ func parseStreamFactsBest(full map[string]any) (streamFacts, audioStreamInfo) {
 		tierWins := tierRank[tier] > tierRank[out.ResolutionTier]
 		if tierWins {
 			out.ResolutionTier = tier
+			// The bitrate rides WITH the winning version, like the
+			// codec and aspect ratio: Plex's bitrate field on the
+			// winning Media entry (kbps). A later, lower-tier
+			// version never overwrites it.
+			if b := int(rawf(media, "bitrate")); b > 0 {
+				out.BitrateKbps = b
+			}
 			// The aspect ratio rides WITH the winning version, like
 			// the video codec below: Plex's own aspectRatio field on
 			// the Media entry first; width/height of THAT entry as
@@ -457,6 +465,24 @@ func genreTagsOf(full map[string]any) []string {
 			continue
 		}
 		if tag := strings.TrimSpace(raws(g, "tag")); tag != "" {
+			out = append(out, tag)
+		}
+	}
+	return out
+}
+
+// tagsOf reads the item's Tag[] tag array in PLEX ORDER — the
+// free-form tags Plex states on the item (used by rule-based custom
+// badges). Empty-string tags are dropped; a missing array yields an
+// empty slice, never a guess.
+func tagsOf(full map[string]any) []string {
+	out := []string{}
+	for _, tv := range rawList(full["Tag"]) {
+		t := rawMap(tv)
+		if t == nil {
+			continue
+		}
+		if tag := strings.TrimSpace(raws(t, "tag")); tag != "" {
 			out = append(out, tag)
 		}
 	}

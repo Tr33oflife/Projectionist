@@ -418,6 +418,12 @@ function setupRealm(window, posterImg) {
           rules: [{ field: 'genre', op: 'is', value: 'Action' }] },
         { id: 'franchise:1:Harness', kind: 'franchise', title: 'Harness Saga', subtitle: '2 titles',
           memberRatingKeys: ['42', '43'], reason: 'Fixture franchise suggestion.', confidence: 'deterministic' },
+        // v1.25 bundle kinds: rewatchables + divergence flow through
+        // the same generic card -> pop-out -> Builder path as genre.
+        { id: 'rewatchables:1', kind: 'rewatchables', title: 'Most rewatched (Movies)', subtitle: '2 titles played 2+ times',
+          memberRatingKeys: ['42', '43'], reason: 'Fixture rewatchables suggestion.', confidence: 'deterministic' },
+        { id: 'divergence:1:critics', kind: 'divergence', title: "Critics loved it, audiences didn't (Movies)", subtitle: '2 titles with a 2+ point split',
+          memberRatingKeys: ['42', '43'], reason: 'Fixture divergence suggestion.', confidence: 'deterministic' },
       ];
       // Production GenerateAll filters dismissed ids server-side, so
       // a dismissed card never returns on a reload — the stub models
@@ -461,6 +467,24 @@ function setupRealm(window, posterImg) {
       pcm.overlayHistory = () => env({ runs: [] });
       pcm.overlayReapplyCheck = () => env({ items: [] });
       pcm.overlayTemplatesList = () => env({ templates: [] });
+      // v1.24: template save/load round-trip stand-in (captures the
+      // saved layout, including rule badges) + the pins store.
+      H.savedTemplate = null;
+      pcm.overlayTemplateSave = (name, placements, families, customBadges) => {
+        H.savedTemplate = { name, placements: placements || [], families: families || null, customBadges: customBadges || [] };
+        return env({ name, placements: (placements || []).length, skippedFanart: 0,
+          kind: families ? 'families' : 'legacy', families: 0, customBadges: (customBadges || []).length });
+      };
+      pcm.overlayTemplateLoad = (name) => env(H.savedTemplate
+        ? { name: H.savedTemplate.name, placements: H.savedTemplate.placements, families: H.savedTemplate.families, customBadges: H.savedTemplate.customBadges }
+        : { name, placements: [], families: null, customBadges: [] });
+      H.pins = [];
+      pcm.customPinsList = () => env({ pins: H.pins });
+      pcm.customPinsSet = (items, text, color, corner, variant, source) => {
+        for (const it of items || []) H.pins.push({ id: 'pin-' + H.pins.length, ratingKey: String(it.ratingKey), title: it.title || '', text, color, corner, variant, source: source || '' });
+        return env({ pins: H.pins });
+      };
+      pcm.customPinsRemove = (id) => { H.pins = H.pins.filter((p) => p.id !== id); return env({ pins: H.pins }); };
       pcm.overlayClassifyPoster = () => env({ classification: { status: 'already-default' } });
       pcm.overlayRestoreDefaultPoster = () => env({ outcome: 'restored' });
       pcm.overlayRestore = () => env({ okCount: 0, results: [] });
@@ -645,12 +669,59 @@ async function main() {
   await waitFor('picked target synced to Apply', () =>
     (doc.querySelector('#btn-overlay-apply-now')?.textContent || '').includes('Apply to 1 item'));
 
+  // v1.24: new families + custom badges in the Studio.
+  const famText = () => doc.querySelector('#overlay-families')?.textContent || '';
+  await waitFor('families panel judges the picked target', () => famText().includes('FIRES'));
+  check('v1.24: the four new families render in the editor panel',
+    ['Awards', 'RT Fresh', 'Bitrate', 'In progress'].every((n) => famText().includes(n)), JSON.stringify(famText().slice(0, 400)));
+  check('v1.24: new families default OFF (nothing forced into the layout)',
+    ['awards', 'rt-fresh', 'bitrate', 'in-progress'].every((id) => {
+      const el = doc.querySelector(`[data-fam-on="${id}"]`);
+      return el && !el.checked;
+    }), 'all four checkboxes unchecked');
+  check('v1.24: custom badges section renders with an Add button', !!doc.querySelector('[data-custom-add]'), '');
+  // Rule badge editor: a badge matching the harness movie (genre
+  // "Science Fiction", studio A24) must fire on this target.
+  doc.querySelector('[data-custom-add]').click();
+  await waitFor('custom badge modal', () => doc.querySelector('#cb-name'));
+  doc.querySelector('#cb-name').value = 'Sci-Fi shelf';
+  doc.querySelector('#cb-text').value = 'SCI-FI';
+  doc.querySelector('#cb-genre').value = 'Science';
+  doc.querySelector('#cb-save').click();
+  await softWait(() => famText().includes('Sci-Fi shelf'));
+  check('v1.24: rule badge editor adds a card that fires on the target',
+    famText().includes('Sci-Fi shelf') && famText().includes('SCI-FI') && famText().includes('FIRES'), JSON.stringify(famText().slice(-300)));
+  // Template save carries the rule badge through the bridge.
+  doc.querySelector('#btn-overlay-save-template').click();
+  await waitFor('template modal', () => doc.querySelector('#tpl-name'));
+  doc.querySelector('#tpl-name').value = 'Domtest Pack';
+  doc.querySelector('#tpl-save-go').click();
+  await softWait(() => H.savedTemplate);
+  check('v1.24: template save carries the rule badge (save/reload payload)',
+    !!H.savedTemplate && H.savedTemplate.customBadges.length === 1 &&
+    H.savedTemplate.customBadges[0].text === 'SCI-FI' && H.savedTemplate.customBadges[0].rule.genre === 'Science',
+    JSON.stringify(H.savedTemplate && H.savedTemplate.customBadges));
+  // Pin flow: pin a badge to the picked title; the verdicts rail
+  // must show it for this item.
+  doc.querySelector('#btn-pin-to-target').click();
+  await waitFor('pin modal', () => doc.querySelector('#pin-text'));
+  doc.querySelector('#pin-text').value = 'STAFF PICK';
+  doc.querySelector('#pin-save').click();
+  await softWait(() => (doc.querySelector('#overlay-verdicts')?.textContent || '').includes('STAFF PICK'));
+  check('v1.24: pinned badge renders in the verdicts rail for its item',
+    (doc.querySelector('#overlay-verdicts')?.textContent || '').includes('STAFF PICK') && H.pins.length === 1,
+    JSON.stringify(doc.querySelector('#overlay-verdicts')?.textContent || ''));
+
   // Bug 2: opening the Apply view must (re)load the restore libraries.
   doc.querySelector('#overlay-subnav .subnav-item[data-view="apply"]').click();
   const populated = await softWait(() =>
     [...doc.querySelectorAll('#restore-section option')].some((o) => o.value === '1' && o.textContent.includes('Movies')));
   check('bug2: restore library select reloads when the Apply view opens', !!populated,
     `select now reads: ${JSON.stringify(restoreSelectText())}`);
+  await softWait(() => (doc.querySelector('#pins-list')?.textContent || '').includes('STAFF PICK'));
+  check('v1.24: pins card on the Apply view lists the pinned badge',
+    (doc.querySelector('#pins-list')?.textContent || '').includes('STAFF PICK'),
+    JSON.stringify(doc.querySelector('#pins-list')?.textContent || ''));
 
   // Restore backed-up posters (v1.23): the card lists every backed-up
   // item with level + parent context; the filter narrows; per-item
@@ -1333,6 +1404,36 @@ async function main() {
     `members: ${doc.querySelector('#member-count')?.textContent} title: ${JSON.stringify(doc.querySelector('#b-title')?.value)}`);
   check('wizard: the static seed lands on Step 2 (members) with state intact',
     wzVisible(2) && (doc.querySelector('#draft-list')?.textContent || '').includes('Second Movie'));
+
+  // ---- v1.25 bundle kinds: the kind rail labels them, and a
+  // rewatchables card seeds the Builder statically with its exact
+  // members (the generic card -> wizard path, no kind allowlist).
+  doc.querySelector('.nav-item[data-tab="advisor"]').click();
+  await waitFor('advisor rewatchables card (bundle pass)', () =>
+    doc.querySelector('.sugg-card[data-id="rewatchables:1"]'));
+  check('advisor: kind rail labels the new bundle kinds',
+    (doc.querySelector('.advisor-rail')?.textContent || '').includes('Rewatchables') &&
+    (doc.querySelector('.advisor-rail')?.textContent || '').includes('Critics vs audiences'),
+    JSON.stringify((doc.querySelector('.advisor-rail')?.textContent || '').slice(0, 200)));
+  const rewCard = doc.querySelector('.sugg-card[data-id="rewatchables:1"]');
+  rewCard.click();
+  await waitFor('rewatchables pop-out opens', () => doc.querySelector('#adv-pop-title'));
+  check('advisor: rewatchables pop-out carries its title, reason and both members, plain Create only',
+    doc.querySelector('#adv-pop-title').value === 'Most rewatched (Movies)' &&
+    (doc.querySelector('#modal-root')?.textContent || '').includes('Fixture rewatchables suggestion.') &&
+    (doc.querySelector('#modal-root')?.textContent || '').includes('Harness Movie') &&
+    (doc.querySelector('#modal-root')?.textContent || '').includes('Second Movie') &&
+    !doc.querySelector('#adv-create-smart'),
+    `title: ${JSON.stringify(doc.querySelector('#adv-pop-title')?.value)}`);
+  doc.querySelector('#adv-create').click();
+  await waitFor('rewatchables seed lands in the Builder', () =>
+    (doc.querySelector('#member-count')?.textContent || '') === '2');
+  check('builder: rewatchables seed lands exactly (2 members, title, Smart off, Step 2)',
+    doc.querySelector('#b-smart').checked === false &&
+    doc.querySelector('#member-count').textContent === '2' &&
+    doc.querySelector('#b-title').value === 'Most rewatched (Movies)' &&
+    wzVisible(2) && (doc.querySelector('#draft-list')?.textContent || '').includes('Second Movie'),
+    `members: ${doc.querySelector('#member-count')?.textContent} title: ${JSON.stringify(doc.querySelector('#b-title')?.value)}`);
 
   // ---- Advisor pop-out editor (v1.18): the edited title flows into
   // drafts AND creates; Close returns to the list with the card

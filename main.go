@@ -40,7 +40,7 @@ import (
 
 // version is the Go build's version. The Electron line ended at 0.4.4;
 // this port starts at 1.0.0.
-const version = "1.23.2"
+const version = "1.25.0"
 
 //go:embed web
 var webEmbed embed.FS

@@ -1175,6 +1175,225 @@ func genTvCompleteness(scan *Scan) []Card {
 	return cards
 }
 
+// -- 11. v1.25 bundle: decade x genre, unwatched gems, rewatchables,
+//    runtime bands, critics-vs-audiences divergence ---------------------------
+// All six are Plex-native (no keys) and membership-shaped (no Rules —
+// a smart collection cannot express a cross, a gap, or a play count).
+// Thresholds are stated on each generator; items missing a required
+// field simply do not count, and each card's reason says what it is
+// based on. Three more bundle members already shipped and are NOT
+// re-implemented here: director spotlights (genPeople, >= 4), actor
+// deep dives (genPeople, >= 3), studio shelves (genStudios, >= 4).
+
+// genDecadeGenre crosses one genre with one decade per section
+// ("90s Action"): pairs meeting >= 4 titles, top 12 pairs by count.
+func genDecadeGenre(scan *Scan) []Card {
+	cards := []Card{}
+	const minCount = 4
+	const topPairs = 12
+	for _, section := range scan.Sections {
+		type pair struct {
+			genre  string
+			decade int
+		}
+		counts := map[pair]int{}
+		members := map[pair][]string{}
+		order := []pair{}
+		for _, item := range scan.Items {
+			if item.SectionKey != section.Key || item.Year == nil {
+				continue
+			}
+			decade := (*item.Year / 10) * 10
+			for _, g := range itemGenres(item) {
+				p := pair{genre: g, decade: decade}
+				if _, ok := counts[p]; !ok {
+					order = append(order, p)
+				}
+				counts[p]++
+				members[p] = append(members[p], item.RatingKey)
+			}
+		}
+		pairs := append([]pair{}, order...)
+		sort.SliceStable(pairs, func(i, j int) bool { return counts[pairs[i]] > counts[pairs[j]] })
+		if len(pairs) > topPairs {
+			pairs = pairs[:topPairs]
+		}
+		for _, p := range pairs {
+			n := counts[p]
+			if n < minCount {
+				continue
+			}
+			label := fmt.Sprintf("%02ds", p.decade%100)
+			cards = append(cards, makeCard("decade-genre", fmt.Sprintf("%s:%d:%s", section.Key, p.decade, p.genre), cardOpts{
+				title:    fmt.Sprintf("%s %s (%s)", label, p.genre, section.Title),
+				subtitle: fmt.Sprintf("%d titles", n),
+				members:  members[p],
+				reason:   fmt.Sprintf("%d %s titles from the %s in %s — genre crossed with decade, from your Plex tags and years.", n, p.genre, label, section.Title),
+			}))
+		}
+	}
+	return cards
+}
+
+// genUnwatchedGems: Plex critic score >= 8.0 AND never played, >= 3
+// titles per section. Distinct from hidden gems (TMDb rating +
+// below-median popularity): this one is Plex-native and popularity-blind.
+func genUnwatchedGems(scan *Scan) []Card {
+	cards := []Card{}
+	const minRating = 8.0
+	const minCount = 3
+	for _, section := range scan.Sections {
+		gems := []Item{}
+		for _, i := range scan.Items {
+			if i.SectionKey == section.Key && i.PlexRating != nil && *i.PlexRating >= minRating && i.ViewCount == 0 {
+				gems = append(gems, i)
+			}
+		}
+		if len(gems) < minCount {
+			continue
+		}
+		sort.SliceStable(gems, func(a, b int) bool { return *gems[a].PlexRating > *gems[b].PlexRating })
+		cards = append(cards, makeCard("unwatched-gems", section.Key, cardOpts{
+			title:    fmt.Sprintf("Unwatched gems (%s)", section.Title),
+			subtitle: fmt.Sprintf("%d highly-rated titles you haven't played", len(gems)),
+			members:  ratingKeysOf(gems),
+			reason:   fmt.Sprintf("Rated %s+ by Plex's critic score and never played — your best unwatched, from Plex play history.", jsNum(minRating)),
+		}))
+	}
+	return cards
+}
+
+// genRewatchables: played at least twice, >= 3 titles per section,
+// most-played first.
+func genRewatchables(scan *Scan) []Card {
+	cards := []Card{}
+	const minPlays = 2
+	const minCount = 3
+	for _, section := range scan.Sections {
+		rew := []Item{}
+		for _, i := range scan.Items {
+			if i.SectionKey == section.Key && i.ViewCount >= minPlays {
+				rew = append(rew, i)
+			}
+		}
+		if len(rew) < minCount {
+			continue
+		}
+		sort.SliceStable(rew, func(a, b int) bool {
+			if rew[a].ViewCount != rew[b].ViewCount {
+				return rew[a].ViewCount > rew[b].ViewCount
+			}
+			return byTitle(Card{Title: rew[a].Title}, Card{Title: rew[b].Title})
+		})
+		cards = append(cards, makeCard("rewatchables", section.Key, cardOpts{
+			title:    fmt.Sprintf("Most rewatched (%s)", section.Title),
+			subtitle: fmt.Sprintf("%d titles played %d+ times", len(rew), minPlays),
+			members:  ratingKeysOf(rew),
+			reason:   fmt.Sprintf("Titles in %s played at least %d times, most-played first — from Plex play history.", section.Title, minPlays),
+		}))
+	}
+	return cards
+}
+
+// genRuntimeBands: movies only. Quick picks run <= 90 minutes (>= 5);
+// epics run >= 180 minutes (>= 3). Note the overlap with the older
+// short-films generator (<= 100 minutes): quick picks is its tighter
+// weeknight subset, kept as its own card because the brief orders the
+// 90-minute band explicitly; both cards may appear for one library.
+func genRuntimeBands(scan *Scan) []Card {
+	cards := []Card{}
+	const quickMax = 90
+	const quickMin = 5
+	const epicMin = 180
+	const epicCount = 3
+	for _, section := range scan.Sections {
+		if section.Type != "movie" {
+			continue
+		}
+		quick := []Item{}
+		epics := []Item{}
+		for _, i := range scan.Items {
+			if i.SectionKey != section.Key || i.DurationMin == nil || *i.DurationMin <= 0 {
+				continue
+			}
+			if *i.DurationMin <= quickMax {
+				quick = append(quick, i)
+			}
+			if *i.DurationMin >= epicMin {
+				epics = append(epics, i)
+			}
+		}
+		if len(quick) >= quickMin {
+			sort.SliceStable(quick, func(a, b int) bool { return *quick[a].DurationMin < *quick[b].DurationMin })
+			cards = append(cards, makeCard("quick-picks", section.Key, cardOpts{
+				title:    fmt.Sprintf("Under %d minutes (%s)", quickMax, section.Title),
+				subtitle: fmt.Sprintf("%d quick picks", len(quick)),
+				members:  ratingKeysOf(quick),
+				reason:   fmt.Sprintf("Movies in %s running %d minutes or less, shortest first — from Plex runtimes.", section.Title, quickMax),
+			}))
+		}
+		if len(epics) >= epicCount {
+			sort.SliceStable(epics, func(a, b int) bool { return *epics[a].DurationMin > *epics[b].DurationMin })
+			cards = append(cards, makeCard("epics", section.Key, cardOpts{
+				title:    fmt.Sprintf("Over 3 hours (%s)", section.Title),
+				subtitle: fmt.Sprintf("%d epics", len(epics)),
+				members:  ratingKeysOf(epics),
+				reason:   fmt.Sprintf("Movies in %s running %d minutes or more, longest first — from Plex runtimes.", section.Title, epicMin),
+			}))
+		}
+	}
+	return cards
+}
+
+// genDivergence: Plex critic score vs Plex audience score (both 0-10)
+// split by >= 2.0 points, >= 3 titles per direction per section.
+// Items missing either score do not count. One card per direction so
+// the label always says which way the gap runs.
+func genDivergence(scan *Scan) []Card {
+	cards := []Card{}
+	const minGap = 2.0
+	const minCount = 3
+	for _, section := range scan.Sections {
+		byDir := map[string][]Item{"critics": {}, "audiences": {}}
+		gaps := map[string]float64{}
+		for _, i := range scan.Items {
+			if i.SectionKey != section.Key || i.PlexRating == nil || i.AudienceRating == nil {
+				continue
+			}
+			gap := *i.PlexRating - *i.AudienceRating
+			if gap >= minGap {
+				byDir["critics"] = append(byDir["critics"], i)
+				gaps[i.RatingKey] = gap
+			} else if gap <= -minGap {
+				byDir["audiences"] = append(byDir["audiences"], i)
+				gaps[i.RatingKey] = -gap
+			}
+		}
+		dirs := []struct {
+			key   string
+			title string
+			blurb string
+		}{
+			{"critics", "Critics loved it, audiences didn't", "critic score runs higher"},
+			{"audiences", "Audiences loved it, critics didn't", "audience score runs higher"},
+		}
+		for _, d := range dirs {
+			members := byDir[d.key]
+			if len(members) < minCount {
+				continue
+			}
+			sort.SliceStable(members, func(a, b int) bool { return gaps[members[a].RatingKey] > gaps[members[b].RatingKey] })
+			cards = append(cards, makeCard("divergence", section.Key+":"+d.key, cardOpts{
+				title:    fmt.Sprintf("%s (%s)", d.title, section.Title),
+				subtitle: fmt.Sprintf("%d titles with a %s+ point split", len(members), jsNum(minGap)),
+				members:  ratingKeysOf(members),
+				reason:   fmt.Sprintf("Plex critic score vs Plex audience score (both 0-10) differ by %s points or more here, and the %s — the \"so bad it's good\" / \"critics missed it\" shelf. Titles missing either score don't count.", jsNum(minGap), d.blurb),
+			}))
+		}
+	}
+	return cards
+}
+
 // -- orchestration -----------------------------------------------------------------------------------------------
 
 // runGen failure-isolates one generator: a panic contributes zero
@@ -1232,6 +1451,11 @@ func GenerateAll(ctx context.Context, scan *Scan, gc GenContext) ([]Card, TopLis
 	cards = append(cards, runGen(func() []Card { return genSeasonal(scan, time.Now()) })...)
 	cards = append(cards, runGen(func() []Card { return genDubSub(scan, gc) })...)
 	cards = append(cards, runGen(func() []Card { return genTvCompleteness(scan) })...)
+	cards = append(cards, runGen(func() []Card { return genDecadeGenre(scan) })...)
+	cards = append(cards, runGen(func() []Card { return genUnwatchedGems(scan) })...)
+	cards = append(cards, runGen(func() []Card { return genRewatchables(scan) })...)
+	cards = append(cards, runGen(func() []Card { return genRuntimeBands(scan) })...)
+	cards = append(cards, runGen(func() []Card { return genDivergence(scan) })...)
 
 	filtered := make([]Card, 0, len(cards))
 	for _, c := range cards {
