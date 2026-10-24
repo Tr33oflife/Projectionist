@@ -94,6 +94,22 @@ includes them); server tokens and session state never export.
 
 ## Screenshots
 
+Shot against a demo library of public-domain classics (posters from
+archive.org — Night of the Living Dead and friends), so what you see is
+the real app, not a mockup:
+
+| Collections | Studio inspector |
+| --- | --- |
+| ![Collections](docs/screenshots/01-collections-grid.png) | ![Studio](docs/screenshots/02-studio-metropolis.png) |
+
+| Advisor | Builder |
+| --- | --- |
+| ![Advisor](docs/screenshots/03-advisor.png) | ![Builder](docs/screenshots/04-builder-grid.png) |
+
+| Generator — Flower | Restore backed-up posters |
+| --- | --- |
+| ![Generator Flower](docs/screenshots/05-generator-flower.png) | ![Restore](docs/screenshots/06-restore-card.png) |
+
 ### Themes
 
 | Projectionist (default) | Light |
