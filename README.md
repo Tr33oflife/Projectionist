@@ -13,6 +13,19 @@ One self-contained binary. No installer, no accounts, nothing leaves your
 machine except the requests you configure (Plex itself, plus whichever
 optional services you add keys for).
 
+## Why this exists
+
+> This was made to solve a problem I had — trouble with Kometa, especially
+> on my seedbox. If it can help you as well, cool — I appreciate all
+> feedback.
+>
+> **I will never charge for this product.** I do have a donate link
+> included, with no expectation of anyone using it.
+>
+> Hopefully this app gives the basic overlay functionality to laymen users
+> that Kometa seems to overlook. Plug in your Plex, and get editing.
+> Jellyfin maybe added in the future. Big maybe.
+
 ## What it does
 
 **Poster overlays.** 30 badge families in three styles (classic, aurora,
