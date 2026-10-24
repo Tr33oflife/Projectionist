@@ -902,7 +902,9 @@ code.small { font-size: 11.5px; background: var(--input-bg); padding: 3px 8px; b
  * wrapper (.floatingchat-container-wrap, desktop and -mobi), which
  * Ko-fi positions fixed at the bottom-left corner (bottom: 16px;
  * left: 16px; 180px max-width, 65px tall). transform-origin: bottom
- * left keeps it anchored in that corner while it shrinks; the layout
+ * left keeps it anchored in that corner while it shrinks; the app
+ * moves the wrapper to the bottom-right instead (left: auto;
+ * right: 16px; origin bottom right). The layout
  * box is unchanged (fixed positioning, so nothing else moves), and
  * no animation or attention-grabbing is added. The draw() config
  * offers no size option — this CSS is the only sizing lever.
@@ -910,6 +912,8 @@ code.small { font-size: 11.5px; background: var(--input-bg); padding: 3px 8px; b
  * user has chosen to open it, it stays full-size and readable. */
 .floatingchat-container-wrap,
 .floatingchat-container-wrap-mobi {
+  left: auto !important;
+  right: 16px !important;
   transform: scale(0.8);
-  transform-origin: bottom left;
+  transform-origin: bottom right;
 }
